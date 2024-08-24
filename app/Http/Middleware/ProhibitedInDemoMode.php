@@ -18,7 +18,7 @@ class ProhibitedInDemoMode
     public function handle($request, Closure $next)
     {
         if (env('APP_SYNC')) {
-            return 'hai ';
+           
             if(($request->is('account/*') || $request->is('account')) && $request->ajax()){
                 throw ValidationException::withMessages([
                     'message' => __('common.restricted_in_demo_mode')

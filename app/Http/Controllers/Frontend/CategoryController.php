@@ -204,10 +204,8 @@ class CategoryController extends Controller
        
 
         if ($item == 'category') {
-        
             $catRepo = new CategoryRepository(new Category());
             $category = $catRepo->findBySlug($slug);
-           
             if($category){
                 $category_id = $category->id;
                 $data['CategoryList'] = $catRepo->subcategory($category_id);
@@ -223,12 +221,9 @@ class CategoryController extends Controller
                 $data['min_price_lowest'] = $product_min_price;
                 $data['max_price_highest'] = $product_max_price;
                 $attributeRepo = new AttributeRepository;
-              
                 $data['attributeLists'] = $attributeRepo->getAttributeForSpecificCategory($category_id, $category_ids);
-                
                 $data['category_id'] = $category_id;
                 $data['color'] = $attributeRepo->getColorAttributeForSpecificCategory($category_id, $category_ids);
-              
             }else{
                 return abort(404);
             }
@@ -317,7 +312,6 @@ class CategoryController extends Controller
             $data['CategoryList'] = Category::whereRaw("id in ('". implode("','",$category_ids). "')")->where('status', 1)->take(20)->get();
             $data['brandList'] = Brand::whereRaw("id in ('". implode("','",$brand_ids). "')")->where('status', 1)->take(20)->get();
             $attribute_ids = ProductVariations::whereRaw("product_id in ('". implode("','",$main_product_ids). "')")->distinct()->pluck('attribute_id')->toArray();
-            
             $data['attributeLists'] =  Attribute::with('values')->whereRaw("id in ('". implode("','", $attribute_ids). "')")->where('id','>',1)->where('status', 1)->take(2)->get();
             $data['color'] = Attribute::with('values')->whereRaw("id in ('". implode("','", $attribute_ids). "')")->where('status', 1)->first();
             $products = SellerProduct::with('product')->whereRaw("product_id in ('". implode("','", $main_product_ids). "')")->activeSeller()->get();

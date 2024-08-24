@@ -35,7 +35,6 @@ class MenuController extends Controller
     }
     public function store(CreateMenuRequest $request)
     {
-        return 123;
         try{
             $this->menuService->store($request->except('_token'));
 
@@ -45,7 +44,7 @@ class MenuController extends Controller
             Toastr::error(__('common.operation_failed'));
             return back();
         }
-        return $this->reloadWithData(); 
+        return $this->reloadWithData();
     }
     public function setup($id){
         try{

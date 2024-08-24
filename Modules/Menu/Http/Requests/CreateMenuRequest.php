@@ -13,18 +13,19 @@ class CreateMenuRequest extends FormRequest
      */
     public function rules()
     {
+       
         if (isModuleActive('FrontendMultiLang')) {
             $code = auth()->user()->lang_code;
             return [
                 'name.'. $code => 'required|max:255',
-                'slug' => "required|unique:menus,slug,".$this->id,
+                // 'slug' => "required|unique:menus,slug,".$this->id,
                 'menu_type' => 'required',
                 'menu_position' => 'required'
-            ];
+            ]; 
         }else{
             return [
                 'name' => 'required|max:255',
-                'slug' => "required|unique:menus,slug,".$this->id,
+                // 'slug' => "required|unique:menus,slug,".$this->id,
                 'menu_type' => 'required',
                 'menu_position' => 'required'
             ];
