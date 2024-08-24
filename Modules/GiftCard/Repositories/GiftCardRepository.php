@@ -303,7 +303,6 @@ class GiftCardRepository
                 $giftcard->delete();
             }
         }
-        
         foreach ($data['section'] as $v_gift_card){
                
             $sections = AddGiftCard::create([
@@ -339,7 +338,7 @@ class GiftCardRepository
             return true;
 
         }catch(\Exception $e){
-            return $e->getMessage();
+           
             LogActivity::errorlog('Error in digitalCardUpdate: ' . $e->getMessage(), [
                 'data' => $data,
                 'id' => $id,

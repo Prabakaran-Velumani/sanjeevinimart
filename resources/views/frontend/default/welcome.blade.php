@@ -6,6 +6,7 @@
 
 @section('share_meta')
   @php
+ 
       $tags = str_replace(',', ' ',app('general_setting')->meta_tags);
   @endphp
   <meta name="keywords" content="{{$tags}}">

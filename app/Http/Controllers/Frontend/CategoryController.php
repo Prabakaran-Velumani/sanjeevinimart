@@ -8,7 +8,7 @@ use Modules\Product\Entities\Brand;
 use Modules\Product\Entities\Category;
 use Modules\Product\Entities\ProductTag;
 use Modules\Seller\Entities\SellerProduct;
-use Modules\Product\Repositories\CategoryRepository;
+use Modules\Product\Repositories\CategoryRepository; 
 use Modules\Product\Repositories\BrandRepository;
 use \Modules\Product\Repositories\AttributeRepository;
 use App\Services\FilterService;
@@ -183,6 +183,7 @@ class CategoryController extends Controller
 
     public function productByCategory(Request $request, $slug)
     {
+        
         $request->validate([
             'item' => 'required'
         ]);

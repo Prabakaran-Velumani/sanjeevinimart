@@ -210,7 +210,7 @@ class GiftCardController extends Controller
 
     public function update(UpdateGiftCardRequest $request, $id)
     {
-        dd($request->all());
+        // dd($request->all());
         // DB::beginTransaction();
         // try{
             $this->giftcardService->update($request->except('_token'),$id);

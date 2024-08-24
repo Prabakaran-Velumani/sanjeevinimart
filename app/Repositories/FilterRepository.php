@@ -51,7 +51,7 @@ class FilterRepository
                         $q = $q->orWhere('name', 'LIKE', "%{$slug}%");
                     }
                     return $q;
-                });
+                }); 
             })->select(['*', 'name as product_name','sku as slug']);
         }elseif($data['requestItemType'] == "tag"){
             $tag = Tag::where('name',$requestItem)->first();
@@ -692,6 +692,7 @@ class FilterRepository
         if(request()->sort_by){
             return $data;
         }
+        
         if($section->type == 1){
             $products = $products->join('category_product', function($q1){
                 $q1->on('products.id','=', 'category_product.product_id')->orderBy('category_product.category_id');
@@ -703,19 +704,28 @@ class FilterRepository
             $products = $products->latest();
         }
         if($section->type == 3){
-            $products->orderByDesc('recent_view');
+            $products->orderByDesc('seller_products.id')
+            ->orderByDesc('recent_view');
+
+           
         }
         if($section->type == 4){
-            $products->orderByDesc('total_sale');
+            $products->orderByDesc('seller_products.id')
+            ->orderByDesc('total_sale');
+   
         }
         if($section->type == 5){
-            $products = $products->withCount('reviews')->orderByDesc('reviews_count');
+            $products = $products->withCount('reviews')->orderByDesc('seller_products.id')
+            ->orderByDesc('reviews_count');
+            
         }
         if($section->type == 6){
             $product_ids = HomepageCustomProduct::where('section_id',$section->id)->pluck('seller_product_id')->toArray();
             $products =  $products->whereRaw("seller_products.id in ('". implode("','",$product_ids). "')");
         }
-        $data['products'] = $products->distinct('seller_products.id');
+        $data['products'] = $products->Distinct('seller_products.id');
+        // $data['products'] = $products->orderBy('seller_products.id');
+        
         return $data;
     }
 
