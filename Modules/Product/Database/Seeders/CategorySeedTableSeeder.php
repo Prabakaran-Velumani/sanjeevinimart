@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\Product\Database\Seeders;
 
 use Illuminate\Database\Seeder;
@@ -16,18 +17,12 @@ class CategorySeedTableSeeder extends Seeder
     public function run()
     {
         Model::unguard();
-
-        // Disable triggers (equivalent to disabling foreign key checks)
-        DB::statement('ALTER TABLE categories DISABLE TRIGGER ALL;');
-
-        // Truncate the table
+        
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         DB::table('categories')->truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
-        // Seed the data
         Category::categoryFactory()->count(10000)->create();
         Category::subcategoryFactory()->count(20000)->create();
-
-        // Re-enable triggers (re-enabling foreign key checks)
-        DB::statement('ALTER TABLE categories ENABLE TRIGGER ALL;');
     }
 }

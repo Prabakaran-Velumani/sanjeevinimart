@@ -30,6 +30,9 @@ class CreateAttributesTable extends Migration
         DB::statement("INSERT INTO attributes (id, name, display_type, description, status, created_at, updated_at) VALUES
         (1, 'Color', 'radio_button', 'this is for color atrribute.', 1, '2018-11-05 02:12:26', '2018-11-05 02:12:26')");
 
+        // Set the auto-increment value based on the last inserted ID
+        DB::statement("SELECT setval('attributes_id_seq', (SELECT COALESCE(MAX(id) + 1, 1) FROM attributes), true);");
+
     }
 
     /**
