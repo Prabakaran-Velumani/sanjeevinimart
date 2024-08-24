@@ -1,6 +1,7 @@
 <?php
 
 namespace Modules\GiftCard\Repositories;
+use Illuminate\Support\Facades\Validator;
 
 use App\Models\Cart;
 use App\Traits\ImageStore;
@@ -20,7 +21,7 @@ use Modules\GiftCard\Entities\GiftCardTag;
 use Modules\GiftCard\Entities\GiftCoupon;
 use Modules\GiftCard\Imports\GiftProductImport;
 use Modules\Setup\Entities\Tag;
-
+use Modules\UserActivityLog\Traits\LogActivity;
 class GiftCardRepository
 {
     use ImageStore, SendMail;
@@ -31,10 +32,12 @@ class GiftCardRepository
 
     public function store($data)
     {
+        
         if ($data['product_type'] == 1) {
             if (!empty($data['thumbnail_image'])) {
                 $data['thumbnail_image'] = ImageStore::saveImage($data['thumbnail_image'], 165, 165);
             }
+           
             $card = GiftCard::create([
                 'name' => $data['name'],
                 'sku' => $data['sku'],
@@ -70,6 +73,7 @@ class GiftCardRepository
             }
 
         }else {
+            
             if (!empty($data['thumbnail_image_one'])) {
                 $data['thumbnail_image_one'] = ImageStore::saveImage($data['thumbnail_image_one'], 165, 165);
             }
@@ -82,8 +86,9 @@ class GiftCardRepository
                 'sku' => $data['gift_sku'],
                 'shipping_id' => 1,
                 'type' => 'gift_card',
+                
             ]);
-
+          
             $tags = [];
             $tags = explode(',', $data['gift_tags']);
             foreach ($tags as $key => $tag) {
@@ -106,6 +111,7 @@ class GiftCardRepository
                 }
             }
             $cart_amount = [];
+          
             foreach ($data['section'] as $v_gift_card){
                 $cart_amount[] = (integer)gv($v_gift_card, 'gift_selling_price',null);
                 $sections = AddGiftCard::create([
@@ -129,6 +135,7 @@ class GiftCardRepository
                     }
                 }
             }
+         
             GiftCard::find($card->id)->update([
                 'selling_price' => min($cart_amount),
             ]);
@@ -210,49 +217,80 @@ class GiftCardRepository
     }
 
     public function digitalCardUpdate($data, $id){
-        $card = GiftCard::findOrFail($id);
+        try{
+            
+         
+            // $validator = Validator::make($data, [
+            //     'gift_name' => 'required|string',
+            //     'thumbnail_image_one' => 'nullable|image',
+            //     'status' => 'required|string',
+            //     'descriptionOne' => 'required|string',
+            //     'gift_sku' => 'required|string',
+            //     'gift_tags' => 'required|string',
+            //     'galary_image' => 'nullable|array',
+            //     'galary_image.*' => 'image',
+            //     'section' => 'required|array',
+            //     'section.*.gift_card_value' => 'required|integer',
+            //     'section.*.gift_selling_price' => 'required|integer',
+            //     'section.*.gift_discount_type' => 'required|integer',
+            //     'section.*.gift_discount_amount' => 'required|integer',
+            //     'section.*.gift_expire_date' => 'nullable|date_format:m-d-Y',
+            //     'section.*.number_of_gift_card' => 'required|integer',
+            //     'section.*.upload_img_file' => 'nullable|file',
+            //     'section.*.gift_selling_coupon' => 'nullable|array',
+            //     'section.*.gift_selling_coupon.*' => 'string',
+            // ]);
+    
+            // if ($validator->fails()) {
+            //     throw new \Exception('Validation failed: ' . implode(', ', $validator->errors()->all()));
+            // }
 
-        if(!empty($data['thumbnail_image_one'])){
-            ImageStore::deleteImage($card->thumbnail_image_one);
-            $data['thumbnail_image_one'] = ImageStore::saveImage($data['thumbnail_image_one'], 300, 300);
-        }
+            $card = GiftCard::findOrFail($id);
 
-        $card->update([
-            'name' => $data['gift_name'],
-            'thumbnail_image' => !empty(gv($data, 'thumbnail_image_one')) ? gv($data, 'thumbnail_image_one'):$card->thumbnail_image,
-            'status' => $data['status'],
-            'description' => $data['descriptionOne'],
-            'shipping_id' => 1,
-            'sku' => $data['gift_sku'],
-            'type' => 'gift_card',
-        ]);
-
-        $tags = [];
-        $tags = explode(',', $data['gift_tags']);
-        foreach ($tags as $key => $tag) {
-            $tag = Tag::where('name', $tag)->updateOrCreate([
-                'name' => $tag
-            ]);
-            GiftCardTag::create([
-                'gift_card_id' => $card->id,
-                'tag_id' => $tag->id,
-            ]);
-        }
-
-        if(!empty($data['galary_image'])){
-            $images = GiftCardGalaryImage::where('gift_card_id', $id)->get();
-            foreach($images as $img){
-                ImageStore::deleteImage($img->image_name);
-                $img->delete();
+            if(!empty($data['thumbnail_image_one'])){
+                ImageStore::deleteImage($card->thumbnail_image_one);
+                $data['thumbnail_image_one'] = ImageStore::saveImage($data['thumbnail_image_one'], 300, 300);
             }
-            foreach($data['galary_image'] as $key => $image){
-                $image_name = ImageStore::saveImage($image,1000,1000);
-                GiftCardGalaryImage::create([
-                    'image_name' => $image_name,
-                    'gift_card_id' => $card->id
+    
+            $card->update([
+                'name' => $data['gift_name'],
+                'thumbnail_image' => !empty(gv($data, 'thumbnail_image_one')) ? gv($data, 'thumbnail_image_one'):$card->thumbnail_image,
+                'status' => $data['status'],
+                'description' => $data['descriptionOne'],
+                'shipping_id' => 1,
+                'sku' => $data['gift_sku'],
+                'type' => 'gift_card',
+            ]);
+           
+            $tags = [];
+            $tags = explode(',', $data['gift_tags']);
+            foreach ($tags as $key => $tag) {
+                $tag = Tag::where('name', $tag)->updateOrCreate([
+                    'name' => $tag
+                ]);
+                GiftCardTag::create([
+                    'gift_card_id' => $card->id,
+                    'tag_id' => $tag->id,
                 ]);
             }
-        }
+           
+            if(!empty($data['galary_image'])){
+                $images = GiftCardGalaryImage::where('gift_card_id', $id)->get();
+                foreach($images as $img){
+                    ImageStore::deleteImage($img->image_name);
+                    $img->delete();
+                }
+                foreach($data['galary_image'] as $key => $image){
+                    $image_name = ImageStore::saveImage($image,1000,1000);
+                    GiftCardGalaryImage::create([
+                        'image_name' => $image_name,
+                        'gift_card_id' => $card->id
+                    ]);
+                }
+            }
+            
+           
+      if($data['section']){
         foreach ($card->addGiftCard as $addGiftCard) {
             $giftcard = AddGiftCard::findOrFail($addGiftCard->id);
             foreach ($giftcard->giftCoupons as $giftcoupon) {
@@ -265,8 +303,8 @@ class GiftCardRepository
                 $giftcard->delete();
             }
         }
-
         foreach ($data['section'] as $v_gift_card){
+               
             $sections = AddGiftCard::create([
                 'digilat_gift_id' => $card->id,
                 'gift_card_value' => (integer)gv($v_gift_card, 'gift_card_value',null),
@@ -274,11 +312,15 @@ class GiftCardRepository
                 'gift_discount_type' => gv($v_gift_card, 'gift_discount_type',0),
                 'gift_discount_amount' => (integer)gv($v_gift_card, 'gift_discount_amount', 0),
                 'start_date' => Carbon::now()->format('Y-m-d'),
-                'end_date' => (gv($v_gift_card, 'gift_expire_date')) ? Carbon::createFromFormat('m-d-Y', gv($v_gift_card, 'gift_expire_date'))->format('Y-m-d') : Carbon::now()->format('Y-m-d'),
+                'end_date' => (gv($v_gift_card, 'gift_expire_date')) 
+                ? Carbon::createFromFormat('m/d/Y', gv($v_gift_card, 'gift_expire_date'))->format('Y-m-d') 
+                : Carbon::now()->format('Y-m-d'),
                 'number_of_gift_card' => (integer)gv($v_gift_card, 'number_of_gift_card',null),
             ]);
+            
             if(gv($v_gift_card, 'upload_img_file')){
                 Excel::import(new GiftProductImport($sections->id), gv($v_gift_card, 'upload_img_file')->store('temp'));
+                
             }else{
                 foreach($v_gift_card['gift_selling_coupon'] as $giftCoupon){
                     GiftCoupon::create([
@@ -286,9 +328,24 @@ class GiftCardRepository
                         'add_gift_id'=>$sections->id,
                     ]);
                 }
+               
             }
+          
         }
-        return true;
+      
+      }
+           
+            return true;
+
+        }catch(\Exception $e){
+           
+            LogActivity::errorlog('Error in digitalCardUpdate: ' . $e->getMessage(), [
+                'data' => $data,
+                'id' => $id,
+                'exception' => $e
+            ]);
+        }
+       
      }
 
     public function deleteById($id){

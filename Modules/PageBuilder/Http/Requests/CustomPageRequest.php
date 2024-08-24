@@ -15,12 +15,12 @@ class CustomPageRequest extends FormRequest
             $code = auth()->user()->lang_code;
             return [
                 'title.'. $code=>"required|unique_translation:dynamic_pages,title,{$this->id}",
-                'slug'=>'required|unique:dynamic_pages,slug,'.$this->id,
+                // 'slug'=>'required|unique:dynamic_pages,slug,'.$this->id,
             ];
         }else{
             return [
-                'title'=>'required|unique:dynamic_pages,title,'.$this->id,
-                'slug'=>'required|unique:dynamic_pages,slug,'.$this->id,
+                // 'title'=>"required|unique:dynamic_pages,title,{$this->id}",
+                // 'slug'=>'required|unique:dynamic_pages,slug,'.$this->id,
             ];
         }
     }

@@ -92,7 +92,11 @@ class GiftCardController extends Controller
     //               GET Digital GIFT CARD DATA METHOD      //
     //------------------------------------------------------//
     public function digitalGiftCard(){
-        $giftCards = GiftCard::with('addGiftCard','addGiftCard.giftCoupons')->where('type','gift_card')->get();
+        $query = GiftCard::with('addGiftCard', 'addGiftCard.giftCoupons')
+    ->whereRaw('type ILIKE ?', ['gift_card']);
+    
+    // Run the query
+    $giftCards = $query->get();
 
         return DataTables::of($giftCards)
         ->addIndexColumn()
@@ -135,6 +139,7 @@ class GiftCardController extends Controller
 
     public function store(CreateGiftCardRequest $request)
     {
+        
         $request->validated();
         $request_data =  $request->all();
 
@@ -205,37 +210,40 @@ class GiftCardController extends Controller
 
     public function update(UpdateGiftCardRequest $request, $id)
     {
-
-        DB::beginTransaction();
-        try{
+        // dd($request->all());
+        // DB::beginTransaction();
+        // try{
             $this->giftcardService->update($request->except('_token'),$id);
             DB::commit();
             LogActivity::successLog('gift card updated');
             Toastr::success(__('common.updated_successfully'), __('common.success'));
             return redirect()->route('admin.giftcard.index');
-        }catch(\Exception $e){
-            LogActivity::errorLog($e->getMessage());
-            DB::rollBack();
-            Toastr::error(__('common.error_message'), __('common.error'));
-            return back();
-        }
+        // }catch(\Exception $e){
+        //     LogActivity::errorLog($e->getMessage());
+        //     DB::rollBack();
+        //     Toastr::error(__('common.error_message'), __('common.error'));
+        //     // return back();
+        // }
     }
 
     public function digitalGiftUpdate(Request $request, $id)
     {
-        //dd($request->all());
+        
+        //  dd($request->all());
         DB::beginTransaction();
         try{
             $this->giftcardService->digitalCardUpdate($request->except('_token'),$id);
             DB::commit();
             LogActivity::successLog('gift card updated');
             Toastr::success(__('common.updated_successfully'), __('common.success'));
+         
             return redirect()->route('admin.giftcard.index');
         }catch(\Exception $e){
+            return $e->getMessage();
             LogActivity::errorLog($e->getMessage());
             DB::rollBack();
             Toastr::error(__('common.error_message'), __('common.error'));
-            return back();
+            // return back();
         }
     }
 

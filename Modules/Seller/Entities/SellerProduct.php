@@ -224,7 +224,7 @@ class SellerProduct extends Model
         if (isModuleActive('MultiVendor')) {
             $query = $query->orWhereHas('seller', function ($q) {
                 return $q->whereHas('SellerAccount', function ($q1) {
-                    return $q1->where('holiday_mode', 0)->orWhere('holiday_date', '!=', date('Y-m-d'))->orWhere(function ($q2) {
+                    return $q1->where('holiday_mode', false)->orWhere('holiday_date', '!=', date('Y-m-d'))->orWhere(function ($q2) {
                         return $q2->where('holiday_date_start', '>', date('Y-m-d'))->where('holiday_date_end', '<', date('Y-m-d'))
                             ->orWhere('holiday_date_start', '>', date('Y-m-d'))->orWhere('holiday_date_end', '<', date('Y-m-d'));
                     });
@@ -233,13 +233,13 @@ class SellerProduct extends Model
                         return $q5->where('expiry_date', '>', date('Y-m-d'))->whereHas('user.SellerAccount', function ($q6) {
                             return $q6->where('seller_commission_id', 3);
                         });
-                    })->where('is_active', 1)->orWhereHas('SellerAccount', function ($q7) {
+                    })->where('is_active', true)->orWhereHas('SellerAccount', function ($q7) {
                         return $q7->where('seller_commission_id', '!=', 3)
-                            ->where('holiday_mode', 0)->orWhere('holiday_date', '!=', date('Y-m-d'))->orWhere(function ($q2) {
+                            ->where('holiday_mode', false)->orWhere('holiday_date', '!=', date('Y-m-d'))->orWhere(function ($q2) {
                                 return $q2->where('holiday_date_start', '>', date('Y-m-d'))->where('holiday_date_end', '<', date('Y-m-d'))
                                     ->orWhere('holiday_date_start', '>', date('Y-m-d'))->orWhere('holiday_date_end', '<', date('Y-m-d'));
                             });
-                    })->where('is_active', 1);
+                    })->where('is_active', true);
             })->where('seller_products.status', 1);
         }
         return $query;

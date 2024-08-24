@@ -142,16 +142,16 @@
                                 <ul id="theme_nav" class="permission_list sms_list ">
                                     <li>
                                         <label data-id="bg_option" class="primary_checkbox d-flex mr-12">
-                                            <input name="holiday_mode" id="holiday_mode_active" value="1"
-                                                {{$seller->sellerAccount->holiday_mode==1?'checked':''}} class="active" type="radio">
+                                            <input name="holiday_mode" id="holiday_mode_active" value=true
+                                                {{$seller->sellerAccount->holiday_mode?'checked':''}} class="active" type="radio">
                                             <span class="checkmark"></span>
                                         </label>
                                         <p>{{ __('common.on') }}</p>
                                     </li>
                                     <li>
                                         <label data-id="color_option" class="primary_checkbox d-flex mr-12">
-                                            <input name="holiday_mode" value="0"
-                                                {{$seller->sellerAccount->holiday_mode==0?'checked':''}}
+                                            <input name="holiday_mode" value=false
+                                                {{!$seller->sellerAccount->holiday_mode?'checked':''}}
                                                 id="holiday_mode_inactive" class="de_active" type="radio">
                                             <span class="checkmark"></span>
                                         </label>
@@ -160,7 +160,7 @@
                                 </ul>
                             </div>
                         </div>
-                        <div id="select_type_div" class="col-xl-6 {{$seller->sellerAccount->holiday_mode ==0?'d-none':''}}">
+                        <div id="select_type_div" class="col-xl-6 {{!$seller->sellerAccount->holiday_mode?'d-none':''}}">
                             <label class="primary_input_label" for="business_country">{{__('common.select_type')}} <span
                                     class="text-danger">*</span></label>
                             <select name="holiday_type" id="select_type" class="primary_select mb-25">
@@ -170,7 +170,7 @@
                             <span class="text-danger" id="error_business_country"></span>
                         </div>
                         <div id="holiday_date_div"
-                            class="col-xl-6 {{$seller->sellerAccount->holiday_mode ==0 || $seller->sellerAccount->holiday_type ==2?'d-none':''}}">
+                            class="col-xl-6 {{!$seller->sellerAccount->holiday_mode || $seller->sellerAccount->holiday_type ==2?'d-none':''}}">
                             <div class="primary_input mb-15">
                                 <label class="primary_input_label" for="holiday_date">{{__('common.holiday_date')}}</label>
                                 <div class="primary_datepicker_input">

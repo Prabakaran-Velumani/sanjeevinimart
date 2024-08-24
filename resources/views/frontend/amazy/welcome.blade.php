@@ -24,6 +24,7 @@
 @section('content')
     <!-- home_banner::start  -->
     @php
+    
         $headers = \Modules\Appearance\Entities\Header::all();
     @endphp
     <x-slider-component :headers="$headers"/>
