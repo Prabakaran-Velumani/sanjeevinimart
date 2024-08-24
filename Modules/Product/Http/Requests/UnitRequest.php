@@ -11,21 +11,21 @@ class UnitRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
-    {
-        if (isModuleActive('FrontendMultiLang')) {
-            $code = auth()->user()->lang_code;
-            return [
-                'name.'. $code => "required|max:255|unique_translation:unit_types,name,{$this->id}",
-                "status" => "required",
-            ];
-        }else{
-            return [
-                'name' => 'required|max:255|unique:unit_types,name,'.$this->id,
-                'status' => 'required'
-            ];
-        }
-    }
+    // public function rules()
+    // {
+    //     if (isModuleActive('FrontendMultiLang')) {
+    //         $code = auth()->user()->lang_code;
+    //         return [
+    //             'name.'. $code => "required|max:255|unique_translation:unit_types,name,{$this->id}",
+    //             "status" => "required",
+    //         ];
+    //     }else{
+    //         return [
+    //             'name' => 'required|max:255|unique:unit_types,name,'.$this->id,
+    //             'status' => 'required'
+    //         ];
+    //     }
+    // }
     public function messages()
     {
         if (isModuleActive('FrontendMultiLang')) {

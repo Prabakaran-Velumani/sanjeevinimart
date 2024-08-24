@@ -12,21 +12,22 @@ class AttributeFormRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
-    {
-        if (isModuleActive('FrontendMultiLang')) {
-            $code = auth()->user()->lang_code;
-            return [
-                'name.'. $code => "required|max:255|unique_translation:attributes,name,{$this->id}",
-                "status" => "required",
-            ];
-        }else{
-            return [
-                'name' => 'required|unique:attributes,name,'.$this->id,
-                "status" => "required",
-            ];
-        }
-    }
+    // public function rules()
+    // {
+        // $id = $this->id ?? null;
+        // if (isModuleActive('FrontendMultiLang')) {
+        //     $code = auth()->user()->lang_code;
+        //     return [
+        //         'name.'. $code => "required|max:255|unique_translation:attributes,name,${id}",
+        //         "status" => "required",
+        //     ];
+        // }else{
+        //     return [
+        //         'name' => 'required|unique:attributes,name,'.$id,
+        //         "status" => "required",
+        //     ];
+        // }
+    // }
     public function messages()
     {
         if (isModuleActive('FrontendMultiLang')) {

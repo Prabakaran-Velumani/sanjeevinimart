@@ -4,6 +4,7 @@
 </div>
 @if(isModuleActive('FrontendMultiLang'))
 @php
+
 $LanguageList = getLanguageList();
 @endphp
 @endif

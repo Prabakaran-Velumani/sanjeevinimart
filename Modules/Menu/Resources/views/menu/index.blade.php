@@ -79,6 +79,7 @@
                 formElement.forEach(element => {
                     formData.append(element.name, element.value);
                 });
+              
                 formData.append('_token', "{{ csrf_token() }}");
                 $.ajax({
                     url: "{{ route('menu.store') }}",

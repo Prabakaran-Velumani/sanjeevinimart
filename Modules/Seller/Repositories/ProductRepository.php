@@ -19,6 +19,7 @@ use App\Traits\ImageStore;
 use Modules\GeneralSetting\Entities\NotificationSetting;
 use Modules\GST\Entities\GstTax;
 use Modules\WholeSale\Entities\WholesalePrice;
+use Illuminate\Support\Facades\Log;
 
 class ProductRepository {
     use Notification, ImageStore, GenerateSlug;
@@ -80,22 +81,56 @@ class ProductRepository {
     public function getFilterdProduct($data){
         $seller_id = getParentSellerId();
         if($data['table'] == 'alert'){
-            return $this->product::where('stock_manage',1)->where('user_id',$seller_id)->whereHas('skus', function($query){
-                return $query->select(DB::raw('SUM(product_stock) as sum_colum'))->having('sum_colum', '<=', 10);
-            })->with(['product' => function($q1){
-                $q1->select('id','product_name','brand_id','thumbnail_image_source','subtitle_1','subtitle_2');
-            },'product.brand' => function($q2){
-                $q2->select('id','name');
-            }]);
+            // return $this->product::where('stock_manage',1)->where('user_id',$seller_id)->whereHas('skus', function($query){
+            //     return $query->select(DB::raw('SUM(product_stock) as sum_colum'))->having('sum_colum', '<=', 10);
+            // })->with(['product' => function($q1){
+            //     $q1->select('id','product_name','brand_id','thumbnail_image_source','subtitle_1','subtitle_2');
+            // },'product.brand' => function($q2){
+            //     $q2->select('id','name');
+            // }]);
+            Log::info("$$$$$$$$$$$$ alert");
+            return $this->product::where('stock_manage', 1)
+            ->where('user_id', $seller_id)
+            ->whereHas('skus', function($query) {
+                // Group by product_id and use SUM directly in the HAVING clause
+                return $query->groupBy('product_id')
+                             ->havingRaw('SUM(product_stock) <= ?', [10])
+                             ->select(DB::raw('SUM(product_stock) as sum_colum'));
+            })
+            ->with([
+                'product' => function($q1) {
+                    $q1->select('id', 'product_name', 'brand_id', 'thumbnail_image_source', 'subtitle_1', 'subtitle_2');
+                },
+                'product.brand' => function($q2) {
+                    $q2->select('id', 'name');
+                }
+            ]);
         }
         if($data['table'] == 'stockout'){
-            return $this->product::where('stock_manage',1)->where('user_id',$seller_id)->whereHas('skus', function($query){
-                return $query->select(DB::raw('SUM(product_stock) as sum_colum'))->having('sum_colum', '<', 1);
-            })->with(['product' => function($q1){
-                $q1->select('id','product_name','brand_id','thumbnail_image_source','subtitle_1','subtitle_2');
-            },'product.brand' => function($q2){
-                $q2->select('id','name');
-            }]);
+            Log::info("$$$$$$$$$$$$ stockout");
+            // return $this->product::where('stock_manage',1)->where('user_id',$seller_id)->whereHas('skus', function($query){
+            //     return $query->select(DB::raw('SUM(product_stock) as sum_colum'))->having('sum_colum', '<', 1);
+            // })->with(['product' => function($q1){
+            //     $q1->select('id','product_name','brand_id','thumbnail_image_source','subtitle_1','subtitle_2');
+            // },'product.brand' => function($q2){
+            //     $q2->select('id','name');
+            // }]);
+            return $this->product::where('stock_manage', 1)
+                ->where('user_id', $seller_id)
+                ->whereHas('skus', function($query) {
+                    // Group by product_id and use SUM directly in the HAVING clause
+                    return $query->groupBy('product_id')
+                                ->havingRaw('SUM(product_stock) < ?', [1])
+                                ->select(DB::raw('SUM(product_stock) as sum_colum'));
+                })
+                ->with([
+                    'product' => function($q1) {
+                        $q1->select('id', 'product_name', 'brand_id', 'thumbnail_image_source', 'subtitle_1', 'subtitle_2');
+                    },
+                    'product.brand' => function($q2) {
+                        $q2->select('id', 'name');
+                    }
+                ]);
         }
         if($data['table'] == 'disable'){
             return $this->product::where('status',0)->where('user_id',$seller_id)->with(['product' => function($q1){

@@ -1328,15 +1328,30 @@ class ProductRepository
         $product = Product::query()->select($get_columns);
 
         if ($table == 'alert') {
-            return $product->where('stock_manage', 1)->whereHas('skus', function ($query) {
-                return $query->select(DB::raw('SUM(product_stock) as sum_colum'))->having('sum_colum', '<=', 10);
+            // return $product->where('stock_manage', 1)->whereHas('skus', function ($query) {
+            //     return $query->select(DB::raw('SUM(product_stock) as sum_colum'))->having('sum_colum', '<=', 10);
+            // });
+            return $product->where('stock_manage', 1)
+                ->whereHas('skus', function ($query) {
+                // Ensure proper grouping and use SUM directly in the HAVING clause
+                return $query->groupBy('product_id')
+                            ->havingRaw('SUM(product_stock) <= ?', [10])
+                            ->select(DB::raw('SUM(product_stock) as sum_colum'));
             });
         }
         if ($table == 'stockout') {
-            return $product->where('stock_manage', 1)->whereHas('skus', function ($query) {
-                return $query->select(DB::raw('SUM(product_stock) as sum_colum'))->having('sum_colum', '<', 1);
+            // return $product->where('stock_manage', 1)->whereHas('skus', function ($query) {
+            //     return $query->select(DB::raw('SUM(product_stock) as sum_colum'))->having('sum_colum', '<', 1);
+            // });
+            return $product->where('stock_manage', 1)
+                ->whereHas('skus', function ($query) {
+                    // Ensure proper grouping and use SUM directly in the HAVING clause
+                    return $query->groupBy('product_id')
+                     ->havingRaw('SUM(product_stock) < ?', [1])
+                     ->select(DB::raw('SUM(product_stock) as sum_colum'));
             });
         }
+
         if ($table == 'disable') {
             return $product->where('status', 0);
         }

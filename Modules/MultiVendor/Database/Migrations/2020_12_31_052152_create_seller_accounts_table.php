@@ -26,12 +26,12 @@ class CreateSellerAccountsTable extends Migration
                 $table->string('subscription_type')->nullable();
                 $table->string('seller_phone')->nullable();
                 $table->string('seller_shop_display_name')->nullable()->unique();
-                $table->boolean('holiday_mode')->default(0);
+                $table->boolean('holiday_mode')->default(false);
                 $table->integer('holiday_type')->nullable();
                 $table->date('holiday_date')->nullable();
                 $table->date('holiday_date_start')->nullable();
                 $table->date('holiday_date_end')->nullable();
-                $table->boolean('is_trusted')->default(0);
+                $table->boolean('is_trusted')->default(false);
                 $table->integer('total_sale_qty')->default(0);
                 $table->longText('about_seller')->nullable();
                 $table->timestamps();
