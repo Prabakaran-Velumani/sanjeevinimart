@@ -8,15 +8,19 @@
             $(".basic").spectrum();
             $(document).on('click', '.remove', function () {
                 $(this).parents('.variant_row_lists').remove();
+
             });
             $(document).on('click','.add_single_variant_row',function () {
+                // let inputValue = $('.variant_values').val();
+                let inputValue = $(this).closest('tr').find('.variant_values').val();
                 $('.variant_row_lists:last').after(`<tr class="variant_row_lists">
                         <td class="pl-0 pb-0 border-0">
-                                <input class="placeholder_input" placeholder="-" name="variant_values[]" type="text">
+                                <input class="placeholder_input" name="variant_values[]" type="text" value="${inputValue}">
                         </td>
                         <td class="pl-0 pb-0 pr-0 remove border-0">
                             <div class="items_min_icon "><i class="ti-trash"></i></div>
                     </td></tr>`);
+                $(this).closest('tr').find('.variant_values').val('');
             });
             $(document).on('click', '.remove_edit', function () {
                 $(this).parents('.variant_edit_row_lists').remove();
@@ -47,18 +51,32 @@
             });
             $(document).on("submit", "#variantForm", function (event) {
                 event.preventDefault();
-                var variant_values =  $('#variant_values').val();
-                if (variant_values == '') {
-                    $('#error_variant_values').text('Attribute Value Required');
-                    return false;
-                }
-                $("#pre-loader").removeClass('d-none');
+                // var variant_values =  $('#variant_values').val();
                 let formData = $(this).serializeArray();
                 $.each(formData, function (key, message) {
                     if (formData[key].name !== 'variant_values[]') {
                         $("#" + formData[key].name + "_error").html("");
                     }
                 });
+                let variant_values = 0;
+                formData = formData.filter(function(item) {
+                    if (item.name === 'variant_values[]') {
+                        // Corrected condition to properly check for non-empty values
+                        if (item.value !== '' && item.value !== null && item.value !== undefined) {
+                            variant_values++;
+                            return true;
+                        }
+                        return false;
+                    } else {
+                        return true;
+                    }
+                });
+
+                if (variant_values === 0) {
+                    $('#error_variant_values').text('Attribute Value Required');
+                    return false;
+                }
+                $("#pre-loader").removeClass('d-none');
                 $.ajax({
                     url: "{{ route('product.attribute.store') }}",
                     data: formData,

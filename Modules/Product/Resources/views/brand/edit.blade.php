@@ -81,7 +81,8 @@ $LanguageList = getLanguageList();
                                 <div class="col-lg-12">
                                     <div class="primary_input mb-30">
                                         <label class="primary_input_label" for=""> {{__("product.website_link")}}</label>
-                                        <input class="primary_input_field" name="link" placeholder="{{__("product.website_link")}}" type="text" value="{{old('link')}}">
+                                        <!-- <input class="primary_input_field" name="link" placeholder="{{__("product.website_link")}}" type="text" value="{{old('link')}}"> -->
+                                        <input class="primary_input_field" name="link" placeholder="{{__("product.website_link")}}" type="text" value="{{$brand->link}}">
                                         <span class="text-danger">{{$errors->first('link')}}</span>
                                     </div>
                                 </div>

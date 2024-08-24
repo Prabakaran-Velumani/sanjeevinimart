@@ -91,7 +91,7 @@ $LanguageList = getLanguageList();
                                 <tbody>
                                     <tr class="variant_row_lists">
                                         <td class="pl-0 pb-0 border-0">
-                                            <input class="placeholder_input" id="variant_values" name="variant_values[]" placeholder="-" type="text">
+                                            <input class="placeholder_input variant_values" id="variant_values" name="variant_values[]" placeholder="-" type="text">
                                         </td>
                                         <td class="pl-0 pb-0 pr-0 border-0">
                                             <div class="add_items_button pt-10">
