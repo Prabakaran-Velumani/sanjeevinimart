@@ -25,7 +25,7 @@ class FilterRepository
     {
         $products = SellerProduct::with('skus', 'product')->activeSeller()->select('seller_products.*')->join('products', function ($query) {
             $query->on('products.id','=','seller_products.product_id')->where('products.status', 1);
-        })->distinct('seller_products.id');
+        })->distinct('seller_products.id')->orderBy('seller_products.id', 'desc');
         return $this->sortAndPaginate($products, $sort_by, $paginate);
     }
     public function getAllActiveProductId()
@@ -146,7 +146,7 @@ class FilterRepository
         }else{
             $giftCards = [];
         }
-        $products = $products->distinct('seller_products.id')->take(60)->get();
+        $products = $products->distinct('seller_products.id')->take(60)->get();//
         $products = $products->merge($giftCards);
         return $this->sortAndPaginate($products, $sort_by, $paginate_by);
     }
@@ -223,7 +223,7 @@ class FilterRepository
                 })->activeSeller();
             }
         }
-        return $this->sortAndPaginate($products->distinct('seller_products.id'), $sort_by, $paginate_by);
+        return $this->sortAndPaginate($products->distinct('seller_products.id'), $sort_by, $paginate_by);//
     }
     public function filterSortProductBlade(array $data, $session_data)
     {
@@ -328,23 +328,23 @@ class FilterRepository
         }else{
             $giftCards = [];
         }
-        $products->distinct('seller_products.id');
+        $products->distinct('seller_products.id');//
         return $this->sortAndPaginate($products, $data['sort_by'], $paginate);
     }
     public function filterProductCategoryWise($category_id, $category_ids, $sort_by, $paginate_by)
     {
-        $products = SellerProduct::with('skus', 'product')->where('seller_products.status', 1)->activeSeller()->select("seller_products.*")->join('products', function ($query) use ($category_ids, $category_id) {
+        $products = SellerProduct::with('skus', 'product')->where('seller_products.status', true)->activeSeller()->select("seller_products.*")->join('products', function ($query) use ($category_ids, $category_id) {
             return $query->on('products.id', '=', 'seller_products.product_id')->where('products.status', 1)->join('category_product',function($q) use($category_id,$category_ids){
                 return $q->on('products.id','=', 'category_product.product_id')->where('category_product.category_id', $category_id)->join('categories', function($q2) use($category_id){
                     return $q2->on('category_product.category_id', '=', 'categories.id')->orOn('category_product.category_id', '=', 'categories.parent_id');
                 });
             });
-        })->distinct('seller_products.id');
+        })->distinct('seller_products.id')->orderBy('seller_products.id', 'desc');
         return $this->sortAndPaginate($products, $sort_by, $paginate_by);
     }
     public function filterProductBrandWise($brand_id, $sort_by, $paginate_by)
     {
-        $products = SellerProduct::with('skus', 'product')->where('seller_products.status', 1)->activeSeller()->select('seller_products.*')->join('products', function ($query) use ($brand_id) {
+        $products = SellerProduct::with('skus', 'product')->where('seller_products.status', true)->activeSeller()->select('seller_products.*')->join('products', function ($query) use ($brand_id) {
             return $query->on('seller_products.product_id', '=', 'products.id')->where('products.brand_id', $brand_id)->where('products.status', 1);
         });
         return $this->sortAndPaginate($products, $sort_by, $paginate_by);
@@ -607,6 +607,7 @@ class FilterRepository
                 $products = $products->sortByDesc($column);
             }
         }
+
         return $products->paginate(($paginate_by != null) ? $paginate_by : 9);
     }
     public function productSortByCategory($itemType, $id, $sort_by, $paginate_by)
@@ -683,6 +684,7 @@ class FilterRepository
         return $data['products'];
     }
     public function getSectionProducts($section_name){
+
         $section = HomePageSection::where('section_name',$section_name)->first();
         $products = SellerProduct::with('seller','reviews')->activeSeller()->select('seller_products.*')->join('products', function($q){
             return $q->on('seller_products.product_id', '=', 'products.id');
@@ -723,9 +725,14 @@ class FilterRepository
             $product_ids = HomepageCustomProduct::where('section_id',$section->id)->pluck('seller_product_id')->toArray();
             $products =  $products->whereRaw("seller_products.id in ('". implode("','",$product_ids). "')");
         }
-        $data['products'] = $products->Distinct('seller_products.id');
+        // $data['products'] = $products->Distinct('seller_products.id');
         // $data['products'] = $products->orderBy('seller_products.id');
-        
+//         $query = $products->distinct('seller_products.id');
+// $sql = $query->toSql();
+// $bindings = $query->getBindings();
+
+// dd(vsprintf(str_replace('?', '%s', $sql), $bindings));
+
         return $data;
     }
 

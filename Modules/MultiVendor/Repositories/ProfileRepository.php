@@ -41,10 +41,10 @@ class ProfileRepository {
             'seller_shop_display_name' => $data['shop_display_name'],
             'seller_commission_id' => isset($data['commission_type'])?$data['commission_type']:$seller_data->seller_commission_id,
             'holiday_mode' => $data['holiday_mode'],
-            'holiday_type' => $data['holiday_mode'] == 1?$data['holiday_type']:null,
-            'holiday_date' => $data['holiday_mode'] == 1 && $data['holiday_type'] == 1?$data['holiday_date']:null,
-            'holiday_date_start' => $data['holiday_mode'] == 1 && $data['holiday_type'] == 2?$data['holiday_date_start']:null,
-            'holiday_date_end' => $data['holiday_mode'] == 1 && $data['holiday_type'] == 2?$data['holiday_date_end']:null,
+            'holiday_type' => $data['holiday_mode'] ?$data['holiday_type']:null,
+            'holiday_date' => $data['holiday_mode']  && $data['holiday_type'] == 1?$data['holiday_date']:null,
+            'holiday_date_start' => $data['holiday_mode'] && $data['holiday_type'] == 2?$data['holiday_date_start']:null,
+            'holiday_date_end' => $data['holiday_mode'] && $data['holiday_type'] == 2?$data['holiday_date_end']:null,
             'about_seller' => $data['about_seller'],
             'subscription_type' => isset($data['subscription_type'])?$data['subscription_type']:$seller_data->subscription_type
         ]);

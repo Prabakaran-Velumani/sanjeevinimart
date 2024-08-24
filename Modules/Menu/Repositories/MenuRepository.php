@@ -53,6 +53,7 @@ class MenuRepository {
         return $pages;
     }
     public function store($data){
+        return 12;
         $menu = new Menu();
         $menu->fill($data)->save();
         if($data['menu_type'] == 'mega_menu'){

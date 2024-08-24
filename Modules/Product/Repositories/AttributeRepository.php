@@ -175,7 +175,11 @@ class AttributeRepository
             });
         })->pluck('product_sku_id')->toArray();
         $attribute_ids = ProductVariations::whereRaw("product_sku_id in ('". implode("','", $seller_products)."')")->where('attribute_id', '!=', 1)->pluck('attribute_id')->toArray();
+        $attribute_list=[];
+        if(is_null($attribute_ids)){
+            
         $attribute_list = Attribute::with('values')->whereRaw("id in ('" . implode("','", $attribute_ids)."')")->where('status',1)->take(20)->get();
+        }
         return $attribute_list;
     }
 
@@ -190,7 +194,11 @@ class AttributeRepository
             });
         })->pluck('product_sku_id')->toArray();
         $attribute_ids = ProductVariations::whereRaw("product_sku_id in ('". implode("','", $seller_products)."')")->where('attribute_id', 1)->pluck('attribute_id')->toArray();
-        $attribute_list = Attribute::with('values')->whereRaw("id in ('". implode("','", $attribute_ids)."')")->where('status', 1)->first();
+        $attribute_list=[];
+        if(is_null($attribute_ids)){
+            $attribute_list = Attribute::with('values')->whereRaw("id in ('". implode("','", $attribute_ids)."')")->where('status', 1)->first();
+        }
+        
         return $attribute_list;
     }
 

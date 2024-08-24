@@ -34,7 +34,7 @@ class ProfileTest extends TestCase
             'seller_phone' => '14092387476943',
             'shop_display_name' => 'shop_name',
             'commission_type' => '1',
-            'holiday_mode' => '1',
+            'holiday_mode' => true,
             "holiday_type" => "2",
             "holiday_date" => "05/22/2021",
             "holiday_date_start" => "05/03/2021",

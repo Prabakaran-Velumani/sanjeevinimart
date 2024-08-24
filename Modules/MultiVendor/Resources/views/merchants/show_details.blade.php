@@ -109,7 +109,7 @@
                                     <tr>
                                         <td class="first_row_width">{{ __('common.holiday_mode') }}</td>
                                         <td>: <span class="ml-1"></span>
-                                            @if (@$user->SellerAccount->holiday_mode == 1)
+                                            @if (@$user->SellerAccount->holiday_mode)
                                                 {{__('common.on')}}
                                             @else
                                                 {{__('common.off')}}

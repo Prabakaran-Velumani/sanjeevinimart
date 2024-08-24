@@ -183,6 +183,7 @@ class CategoryController extends Controller
 
     public function productByCategory(Request $request, $slug)
     {
+       
         $request->validate([
             'item' => 'required'
         ]);
@@ -198,10 +199,15 @@ class CategoryController extends Controller
             $paginate = $request->paginate;
             $data['paginate'] = $request->paginate;
         }
+        
         $item = $request->item;
+       
+
         if ($item == 'category') {
+        
             $catRepo = new CategoryRepository(new Category());
             $category = $catRepo->findBySlug($slug);
+           
             if($category){
                 $category_id = $category->id;
                 $data['CategoryList'] = $catRepo->subcategory($category_id);
@@ -217,15 +223,19 @@ class CategoryController extends Controller
                 $data['min_price_lowest'] = $product_min_price;
                 $data['max_price_highest'] = $product_max_price;
                 $attributeRepo = new AttributeRepository;
+              
                 $data['attributeLists'] = $attributeRepo->getAttributeForSpecificCategory($category_id, $category_ids);
+                
                 $data['category_id'] = $category_id;
                 $data['color'] = $attributeRepo->getColorAttributeForSpecificCategory($category_id, $category_ids);
+              
             }else{
                 return abort(404);
             }
         }
         if ($item == 'brand') {
             $brandRepo = new BrandRepository(new Brand());
+          
             $brand = $brandRepo->findBySlug($slug);
             if($brand){
                 $brand_id = $brand->id;
@@ -256,24 +266,44 @@ class CategoryController extends Controller
             $data['tag'] = $section->title;
             $data['item'] = $request->item;
             $data['section_name'] = $slug;
+            
+         
             $mainProducts = Product::where('products.status', 1)->select(['products.id','products.brand_id'])->join('seller_products', function($q)use($section_product_ids){
                 return $q->on('products.id','=','seller_products.product_id')->whereRaw("seller_products.id in ('". implode("','",$section_product_ids). "')");
             });
+          
             $main_product_ids = $mainProducts->pluck('id')->toArray();
+          
             $brand_ids = $mainProducts->distinct('brand_id')->pluck('brand_id')->toArray();
+            
             $category_ids = CategoryProduct::whereRaw("product_id in ('". implode("','",$main_product_ids)."')")->distinct()->pluck('category_id')->toArray();
             $data['CategoryList'] = Category::whereRaw("id in ('". implode("','",$category_ids). "')")->where('parent_id',0)->where('status', 1)->take(10)->get();
-            $data['brandList'] = Brand::whereRaw("id in ('". implode("','",$brand_ids). "')")->where('status', 1)->take(10)->get();
+           
+            if(is_null($brand_ids)){
+                $data['brandList'] = Brand::whereRaw("id in ('". implode("','",$brand_ids). "')")->where('status', 1)->take(10)->get();
+            
+            }
+            
             $attribute_ids = ProductVariations::whereRaw("product_id in ('". implode("','",$main_product_ids)."')")->distinct()->pluck('attribute_id')->toArray();
+            
+            if(is_null($attribute_ids)){
             $data['attributeLists'] =  Attribute::with('values')->whereRaw("id in ('". implode("','", $attribute_ids). "')")->where('id','>',1)->where('status', 1)->take(1)->get();
             $data['color'] = Attribute::with('values')->whereRaw("id in ('". implode("','", $attribute_ids). "')")->where('id',1)->where('status', 1)->first();
+            }
+           
+           
+        
             $data['products'] = $this->filterService->sortAndPaginate($products, $sort_by, $paginate);
+        
             $product_min_price = $this->filterService->filterProductMinPrice($products->pluck('id')->toArray());
             $product_max_price = $this->filterService->filterProductMaxPrice($products->pluck('id')->toArray());
             $product_min_price = $this->filterService->getConvertedMin($product_min_price);
             $product_max_price = $this->filterService->getConvertedMax($product_max_price);
             $data['min_price_lowest'] = $product_min_price;
             $data['max_price_highest'] = $product_max_price;
+           
+            
+        
         }
 
         if ($item == 'tag') {
@@ -287,6 +317,7 @@ class CategoryController extends Controller
             $data['CategoryList'] = Category::whereRaw("id in ('". implode("','",$category_ids). "')")->where('status', 1)->take(20)->get();
             $data['brandList'] = Brand::whereRaw("id in ('". implode("','",$brand_ids). "')")->where('status', 1)->take(20)->get();
             $attribute_ids = ProductVariations::whereRaw("product_id in ('". implode("','",$main_product_ids). "')")->distinct()->pluck('attribute_id')->toArray();
+            
             $data['attributeLists'] =  Attribute::with('values')->whereRaw("id in ('". implode("','", $attribute_ids). "')")->where('id','>',1)->where('status', 1)->take(2)->get();
             $data['color'] = Attribute::with('values')->whereRaw("id in ('". implode("','", $attribute_ids). "')")->where('status', 1)->first();
             $products = SellerProduct::with('product')->whereRaw("product_id in ('". implode("','", $main_product_ids). "')")->activeSeller()->get();
@@ -363,6 +394,10 @@ class CategoryController extends Controller
             if (session()->has('filterDataFromCat')) {
                 session()->forget('filterDataFromCat');
             }
+      
+
+            // return print_r($request->has);;
+
             return view(theme('pages.listing'),$data);
         }
         else {
