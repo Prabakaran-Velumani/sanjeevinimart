@@ -121,8 +121,10 @@ class PricingController extends Controller
     public function status(Request $request)
     {
         try {
+            $status = filter_var($request->status, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
+            $newStatus = !$status;
             $data = [
-                'status' => $request->status == 1 ? 0 : 1
+                'status' => $newStatus
             ];
             $this->pricingService->statusUpdate($data, $request->id);
             LogActivity::successLog('Pricing Status Update.');
