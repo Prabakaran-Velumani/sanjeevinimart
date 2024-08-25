@@ -19,7 +19,7 @@ class BankAccountRequest extends FormRequest
             'bank_name' => ['required', 'string', 'max:191'],
             'branch_name' => ['required', 'string', 'max:191'],
             'account_name' => ['required', 'string', 'max:191'],
-            'account_number' => ['required', 'string', 'max:191', 'unique:bank_accounts,account_number,' . $this->bank_account],
+            'account_number' => ['required', 'string', 'max:191', 'unique:bank_accounts,account_number,' . $this->account_number],
             'opening_balance' => ['sometimes', 'nullable', 'numeric'],
             'description' => ['sometimes', 'nullable', 'string', 'max:500'],
             'status' => ['sometimes', 'boolean'],
