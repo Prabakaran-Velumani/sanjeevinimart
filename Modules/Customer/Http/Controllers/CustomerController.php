@@ -36,9 +36,8 @@ class CustomerController extends Controller
     {
         $data['customers'] = $this->customerService->getAll();
         return view('customer::customers.index', $data);
-    }
-    public function customer_index_get_data(){
-        if(isset($_GET['table'])){
+    }     public function customer_index_get_data(){
+        if(isset($_GET['table'])){ 
             $table = $_GET['table'];
             if($table == 'active_customer'){
                 $customer = $this->customerService->getAll()->where('is_active',1);
@@ -46,8 +45,17 @@ class CustomerController extends Controller
             elseif($table == 'inactive_customer'){
                 $customer = $this->customerService->getAll()->where('is_active', 0);
             }elseif($table == 'all_customer'){
-                $customer = $this->customerService->getAll()->whereNotIn('is_active', ['2']);
-            }
+                $customer = $this->customerService->getAll();
+                // $query = $this->customerService->getAll();
+                // $sql = $query->toSql();
+                // $bindings = $query->getBindings();
+                
+                // // dd(vsprintf(str_replace('?', '%s', $sql), $bindings));
+                // return response()->json([
+                //     'sql' => vsprintf(str_replace('?', '%s', $sql), $bindings)
+                // ]);
+                
+            } 
             return DataTables::of($customer)
             ->addIndexColumn()
             ->addColumn('avatar', function($customer){
@@ -518,7 +526,7 @@ class CustomerController extends Controller
             $this->customerService->BulkUploadStore($request->except('_token'));
             DB::commit();
             Toastr::success(__('common.created_successfully'), __('common.success'));
-            LogActivity::successLog('Customer Bluk Upload Successfully.');
+            LogActivity::successLog('Customer Bluk Upload Successfullyzzz.');
             return back();
         } catch (\Exception $e) {
             DB::rollBack();
