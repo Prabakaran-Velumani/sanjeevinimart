@@ -45,6 +45,9 @@ class DynamicPageRepository {
         }else{
             $data['slug'] = $data['slug'];
         }
+        if (isset($data['id'])) {
+            unset($data['id']);
+        }
         $this->dynamicPage->fill($data)->save();
     }
 
