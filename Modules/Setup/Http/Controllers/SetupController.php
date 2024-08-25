@@ -64,7 +64,7 @@ class SetupController extends Controller
 
     public function checkoutPageSetup()
     {
-        $checkoutField = CheckoutFieldVisibility::all();
+        $checkoutField = CheckoutFieldVisibility::orderBy('id', 'asc')->get();
         return view('setup::checkoutsetting.checkout_field_settings', compact('checkoutField'));
     }
 
@@ -72,28 +72,28 @@ class SetupController extends Controller
     {
         try {
             $address = CheckoutFieldVisibility::findOrFail(1);
-            $address->visibility = $request->address_visibility;
-            $address->required = $request->address_required;
+            $address->visibility = $request->address_visibility ?? '0';
+            $address->required = $request->address_required ?? '0';
             $address->save();
 
             $city = CheckoutFieldVisibility::findOrFail(2);
-            $city->visibility = $request->city_visibility;
-            $city->required = $request->city_required;
+            $city->visibility = $request->city_visibility ?? '0';
+            $city->required = $request->city_required ?? '0';
             $city->save();
 
             $state = CheckoutFieldVisibility::findOrFail(3);
-            $state->visibility = $request->state_visibility;
-            $state->required = $request->state_required;
+            $state->visibility = $request->state_visibility ?? '0';
+            $state->required = $request->state_required ?? '0';
             $state->save();
 
             $country = CheckoutFieldVisibility::findOrFail(4);
-            $country->visibility = $request->country_visibility;
-            $country->required = $request->country_required;
+            $country->visibility = $request->country_visibility ?? '0';
+            $country->required = $request->country_required ?? '0';
             $country->save();
 
             $postal = CheckoutFieldVisibility::findOrFail(5);
-            $postal->visibility = $request->postal_visibility;
-            $postal->required = $request->postal_required;
+            $postal->visibility = $request->postal_visibility ?? '0';
+            $postal->required = $request->postal_required ?? '0';
             $postal->save();
             LogActivity::successLog('checkout field update successful.');
             Toastr::success('Checkout field update successful.');
@@ -103,7 +103,6 @@ class SetupController extends Controller
             return 0;
         }
     }
-
     public function oneClickOrderReceive()
     {
         $oneClickOrder = OneClickorderReceiveStatus::first();
