@@ -225,6 +225,7 @@ Route::get('frontend/close-promotion',[WelcomeController::class,'closePromotion'
  Route::group(['middleware' => ['auth','admin']], function(){
      Route::middleware('permission')->prefix('hr')->group(function(){
         Route::resource('staffs', '\App\Http\Controllers\StaffController');
+        // Route::post('/staff-store',[StaffController::class,'store'])->name('staffs.store')->middleware('prohibited_demo_mode');
         Route::post('/staff-status-update',[StaffController::class,'status_update'])->name('staffs.update_active_status')->middleware('prohibited_demo_mode');
         Route::get('/staff/view/{id}', [StaffController::class,'show'])->name('staffs.view');
         Route::get('/staff/destroy/{id}',[StaffController::class,'destroy'])->name('staffs.destroy')->middleware('prohibited_demo_mode');
