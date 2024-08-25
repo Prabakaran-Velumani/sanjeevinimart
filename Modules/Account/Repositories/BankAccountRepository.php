@@ -31,7 +31,7 @@ class BankAccountRepository
 
     public function pluckByType($type)
     {
-        return $this->bankAccount->select("CONCAT(name, ' (', code, ')') AS full_name, id")->where(['status' => 1, 'type' => $type])->get()->pluck('full_name', 'id')->prepend(__('chart_of_account.Select Account'), "");
+        return $this->bankAccount->selectRaw("CONCAT(name, ' (', code, ')') AS full_name, id")->where(['status' => 1, 'type' => $type])->get()->pluck('full_name', 'id')->prepend(__('chart_of_account.Select Account'), "");
     }
 
     public function create($request)

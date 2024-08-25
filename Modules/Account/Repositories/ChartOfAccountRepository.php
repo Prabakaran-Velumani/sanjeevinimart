@@ -24,7 +24,7 @@ class ChartOfAccountRepository
 
     public function pluckAll($id = null)
     {
-        $query = $this->chartOfAccount->select(DB::raw('CONCAT(name, " (", code, ")") AS full_name'), 'id')->where('status', 1)->get();
+        $query = $this->chartOfAccount->selectRaw("CONCAT(name, ' (', code, ')') AS full_name, id")->where('status', 1)->get();
         if ($id) {
             $query = $query->except($id);
         }
