@@ -25,7 +25,7 @@ class TransactionRepository
 
     public function pluckAll($id)
     {
-        $query = $this->transaction->select(DB::raw('CONCAT(name, " (", code, ")") AS full_name'), 'id')->where('status', 1)->get();
+        $query = $this->transaction->selectRaw("CONCAT(name, ' (', code, ')') AS full_name, id")->where('status', 1)->get();
         if ($id) {
             $query = $query->except($id);
         }

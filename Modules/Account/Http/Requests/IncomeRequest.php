@@ -19,18 +19,18 @@ class IncomeRequest extends FormRequest
             'chart_of_account_id' => [
                 'required', 'integer',
                 Rule::exists('chart_of_accounts', 'id')->where(function ($query) {
-                    return $query->where('status', 1)->where('type', 'income');
-                })
-            ],
-            'bank_account_id' => [
-                'required_if:payment_method,bank', 'nullable', 'integer',
-                Rule::exists('bank_accounts', 'id')->where(function ($query) {
-                    return $query->where('status', 1);
+                    return $query->where('status', 1)->where('type', 'Income');
                 })
             ],
             'payment_method' => [
                 'required', 'string', 'max:50',
                 Rule::in(get_account_var('list')['payment_method'])
+            ],
+            'bank_account_id' => [
+                'required_if:payment_method,Bank', 'nullable', 'integer',
+                Rule::exists('bank_accounts', 'id')->where(function ($query) {
+                    return $query->where('status', 1);
+                })
             ],
             'title' => ['required', 'string', 'max:191'],
             'amount' => ['required', 'numeric'],
