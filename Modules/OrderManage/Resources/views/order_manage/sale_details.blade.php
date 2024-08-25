@@ -322,7 +322,8 @@
                                                                             <img src="{{showImage(@$package_product->giftCard->thumbnail_image)}}" alt="#">
                                                                         @else
                                                                             @if (@$package_product->seller_product_sku->sku->product->product_type == 1)
-                                                                                <img src="{{showImage(@$package_product->seller_product_sku->product->thum_img??@$package_product->seller_product_sku->sku->product->thumbnail_image_source)}}"
+                                                                            <img src="{{showImage(
+                                                                                @$package_product->seller_product_sku->sku->product->thumbnail_image_source ?? @$package_product->seller_product_sku->product->thum_img )}}"
                                                                                      alt="#">
                                                                             @else
                                                                                 <img src="{{showImage(@$package_product->seller_product_sku->sku->variant_image?@$package_product->seller_product_sku->sku->variant_image:@$package_product->seller_product_sku->product->thum_img??@$package_product->seller_product_sku->product->product->thumbnail_image_source)}}"
@@ -586,8 +587,7 @@
                             </div>
                         @endif
 
-                        {{-- @if($order->is_confirmed && $order_package->carrier->name == 'Torod' && $order_package->torod_processing != 1) --}}
-                        @if($order->is_confirmed)
+                        @if($order->is_confirmed && $order_package->carrier->name == 'Torod' && $order_package->torod_processing != 1)
                             <div class="row white_box p-25 ml-0 mr-0 box_shadow_white mt-20">
                                 <div class="col-lg-12 mb-3">
                                     <label class="primary_input_label" for="">
@@ -595,7 +595,7 @@
 
                                 </div>
                                <div class="col-lg-12">
-                                    {{-- @includeIf('torod::orders.order_process',compact('order_package')) --}}
+                                    @includeIf('torod::orders.order_process',compact('order_package'))
                                </div>
                             </div>
                         @endif

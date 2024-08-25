@@ -457,7 +457,7 @@ if (!function_exists('showDate')) {
 if (!function_exists('showImage')) {
     function showImage($path)
     {
-
+    
         if($path){
             if(strpos($path, 'amazonaws.com') != false || strpos($path, 'digitaloceanspaces.com') != false || strpos($path, 'drive.google.com') != false || strpos($path, 'wasabisys.com') != false || strpos($path, 'backblazeb2.com') != false || strpos($path, 'dropboxusercontent.com') != false || strpos($path, 'b-cdn.net') != false || strpos($path, 'contabostorage.com') != false){
 

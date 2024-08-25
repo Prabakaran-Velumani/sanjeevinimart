@@ -16,11 +16,11 @@ class RefundReasonRequest extends FormRequest
         if (isModuleActive('FrontendMultiLang')) {
             $code = auth()->user()->lang_code;
             return [
-                'reason.'. $code => "required|max:255|unique_translation:refund_reasons,reason,{$this->id}",
+                'reason.'. $code => "required|max:255|unique_translation:refund_reasons,reason",
             ];
         }else{
             return [
-                'reason' => 'required|max:255|unique:refund_reasons,reason,'.$this->id,
+                'reason' => 'required|max:255|unique:refund_reasons,reason',
             ];
         }
         
