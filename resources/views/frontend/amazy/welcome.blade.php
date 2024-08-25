@@ -2169,6 +2169,145 @@
         </div>
     </div>
 </div>
+{{-- for prsanth --}}
+@php
+    $handcarft = $widgets->where('section_name', 'handcarft')->first();
+@endphp
+<div class="amaz_recomanded_area {{$handcarft->status == 0 ? 'd-none' : ''}}">
+    <div id="more_products" class="amaz_recomanded_box banner-image">
+        <div class="amaz_content">
+            <!-- <div class="amaz_recomanded_box_head"> -->
+                <!-- <h4 class="mb-0">{{$handcarft->title}}</h4> -->
+            </div>
+            <!-- <div class="amaz_recomanded_box_body2 dataApp">
+              
+            </div> -->
+            <!-- <button class="shop-now-btn">Shop Now</button> -->
+        </div>
+    </div>
+</div>
+
+<style>
+    
+    .banner-image {
+        background: url('public/uploads/images/24-08-2024/66c9b363c3d91.png') no-repeat center center;
+        background-size: cover;
+        position: relative;
+        height: 60vh;
+        width: 100vw; 
+        margin: 0; 
+    }
+
+    .amaz_content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%); 
+        color: #fff;
+        text-align: center;
+    }
+/* 
+    .amaz_recomanded_box_head h4 {
+        font-size: 36px;
+        font-weight: bold;
+        color: white;
+    } */
+
+    /* Add the Shop Now button styling */
+    /* .shop-now-btn {
+        position: absolute;
+        bottom: 1px;
+        left: 20%;
+        transform: translateX(-50%);
+        background-color: #ff6f61;
+        color: white;
+        padding: 12px 30px;
+        font-size: 16px;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .shop-now-btn:hover {
+        background-color: #e0554e;
+    } */
+</style>
+
+
+
+@php
+    $news_letters = $widgets->where('section_name','news_letters')->first();
+@endphp
+
+<style>
+    .img-container {
+      max-width: 100%;
+      height: auto;
+    }
+    .content {
+      padding: 20px;
+    }
+    .newsletter-container {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            padding-left: 59px;
+      
+        }
+        .icon {
+            width: 56px; /* Adjust the icon size */
+            height: auto;
+            vertical-align: middle; /* Aligns icon with text */
+            margin-right: 8px; /* Space between icon and text */
+        }
+        .content {
+    display: flex;
+    align-items: flex-start; /* Align items to the top */
+  }
+  .icon {
+    margin-right: 10px; /* Adjust spacing between icon and text */
+  }
+  </style>
+</head>
+<body>
+
+<div class="container mt-4">
+  <div class="row align-items-center">
+    <div class="col-md-6">
+      <img src="public/uploads/images/24-08-2024/ab.jpg" alt="Placeholder Image" class="img-container">
+    </div>
+    <div class="col-md-6">
+      <div class="content">
+      <img src="public/uploads/images/24-08-2024/icon-1.png" alt="Icon" class="icon">
+        <p>
+         
+          Sanjeevini Mart, where every purchase tells a story of empowerment, craftsmanship, and sustainability. Nestled in the heart of Karnataka, our platform is a vibrant celebration of the ingenious creations from the Self-Help Groups.
+    
+    
+          Step into a world where tradition meets innovation, where artisans weave dreams into every thread, carve history into each wooden masterpiece, and infuse love into every jar of homemade delicacy. From intricately designed handicrafts to tantalizing food items, from eco-friendly toys to ethereal cosmetics, our curated collection showcases the essence of Karnataka’s rich cultural heritage.
+</p>
+      </div>
+
+<div class="newsletter-container">
+
+    <div class="newsletter-content">
+        <h2>Join Our Newslatter Now</h2>
+        <p>Don’t miss out on exciting promotions and the latest shopping news</p>
+        <!-- <div class="signup-box"> -->
+            <input type="email" placeholder="Enter your email"style="border-radius:20px;border:1px solid grey">
+            <input type="submit" value="Signup" style="background-color:#7f8534;border-radius:20px;border:1px solid grey">
+        </div>
+    </div>
+</div>
+    </div>
+  </div>
+</div>
+
+
+{{-- for prsanth --}}
+
+
 <!-- amaz_recomanded::end -->
 <x-top-brand-component/>
 <!-- amaz_brand::start  -->

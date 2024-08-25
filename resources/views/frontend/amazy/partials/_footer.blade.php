@@ -4,7 +4,7 @@
     $about_section = Modules\FrontendCMS\Entities\HomePageSection::where('section_name','about_section')->first();
 @endphp
 @if(url()->current() == url('/'))
-<div id="about_section" class="amaz_section section_spacing4 {{ ($about_section)? ($about_section->status == 0?'d-none':'') : ''}}">
+{{-- <div id="about_section" class="amaz_section section_spacing4 {{ ($about_section)? ($about_section->status == 0?'d-none':'') : ''}}">
     <div class="container">
         <div class="row">
             <div class="col-12">
@@ -21,7 +21,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 @endif
 
 <!-- FOOTER::START  -->
