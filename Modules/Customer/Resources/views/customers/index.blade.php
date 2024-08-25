@@ -255,7 +255,7 @@
                             responsive: true,
                         });
                     }
-
+ 
                     function allCustomerDataTable(){
                         $('#allCustomerTable').DataTable({
                             processing: true,
@@ -264,6 +264,7 @@
                             "ajax": ( {
                                 url: "{{ route('cusotmer.list.get-data') }}" + '?table=all_customer'
                             }),
+                            
                             "initComplete":function(json){
 
                             },

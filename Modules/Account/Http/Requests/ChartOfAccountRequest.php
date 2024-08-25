@@ -16,8 +16,14 @@ class ChartOfAccountRequest extends FormRequest
     {
         if ($this->chart_of_account) {
             return [
-                'name' => ['required', 'string', 'max:191', 'unique:chart_of_accounts,name,' . $this->chart_of_account],
-                'code' => ['sometimes', 'nullable', 'string', 'max:191', 'unique:chart_of_accounts,code,' . $this->chart_of_account],
+                'name' => [
+                    'required', 'string', 'max:191',
+                    Rule::unique('chart_of_accounts', 'name')
+                ],
+                'code' => [
+                    'sometimes', 'nullable', 'string', 'max:191',
+                    Rule::unique('chart_of_accounts', 'code')
+                ],
                 'description' => ['sometimes', 'nullable', 'string'],
                 'opening_balance' => ['sometimes', 'nullable', 'numeric'],
                 'default_for' => [
@@ -35,8 +41,14 @@ class ChartOfAccountRequest extends FormRequest
                     return $query->where('status', 1);
                 })
             ],
-            'name' => ['required', 'string', 'max:191', 'unique:chart_of_accounts,name,' . $this->chart_of_account],
-            'code' => ['sometimes', 'nullable', 'string', 'max:191', 'unique:chart_of_accounts,code,' . $this->chart_of_account],
+            'name' => [
+                'required', 'string', 'max:191',
+                Rule::unique('chart_of_accounts', 'name')
+            ],
+            'code' => [
+                'sometimes', 'nullable', 'string', 'max:191',
+                Rule::unique('chart_of_accounts', 'code')
+            ],
             'type' => [
                 Rule::requiredIf(!$this->parent_id),
                 Rule::in(get_account_var('list')['account_type']),

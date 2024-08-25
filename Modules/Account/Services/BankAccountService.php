@@ -23,7 +23,7 @@ class BankAccountService
      */
     public function __construct(BankAccountRepository $bankAccountRepository)
     {
-        $this->chartOfAccountRepository = $bankAccountRepository;
+        $this->bankAccountRepository = $bankAccountRepository;
     }
 
     /**
@@ -32,7 +32,7 @@ class BankAccountService
      */
     public function store($request)
     {
-        return $this->chartOfAccountRepository->create($request);
+        return $this->bankAccountRepository->create($request);
     }
 
     /**
@@ -42,7 +42,7 @@ class BankAccountService
      */
     public function update($request, $id)
     {
-        return $this->chartOfAccountRepository->update($request, $id);
+        return $this->bankAccountRepository->update($request, $id);
     }
 
     /**
@@ -50,7 +50,7 @@ class BankAccountService
      */
     public function find($id, $with = [])
     {
-        return $this->chartOfAccountRepository->find($id, $with);
+        return $this->bankAccountRepository->find($id, $with);
     }
 
     /**
@@ -59,7 +59,7 @@ class BankAccountService
      */
     public function destroy($id)
     {
-        return $this->chartOfAccountRepository->delete($id);
+        return $this->bankAccountRepository->delete($id);
     }
 
 }
