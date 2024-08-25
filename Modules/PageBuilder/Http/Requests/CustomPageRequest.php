@@ -19,7 +19,7 @@ class CustomPageRequest extends FormRequest
             ];
         }else{
             return [
-                // 'title'=>"required|unique:dynamic_pages,title,{$this->id}",
+                'title'=>"required|unique:dynamic_pages,title,{$this->id}",
                 // 'slug'=>'required|unique:dynamic_pages,slug,'.$this->id,
             ];
         }
