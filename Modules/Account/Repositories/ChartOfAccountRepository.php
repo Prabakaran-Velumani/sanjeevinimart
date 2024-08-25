@@ -33,8 +33,11 @@ class ChartOfAccountRepository
 
     public function pluckByType($type)
     {
-        return $this->chartOfAccount->select(DB::raw('CONCAT(name, " (", code, ")") AS full_name'), 'id')->where('status', 1)->whereIn('type', $type)->get()
-            ->pluck('full_name', 'id')->prepend(__('chart_of_account.Select Account'), '');
+        $type1 = [];
+        foreach($type as $type2){
+            $type1[] = "'".strtolower($type2)."'";
+        }
+        return $this->chartOfAccount->selectRaw("CONCAT(name, ' (', code, ')') AS full_name, id")->where('status', 1)->whereRaw("LOWER(type) in (".implode(',',$type1).")")->get()->pluck('full_name', 'id')->prepend(__('chart_of_account.Select Account'), '');
     }
 
     public function create($request)
