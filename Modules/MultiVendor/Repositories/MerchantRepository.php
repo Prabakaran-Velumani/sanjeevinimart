@@ -29,6 +29,7 @@ use Modules\MultiVendor\Export\BrandExport;
 use Modules\MultiVendor\Export\UnitExport;
 use Modules\MultiVendor\Export\MediaIdsExport;
 use Illuminate\Support\Facades\Log;
+use Modules\GeneralSetting\Entities\Currency;
 
 class MerchantRepository
 {
@@ -66,9 +67,8 @@ class MerchantRepository
     public function create($data)
     {
         $role = Role::where('type', 'seller')->first();
-        Log::info("app(general_setting) ***********");
-        Log::info(app('general_setting'));
-        Log::info("***************app(general_setting)");
+        $currency = Currency::where('code', app('general_setting')->currency)->first();
+        $currencyId = $currency ? $currency->id : null;
         $user =  User::create([
             'first_name' => $data['name'],
             'email' => $data['email'],
@@ -80,7 +80,7 @@ class MerchantRepository
             'username' => $data['phone_number'],
             'verify_code' => sha1(time()),
             'password' => Hash::make($data['password']),
-            'currency_id' => app('general_setting')->currency,
+            'currency_id' => $currencyId,
             'lang_code' => app('general_setting')->language_code,
             'currency_code' => app('general_setting')->currency_code,
         ]);

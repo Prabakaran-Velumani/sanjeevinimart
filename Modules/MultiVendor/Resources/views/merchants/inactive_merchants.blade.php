@@ -58,6 +58,7 @@
     @endif
 
 @include('multivendor::merchants.confirm_modal')
+@include('multivendor::merchants.seller_change_password_modal')
 @endsection
 @push('scripts')
     <script type="text/javascript">
@@ -69,6 +70,52 @@
                 $(document).on('click', '.trust_seller_change', function(event){
                     let url = $(this).data('value');
                     confirm_modal(url);
+                });
+
+                $(document).on('click', '.seller_change_password', function(event){
+                    $('.sPr').val('');
+                    $('.sellerErrorS').text('');
+                    let url = $(this).data('value');
+                    confirm_modal_seller_password(url);
+                });
+
+                $(document).on('click','.sellerChangePassword', function(e){
+                    e.preventDefault();
+                    $('#pre-loader').removeClass('d-none');
+
+                    var formElement = $('#selPassSt').serializeArray();
+                    var formData = new FormData();
+                    formElement.forEach(element => {
+                        formData.append(element.name, element.value);
+                    });
+                    formData.append('_token', "{{ csrf_token() }}");
+
+                    $.ajax({
+                        url: "{{ route('admin.change-seller-password-store') }}",
+                        type: "POST",
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        data: formData,
+                        success: function(response) {
+                            $('.error').text('');
+                            $('#seller_change_password_modal').modal('hide');
+                            toastr.success("{{__('common.updated_successfully')}}","{{__('common.success')}}");
+                            $('#pre-loader').addClass('d-none');
+
+                        },
+                        error: function(response) {
+                            if(response.responseJSON.error){
+                                toastr.error(response.responseJSON.error ,"{{__('common.error')}}");
+                                $('#pre-loader').addClass('d-none');
+                            }else{
+                                $('.error').text('');
+                                $('.sellerErrorS').text(response.responseJSON.errors.seller_new_password);
+                                $('#pre-loader').addClass('d-none');
+                            }
+
+                        }
+                    });
                 });
 
                 $(document).on('click', '.update_active_status', function(event){
@@ -109,9 +156,9 @@
                                 { data: 'DT_RowIndex', name: 'id',render:function(data){
                                     return numbertrans(data)
                                 }},
-                                { data: 'name', name: 'name' },
-                                { data: 'email', name: 'email' },
-                                { data: 'phone', name: 'phone' },
+                                { data: 'name', name: 'user.first_name' },
+                                { data: 'email', name: 'user.email' },
+                                { data: 'phone', name: 'user.phone' },
                                 { data: 'commission_type', name: 'commission_type' },
                                 { data: 'gst', name: 'gst' },
                                 { data: 'is_trusted', name: 'is_trusted' },
@@ -125,9 +172,9 @@
                                 { data: 'DT_RowIndex', name: 'id',render:function(data){
                                     return numbertrans(data)
                                 }},
-                                { data: 'name', name: 'name' },
-                                { data: 'email', name: 'email' },
-                                { data: 'phone', name: 'phone' },
+                                { data: 'name', name: 'user.first_name' },
+                                { data: 'email', name: 'user.email' },
+                                { data: 'phone', name: 'user.phone' },
                                 { data: 'commission_type', name: 'commission_type' },
                                 { data: 'is_trusted', name: 'is_trusted' },
                                 { data: 'shop_name', name: 'shop_name' },
