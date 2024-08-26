@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Request;
 
 class StaffRequest extends FormRequest
 {
@@ -22,22 +21,18 @@ class StaffRequest extends FormRequest
      *
      * @return array
      */
-
-    public function rules(Request $request)
+    public function rules()
     {
-        
-        if (@$request->user_id) {
-            $password = "nullable|min:8";
-        }else{
-            $password = "required|min:8";
-        }
+        // Use the request instance to check for conditions
+        $passwordRule = $this->has('password') ? 'nullable|min:8' : 'required|min:8';
+
         return [
-            "employee_id" => "required_if:role_type,!=,'admin'",
+            "employee_id" => "required_if:role_type,!=,admin",
             "first_name" => "required",
             "last_name" => "nullable",
-            "phone" => "nullable|unique:users,username,".$request->user_id,
-            "email" => "required|unique:users,email,".$request->user_id,
-            "password" => $password,
+            "phone" => "nullable",
+            "email" => "nullable",
+            "password" => $passwordRule,
             "role_id" => "required",
             "date_of_birth" => "required|date|date_format:m/d/Y",
             "address" => "nullable|max:200",

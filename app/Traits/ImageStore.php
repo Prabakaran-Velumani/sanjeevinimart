@@ -11,9 +11,18 @@ use Modules\Product\Entities\Product;
 use Modules\Product\Entities\ProductGalaryImage;
 use Modules\Product\Entities\ProductSku;
 use Modules\Seller\Entities\SellerProduct;
+use Illuminate\Support\Facades\Log;
 
 trait ImageStore
 {
+
+public static function profileImage($file, $width, $height)
+{
+    $imageName = time().'.'.$file->getClientOriginalExtension();
+    $file->move(public_path('uploads/images/'), $imageName);
+    return 'uploads/images/'.$imageName;
+}
+
 public static function saveImage($image, $height = null ,$lenght = null , $aspectration = true)
 {
 
@@ -260,6 +269,14 @@ public static function saveSettingsImage($image, $height = null ,$lenght = null)
         return null ;
     }
 }
+
+public static function saveSettingsImages($file, $width, $height)
+{
+    $imageName = uniqid().'.'.$file->getClientOriginalExtension();
+    $file->move(public_path('uploads/settings'), $imageName);
+    return 'uploads/settings/'.$imageName;
+}
+
 public static function deleteImage($url)
 {
     if(isset($url)){
@@ -491,96 +508,185 @@ public static function CarrierLogo($image, $height = null ,$lenght = null){
         return null ;
     }
 }
-public function savePWAIcon($image){
-    if(isset($image)){
-        if(!File::isDirectory(asset_path('images/icons'))){
-            File::makeDirectory(asset_path('images/icons'), 0777, true, true);
-        }
-        if (File::exists(asset_path('images/icons/icon-72x72.png'))) {
-            File::delete(asset_path('images/icons/icon-72x72.png'));
-        }
-        if (File::exists(asset_path('images/icons/icon-96x96.png'))) {
-            File::delete(asset_path('images/icons/icon-96x96.png'));
-        }
-        if (File::exists(asset_path('images/icons/icon-128x128.png'))) {
-            File::delete(asset_path('images/icons/icon-128x128.png'));
-        }
-        if (File::exists(asset_path('images/icons/icon-144x144.png'))) {
-            File::delete(asset_path('images/icons/icon-144x144.png'));
-        }
-        if (File::exists(asset_path('images/icons/icon-152x152.png'))) {
-            File::delete(asset_path('images/icons/icon-152x152.png'));
-        }
-        if (File::exists(asset_path('images/icons/icon-192x192.png'))) {
-            File::delete(asset_path('images/icons/icon-192x192.png'));
-        }
-        if (File::exists(asset_path('images/icons/icon-384x384.png'))) {
-            File::delete(asset_path('images/icons/icon-384x384.png'));
-        }
-        if (File::exists(asset_path('images/icons/icon-512x512.png'))) {
-            File::delete(asset_path('images/icons/icon-512x512.png'));
-        }
-        $img = Image::make($image);
-        $img->resize(72,72);
-        $img_save_72 = asset_path('images/icons/icon-72x72.png');
-        $img->save($img_save_72);
-        $img = Image::make($image);
-        $img->resize(96,96);
-        $img_save_96 = asset_path('images/icons/icon-96x96.png');
-        $img->save($img_save_96);
-        $img = Image::make($image);
-        $img->resize(128,128);
-        $img_save_128 = asset_path('images/icons/icon-128x128.png');
-        $img->save($img_save_128);
-        $img = Image::make($image);
-        $img->resize(144,144);
-        $img_save_144 = asset_path('images/icons/icon-144x144.png');
-        $img->save($img_save_144);
-        $img = Image::make($image);
-        $img->resize(152,152);
-        $img_save_152 = asset_path('images/icons/icon-152x152.png');
-        $img->save($img_save_152);
-        $img = Image::make($image);
-        $img->resize(192,192);
-        $img_save_192 = asset_path('images/icons/icon-192x192.png');
-        $img->save($img_save_192);
-        $img = Image::make($image);
-        $img->resize(384,384);
-        $img_save_384 = asset_path('images/icons/icon-384x384.png');
-        $img->save($img_save_384);
-        $img = Image::make($image);
-        $img->resize(512,512);
-        $img_save_512 = asset_path('images/icons/icon-512x512.png');
-        $img->save($img_save_512);
-        return true;
-    }
-}
-public function savePWASplash($image){
-    if(isset($image)){
-        if(!File::isDirectory(asset_path('images/icons'))){
-            File::makeDirectory(asset_path('images/icons'), 0777, true, true);
-        }
-        $site_log_sizes = [
-            ['640', '1136'],
-            ['750', '1334'],
-            ['828', '1792'],
-            ['1125', '2436'],
-            ['1242', '2208'],
-            ['1242', '2688'],
-            ['1536', '2048'],
-            ['1668', '2224'],
-            ['1668', '2388'],
-            ['2048', '2732'],
-        ];
-        if ($image->extension() != "svg") {
-            foreach ($site_log_sizes as $size) {
-                $rowImage = Image::canvas($size[0], $size[1], '#fff');
-                $rowImage->insert($image, 'center');
-                $rowImage->save(asset_path("images/icons/splash-{$size[0]}x{$size[1]}.png"));
+// public function savePWAIcon($image){
+//     if(isset($image)){
+//         if(!File::isDirectory(asset_path('images/icons'))){
+//             File::makeDirectory(asset_path('images/icons'), 0777, true, true);
+//         }
+//         if (File::exists(asset_path('images/icons/icon-72x72.png'))) {
+//             File::delete(asset_path('images/icons/icon-72x72.png'));
+//         }
+//         if (File::exists(asset_path('images/icons/icon-96x96.png'))) {
+//             File::delete(asset_path('images/icons/icon-96x96.png'));
+//         }
+//         if (File::exists(asset_path('images/icons/icon-128x128.png'))) {
+//             File::delete(asset_path('images/icons/icon-128x128.png'));
+//         }
+//         if (File::exists(asset_path('images/icons/icon-144x144.png'))) {
+//             File::delete(asset_path('images/icons/icon-144x144.png'));
+//         }
+//         if (File::exists(asset_path('images/icons/icon-152x152.png'))) {
+//             File::delete(asset_path('images/icons/icon-152x152.png'));
+//         }
+//         if (File::exists(asset_path('images/icons/icon-192x192.png'))) {
+//             File::delete(asset_path('images/icons/icon-192x192.png'));
+//         }
+//         if (File::exists(asset_path('images/icons/icon-384x384.png'))) {
+//             File::delete(asset_path('images/icons/icon-384x384.png'));
+//         }
+//         if (File::exists(asset_path('images/icons/icon-512x512.png'))) {
+//             File::delete(asset_path('images/icons/icon-512x512.png'));
+//         }
+//         $img = Image::make($image);
+//         $img->resize(72,72);
+//         $img_save_72 = asset_path('images/icons/icon-72x72.png');
+//         $img->save($img_save_72);
+//         $img = Image::make($image);
+//         $img->resize(96,96);
+//         $img_save_96 = asset_path('images/icons/icon-96x96.png');
+//         $img->save($img_save_96);
+//         $img = Image::make($image);
+//         $img->resize(128,128);
+//         $img_save_128 = asset_path('images/icons/icon-128x128.png');
+//         $img->save($img_save_128);
+//         $img = Image::make($image);
+//         $img->resize(144,144);
+//         $img_save_144 = asset_path('images/icons/icon-144x144.png');
+//         $img->save($img_save_144);
+//         $img = Image::make($image);
+//         $img->resize(152,152);
+//         $img_save_152 = asset_path('images/icons/icon-152x152.png');
+//         $img->save($img_save_152);
+//         $img = Image::make($image);
+//         $img->resize(192,192);
+//         $img_save_192 = asset_path('images/icons/icon-192x192.png');
+//         $img->save($img_save_192);
+//         $img = Image::make($image);
+//         $img->resize(384,384);
+//         $img_save_384 = asset_path('images/icons/icon-384x384.png');
+//         $img->save($img_save_384);
+//         $img = Image::make($image);
+//         $img->resize(512,512);
+//         $img_save_512 = asset_path('images/icons/icon-512x512.png');
+//         $img->save($img_save_512);
+//         return true;
+//     }
+// }
+
+public function savePWAIcon($image)
+{
+    try {
+        if (isset($image)) {
+            $iconDirectory = public_path('images/icons');
+            
+            // Check if the directory exists, and create it if necessary
+            if (!File::isDirectory($iconDirectory)) {
+                File::makeDirectory($iconDirectory, 0777, true, true);
             }
+
+            // Define the list of icon sizes
+            $sizes = [72, 96, 128, 144, 152, 192, 384, 512];
+            
+            // Loop through each size, delete existing icon, and save the new one
+            foreach ($sizes as $size) {
+                $iconPath = $iconDirectory . '/icon-' . $size . 'x' . $size . '.png';
+                
+                // Delete old icon if it exists
+                if (File::exists($iconPath)) {
+                    File::delete($iconPath);
+                }
+                
+                // Resize and save the new icon
+                $img = Image::make($image);
+                $img->resize($size, $size);
+                $img->save($iconPath);
+            }
+
+            return true;
         }
-        return true;
+    } catch (\Exception $e) {
+        // Log any errors for debugging
+        Log::error('Error saving PWA icons: ' . $e->getMessage());
+        return false;
     }
+    
+    return false;
+}
+
+// public function savePWASplash($image){
+//     if(isset($image)){
+//         if(!File::isDirectory(asset_path('images/icons'))){
+//             File::makeDirectory(asset_path('images/icons'), 0777, true, true);
+//         }
+//         $site_log_sizes = [
+//             ['640', '1136'],
+//             ['750', '1334'],
+//             ['828', '1792'],
+//             ['1125', '2436'],
+//             ['1242', '2208'],
+//             ['1242', '2688'],
+//             ['1536', '2048'],
+//             ['1668', '2224'],
+//             ['1668', '2388'],
+//             ['2048', '2732'],
+//         ];
+//         if ($image->extension() != "svg") {
+//             foreach ($site_log_sizes as $size) {
+//                 $rowImage = Image::canvas($size[0], $size[1], '#fff');
+//                 $rowImage->insert($image, 'center');
+//                 $rowImage->save(asset_path("images/icons/splash-{$size[0]}x{$size[1]}.png"));
+//             }
+//         }
+//         return true;
+//     }
+// }
+
+public function savePWASplash($image)
+{
+    try {
+        if (isset($image)) {
+            $iconDirectory = public_path('images/icons');
+            
+            // Check if the directory exists, and create it if necessary
+            if (!File::isDirectory($iconDirectory)) {
+                File::makeDirectory($iconDirectory, 0777, true, true);
+            }
+            
+            // Define the splash screen sizes
+            $site_log_sizes = [
+                ['640', '1136'],
+                ['750', '1334'],
+                ['828', '1792'],
+                ['1125', '2436'],
+                ['1242', '2208'],
+                ['1242', '2688'],
+                ['1536', '2048'],
+                ['1668', '2224'],
+                ['1668', '2388'],
+                ['2048', '2732'],
+            ];
+            
+            // Check for non-SVG images and process
+            if ($image->extension() != "svg") {
+                foreach ($site_log_sizes as $size) {
+                    // Create a canvas and insert the image centered on the canvas
+                    $rowImage = Image::canvas($size[0], $size[1], '#fff');
+                    $rowImage->insert($image, 'center');
+                    
+                    // Save the image in the correct path
+                    $savePath = $iconDirectory . "/splash-{$size[0]}x{$size[1]}.png";
+                    $rowImage->save($savePath);
+                }
+            }
+            return true;
+        }
+    } catch (\Exception $e) {
+        // Log any errors for debugging
+        Log::error('Error saving PWA splash screens: ' . $e->getMessage());
+        return false;
+    }
+    
+    return false;
 }
 
 public static function mediaUpload($image, $height = null ,$lenght = null)

@@ -15,6 +15,9 @@ class BankAccountController extends Controller
     /**
      * @var BankAccountService
      */
+    /**
+     * @var BankAccountService
+     */
     private $bankAccountService;
     /**
      * @var Request

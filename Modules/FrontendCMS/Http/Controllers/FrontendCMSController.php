@@ -46,7 +46,7 @@ class FrontendCMSController extends Controller
         }
     }
     public function loginPage(){
-        $getAllLoginPageInfo = LoginPage::all();
+        $getAllLoginPageInfo = LoginPage::orderBy('id', 'asc')->get();
         return view('frontendcms::login-page.index', compact('getAllLoginPageInfo'));
     }
     public function loginPageUpdate(Request $request){

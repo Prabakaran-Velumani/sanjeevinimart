@@ -46,13 +46,21 @@
                 let route = $(this).data('value');
                 confirm_modal(route);
             });
-            $('#userSearchTable').DataTable({
+            alert('hi');
+            $('#userSearchTable').DataTable({ 
                     processing: true,
                     serverSide: true,
                     stateSave: true,
-                    "ajax": ( {
-                        url: "{{ route('report.get_search_keyword_data') }}"
-                    }),
+                  
+                    "ajax": ({
+                        url: "{{ route('report.get_search_keyword_data') }}",
+            success: function(response) {
+                
+                console.log('SQL Query:', response.sql);
+                alert('SQL Query: ' + response.sql);
+            }
+        }),
+
                     "initComplete":function(json){
 
                     },

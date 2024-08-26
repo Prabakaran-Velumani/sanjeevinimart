@@ -299,7 +299,7 @@ $(function(){
         if (val){
             field.attr('disabled', true).niceSelect('update');
             $.ajax({
-                url: APP_URL +'/'+'account/chart-of-accounts/'+val,
+                url: `${window.location.protocol + "//" + window.location.host}/account/chart-of-accounts/${val}`,
                 dataType: 'json',
                 success: function(data){
                     field.val(data.type);

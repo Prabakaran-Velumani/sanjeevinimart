@@ -168,13 +168,13 @@ class GeneralSettingController extends Controller
         }
 
         if ($request->favicon_logo != null) {
-            $url = $this->saveSettingsImage($request->favicon_logo,50,50);
+            $url = $this->saveSettingsImages($request->favicon_logo,50,50);
             $this->deleteImage(app('general_setting')->favicon);
             $this->savePWAIcon($request->favicon_logo);
             $request->merge(["favicon" => $url]);
         }
         if ($request->site_logo != null) {
-            $url = $this->saveSettingsImage($request->site_logo,50, 193);
+            $url = $this->saveSettingsImages($request->site_logo,50, 193);
             $this->deleteImage(app('general_setting')->logo);
             $this->savePWASplash($request->site_logo);
             $request->merge(["logo" => $url]);
@@ -226,7 +226,7 @@ class GeneralSettingController extends Controller
         }
         $shopLinkUrl = app('general_setting')->shop_link_banner;
         if ($request->shop_link_banner != null) {
-            $shopLinkUrl = $this->saveSettingsImage($request->shop_link_banner,350,1920);
+            $shopLinkUrl = $this->saveSettingsImages($request->shop_link_banner,350,1920);
             $request->merge(["shop_link_banner" => $shopLinkUrl]);
         }
         if ($request->currency_id != null) {
