@@ -4,6 +4,8 @@ namespace Modules\GST\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+use Illuminate\Validation\Rule;
+
 class GstgroupRequest extends FormRequest
 {
     /**
@@ -13,8 +15,12 @@ class GstgroupRequest extends FormRequest
      */
     public function rules()
     {
+        $isUpdate = $this->id !== null;
         return [
-            'name' => 'required|unique:g_s_t_groups,name,'.$this->id,
+            'name' => [
+                'required',
+                Rule::unique('g_s_t_groups', 'name')->ignore($isUpdate ? $this->id : null),
+            ],
             'same_state_gst.*' => ['required'],
             'same_state_gst_percent.*' => ['required'],
             'outsite_state_gst.*' => ['required'],
