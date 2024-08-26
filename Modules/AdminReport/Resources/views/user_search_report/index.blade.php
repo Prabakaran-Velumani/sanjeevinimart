@@ -55,6 +55,7 @@
                     "ajax": ({
                         url: "{{ route('report.get_search_keyword_data') }}",
             success: function(response) {
+                
                 console.log('SQL Query:', response.sql);
                 alert('SQL Query: ' + response.sql);
             }

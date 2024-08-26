@@ -10,7 +10,7 @@ use Modules\Product\Entities\ProductVariations;
 use Modules\Seller\Entities\SellerProductSKU;
 
 class AttributeRepository
-{
+{ 
     public function getAll()
     {
         return Attribute::latest()->get();
@@ -174,13 +174,24 @@ class AttributeRepository
                 $q1->where('category_id',$category_id);
             });
         })->pluck('product_sku_id')->toArray();
-        $attribute_ids = ProductVariations::whereRaw("product_sku_id in ('". implode("','", $seller_products)."')")->where('attribute_id', '!=', 1)->pluck('attribute_id')->toArray();
-      
-        if(is_null($attribute_ids)){
-            
-        $attribute_list = Attribute::with('values')->whereRaw("id in ('" . implode("','", $attribute_ids)."')")->where('status',1)->take(20)->get();
+       
+        if (empty($attribute_ids)) {
+        $attribute_ids=[];
+        }else{
+            $attribute_ids = ProductVariations::whereRaw("product_sku_id in ('". implode("','", $seller_products)."')")->where('attribute_id', '!=', 1)->pluck('attribute_id')->toArray();
         }
-        return $attribute_list??[];
+      
+   
+   if (empty($attribute_ids)) {
+           
+ 
+            return[];
+        }else{
+            $attribute_list = Attribute::with('values')->whereRaw("id in ('" . implode("','", $attribute_ids)."')")->where('status',1)->take(20)->get();
+            return   $attribute_list;
+         
+        }
+       
     }
 
     public function getColorAttributeForSpecificCategory($category_id, $category_ids)
@@ -193,9 +204,29 @@ class AttributeRepository
                 $q1->where('category_id',$category_id);
             });
         })->pluck('product_sku_id')->toArray();
-        $attribute_ids = ProductVariations::whereRaw("product_sku_id in ('". implode("','", $seller_products)."')")->where('attribute_id', 1)->pluck('attribute_id')->toArray();
-        $attribute_list = Attribute::with('values')->whereRaw("id in ('". implode("','", $attribute_ids)."')")->where('status', 1)->first();
-        return $attribute_list;
+       
+        if (empty($attribute_ids)) {
+            $attribute_ids = [];
+        }
+        else{
+            $attribute_ids = ProductVariations::whereRaw("product_sku_id in ('". implode("','", $seller_products)."')")->where('attribute_id', 1)->pluck('attribute_id')->toArray();
+
+        }
+       
+
+        if (empty($attribute_ids)) {
+           
+ 
+            return[];
+        }else{
+            $attribute_list = Attribute::with('values')->whereRaw("id in ('". implode("','", $attribute_ids)."')")->where('status', 1)->first();
+            return   $attribute_list;
+         
+        }
+
+
+       
+       
     }
 
     public function getColorAttributeForSpecificBrand($brand_id)

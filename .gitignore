@@ -3,4 +3,9 @@
 .env.*
 
 # Ignore log files
-storage/logs/*.log
+/storage/logs/*
+/storage/app/.access_code
+/storage/app/.access_log
+/storage/app/.account_email
+/storage/app/.app_installed
+/storage/app/.install_count

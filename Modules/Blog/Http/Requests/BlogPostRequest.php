@@ -16,7 +16,7 @@ class BlogPostRequest extends FormRequest
             $code = auth()->user()->lang_code;
             return [
                 'title.'. $code => 'required',
-                'slug.'. $code => 'required|unique_translation:blog_posts,slug,'.$this->post,
+                'slug' => 'required|unique:blog_posts,slug,' . ($this->post ? (int) $this->post : 'NULL'),
                 'content.'. $code => 'required',
                 'blog_image' => 'nullable',
                 'categories' => 'required',
@@ -25,7 +25,7 @@ class BlogPostRequest extends FormRequest
         }else{
             return [
                 'title' => 'required',
-                'slug' => 'required|unique:blog_posts,slug,'.$this->post,
+                'slug' => 'required|unique:blog_posts,slug,' . ($this->post ? (int) $this->post : 'NULL'),
                 'content' => 'required',
                 'blog_image' => 'nullable',
                 'categories' => 'required',
