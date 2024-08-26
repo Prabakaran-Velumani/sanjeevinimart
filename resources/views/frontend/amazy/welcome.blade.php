@@ -2350,10 +2350,10 @@
             <img src="public/uploads/images/24-08-2024/ab.jpg" class="d-block w-100" alt="Image 1">
           </div>
           <div class="carousel-item">
-            <img src="public/uploads/images/24-08-2024/ab.jpg" class="d-block w-100" alt="Image 2">
+            <img src="public/uploads/images/24-08-2024/ab2.jpg" class="d-block w-100" alt="Image 2">
           </div>
           <div class="carousel-item">
-            <img src="public/uploads/images/24-08-2024/ab.jpg" class="d-block w-100" alt="Image 3">
+            <img src="public/uploads/images/24-08-2024/ab3.jpg" class="d-block w-100" alt="Image 3">
           </div>
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#imageCarousel" data-bs-slide="prev">
@@ -2392,8 +2392,13 @@
     </div>
 </div>
     </div>
-  </div>
+    </div>
+
 </div>
+</div>
+</div>
+</div>
+
 
 
 {{-- for prsanth --}}
