@@ -27,6 +27,7 @@ class CreateCitiesTable extends Migration
         for($i=1;$i<=$total_files;$i++){
             $sql_path = base_path('static_sql/cities/cities_'.$i.'.sql');
             DB::unprepared(file_get_contents($sql_path));
+            DB::statement("SELECT setval(pg_get_serial_sequence('cities', 'id'), (SELECT MAX(id) FROM cities) + 1);");
         }
     }
 
