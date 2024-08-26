@@ -16,12 +16,12 @@ class CancelResonRequest extends FormRequest
         if (isModuleActive('FrontendMultiLang')) {
             $code = auth()->user()->lang_code;
             return [
-                'name.'. $code => "required|max:255|unique_translation:cancel_reasons,name,{$this->id}",
+                'name.'. $code => "required|max:255|unique_translation:cancel_reasons,name",
                 'description.'. $code => 'required'
             ];
         }else{
             return [
-                'name' => 'required|max:255|unique:cancel_reasons,name,'.$this->id,
+                'name' => 'required|max:255|unique:cancel_reasons,name',
                 'description' => 'required'
             ];
         }
