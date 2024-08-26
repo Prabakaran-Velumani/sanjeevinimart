@@ -37,8 +37,15 @@ class ThemeColorController extends Controller
 
     public function update(ThemeColorRequest $request, $id)
     {
+       
         try {
-            $this->themeColorService->update($request, $id);
+          
+            $query =$this->themeColorService->update($request, $id);
+            // $sql = $query->toSql();
+            // $bindings = $query->getBindings();
+            
+            // dd(vsprintf(str_replace('?', '%s', $sql), $bindings));
+            
             Toastr::success(__('common.updated_successfully'), __('common.success'));
             LogActivity::successLog('theme color updated successful.');
             return back();
