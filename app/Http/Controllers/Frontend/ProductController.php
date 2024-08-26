@@ -24,6 +24,7 @@ class ProductController extends Controller
 
     public function show($seller,$slug = null)
     {
+    // return 12;
 
         session()->forget('item_details');
         if($slug){
@@ -37,6 +38,7 @@ class ProductController extends Controller
         if (auth()->check()) {
             $this->productService->recentViewStore($product->id);
         } else {
+       
             $recentViwedData = [];
             $recentViwedData['product_id'] = $product->id;
             if(session()->has('recent_viewed_products')){
@@ -46,6 +48,7 @@ class ProductController extends Controller
                 }
                 $recent_viewed_products->push($recentViwedData);
                 session()->put('recent_viewed_products', $recent_viewed_products);
+               
             }
             else{
                 $recent_viewed_products = collect([$recentViwedData]);
@@ -56,6 +59,7 @@ class ProductController extends Controller
         $item_details = session()->get('item_details');
         $options = array();
         $data = array();
+       
         if ($product->product->product_type == 2 && $product->variant_details != '') {
             $item_detail = [];
             foreach ($product->variant_details as $key => $v) {
@@ -74,6 +78,7 @@ class ProductController extends Controller
                 session()->put('item_details', $item_detail);
             }
         }
+       
         $reviews = $product->reviews->where('status',1)->pluck('rating');
         if(count($reviews)>0){
             $value = 0;
@@ -87,6 +92,7 @@ class ProductController extends Controller
             $rating = 0;
             $total_review = 0;
         }
+     
         //ga4
         if(app('business_settings')->where('type', 'google_analytics')->first()->status == 1){
             $eData = [
@@ -106,9 +112,11 @@ class ProductController extends Controller
             ];
             $this->postEvent($eData);
         }
+      
         //end ga4
         $recent_viewed_products = $this->productService->recentViewedLast3Product($product->id);
         $reasons = $this->reason->get();
+      
         if(isModuleActive('CheckPincode')){
             $pincodeConfig = PinCodeConfigurations::first();
             return view(theme('pages.product_details'),compact('product','rating','total_review','recent_viewed_products','pincodeConfig','reasons'));

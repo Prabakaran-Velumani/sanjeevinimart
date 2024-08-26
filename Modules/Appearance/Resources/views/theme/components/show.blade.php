@@ -38,7 +38,7 @@
                                     <div class="theme_description_div">
                                         <p>{{ $theme->description }}</p>
                                     </div>
-
+ 
                                     <div class="tag_div">
                                         <span><strong>{{ __('appearance.tags') }}: </strong>
                                             {{ $theme->tags }}</span>

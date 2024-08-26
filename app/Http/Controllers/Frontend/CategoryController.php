@@ -183,6 +183,7 @@ class CategoryController extends Controller
 
     public function productByCategory(Request $request, $slug)
     {
+
        
         $request->validate([
             'item' => 'required'
@@ -222,7 +223,9 @@ class CategoryController extends Controller
                 $data['max_price_highest'] = $product_max_price;
                 $attributeRepo = new AttributeRepository;
                 $data['attributeLists'] = $attributeRepo->getAttributeForSpecificCategory($category_id, $category_ids);
+              
                 $data['category_id'] = $category_id;
+                
                 $data['color'] = $attributeRepo->getColorAttributeForSpecificCategory($category_id, $category_ids);
             }else{
                 return abort(404);

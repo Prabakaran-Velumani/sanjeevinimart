@@ -88,7 +88,6 @@ class ProductRepository {
             // },'product.brand' => function($q2){
             //     $q2->select('id','name');
             // }]);
-            Log::info("$$$$$$$$$$$$ alert");
             return $this->product::where('stock_manage', 1)
             ->where('user_id', $seller_id)
             ->whereHas('skus', function($query) {
@@ -107,7 +106,6 @@ class ProductRepository {
             ]);
         }
         if($data['table'] == 'stockout'){
-            Log::info("$$$$$$$$$$$$ stockout");
             // return $this->product::where('stock_manage',1)->where('user_id',$seller_id)->whereHas('skus', function($query){
             //     return $query->select(DB::raw('SUM(product_stock) as sum_colum'))->having('sum_colum', '<', 1);
             // })->with(['product' => function($q1){
