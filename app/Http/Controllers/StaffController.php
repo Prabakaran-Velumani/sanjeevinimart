@@ -49,27 +49,27 @@ class StaffController extends Controller
     {
         DB::beginTransaction();
         try {
-            if ($request->password) {
-                try {
-                    $this->userRepository->store($request->except("_token"));
-                    DB::commit();
-                    LogActivity::successLog(__('hr.staff') .' '. __('common.added_successfully'));
-                    Toastr::success(__('common.added_successfully'), __('common.success'));
-                    return redirect()->route('staffs.index');
-                }catch (\Exception $e) {
-                    LogActivity::errorLog($e->getMessage());
-                    DB::rollBack();
-                    Toastr::error(__('common.error_message'), __('common.error'));
-                    return back();
-                }
+            // Ensure that password is handled properly
+            $data = $request->except('_token'); // Exclude the CSRF token from the data
+
+            if ($request->password !== null) {
+                // Handle the case where a password is provided
+                $data['password'] = bcrypt($request->password); // Encrypt the password if needed
             } else {
-                DB::rollBack();
-                Toastr::error(__('common.error_message'), __('common.error'));
-                return back();
+                // Handle the case where no password is provided
+                unset($data['password']); // Remove password field if not provided
             }
+
+            // Store the data using the userRepository
+            $this->userRepository->store($data);
+
+            DB::commit();
+            LogActivity::successLog(__('hr.staff') . ' ' . __('common.added_successfully'));
+            Toastr::success(__('common.added_successfully'), __('common.success'));
+            return redirect()->route('staffs.index');
         } catch (\Exception $e) {
-            LogActivity::errorLog($e->getMessage());
             DB::rollBack();
+            LogActivity::errorLog($e->getMessage());
             Toastr::error(__('common.error_message'), __('common.error'));
             return back();
         }
