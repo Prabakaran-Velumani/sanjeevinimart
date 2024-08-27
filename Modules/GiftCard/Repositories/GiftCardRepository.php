@@ -160,8 +160,6 @@ class GiftCardRepository
             ImageStore::deleteImage($card->thumbnail_image);
             $data['thumbnail_image'] = ImageStore::saveImage($data['thumbnail_image'], 300, 300);
         }
-
-
         $card->update([
             'name' => $data['name'],
             'sku' => $data['sku'],
