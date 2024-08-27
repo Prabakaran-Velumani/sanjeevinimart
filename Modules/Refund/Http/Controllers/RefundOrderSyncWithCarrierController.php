@@ -3,7 +3,7 @@
 namespace Modules\Refund\Http\Controllers;
 
 
-use Brian2694\Toastr\Toastr;
+use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Routing\Controller;
 use Modules\Refund\Entities\RefundRequest;
 use Modules\Refund\Entities\RefundRequestDetail;

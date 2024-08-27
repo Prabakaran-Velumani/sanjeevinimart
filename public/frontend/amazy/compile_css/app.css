@@ -6758,9 +6758,15 @@ header.amazcartui_header .header_area .header_topbar_area .header__wrapper .head
   color: var(--text_color);
   font-size: 14px;
 }
-header.amazcartui_header .header_area .header_top_area {
+/* header.amazcartui_header .header_area .header_top_area {
   background: #fff;
   padding: 25px 0px;
+  border: 0;
+} */
+
+header.amazcartui_header .header_area .header_top_area {
+  background: #fff;
+  padding: 1px 0px;
   border: 0;
 }
 @media (max-width: 991.98px) {
@@ -7634,12 +7640,24 @@ header.amazcartui_header .header_area .contact_wrap .signin a.sign_in:hover {
 header.amazcartui_header .header_area .contact_wrap .contact_btn {
   margin-left: 25px;
 }
-header.amazcartui_header .header_area.navbar_fixed {
+/* header.amazcartui_header .header_area.navbar_fixed {
   z-index: 90;
   box-shadow: 0px 3px 16px 0px rgba(0, 0, 0, 0.03);
   position: fixed;
   width: 100%;
   top: -70px;
+  left: 0;
+  right: 0;
+  transform: translateY(70px);
+  transition: transform 500ms ease, background 500ms ease;
+  -webkit-transition: transform 500ms ease, background 500ms ease;
+} */
+header.amazcartui_header .header_area.navbar_fixed {
+  z-index: 90;
+  box-shadow: 0px 3px 16px 0px rgba(0, 0, 0, 0.03);
+  position: fixed;
+  width: 100%;
+  top: -180px;
   left: 0;
   right: 0;
   transform: translateY(70px);
@@ -17720,7 +17738,7 @@ section.return_part.padding_top.bg-white {
 }
 
 header.amazcartui_header .header_area .main_header_area .shop_header_wrapper .category_menu .dropdown_menu li .mega_width_menu {
-  width: 833px;
+  width: 950px;
   padding: 31px 0 0px 50px;
   display: flex;
   flex-wrap: wrap;
@@ -18948,4 +18966,87 @@ header.amazcartui_header .header_area .main_header_area .shop_header_wrapper .ca
 .disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+#feature_categories .col-xxl-3:nth-child(1) {
+  background-image: url('http://192.168.1.51/sanjeevinimart/public/uploads/all/66cd7bfe1f30c.jpeg'); 
+  
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+#feature_categories .col-xxl-3:nth-child(2) {
+  /* background-color:#fff;	 */
+  padding-left: 5px;
+  background-image: url(' http://192.168.1.51/sanjeevinimart/public/uploads/all/66cd7bfe07816.jpeg'); 
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+ 
+}
+#feature_categories .col-xxl-3:nth-child(3) {
+  /* background-color:#ccc;	 */
+  background-image: url('http://192.168.1.51/sanjeevinimart/public/uploads/all/66cd7bfe0ce9d.jpeg'); 
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+ 
+ 
+
+}
+#feature_categories .col-xxl-3:nth-child(4) {
+  /* background-color:#fff;	 */
+  background-image: url(' http://192.168.1.51/sanjeevinimart/public/uploads/all/66cd802521e85.jpeg'); 
+
+   /* background-image: url(' ');  */
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  
+   
+}
+
+
+
+#feature_categories .col-xxl-3:nth-child(5) {
+  /* background-color:#ccc; */
+  background-image: url('  http://192.168.1.51/sanjeevinimart/public/uploads/all/66cd81414435f.jpeg');
+
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin-top:30px;  
+ 
+}
+#feature_categories .col-xxl-3:nth-child(6) {
+  /* background-color:#fff; */
+
+  background-image: url(' http://192.168.1.51/sanjeevinimart/public/uploads/all/66cd845848cdd.jpeg');
+
+
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+
+ margin-top:30px;  
+}
+#feature_categories .col-xxl-3:nth-child(7) {
+  background-image: url(' http://192.168.1.51/sanjeevinimart/public/uploads/all/66cd85b4ec890.jpeg');
+ 
+  /* background-color:#ccc; */
+
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+
+ margin-top:30px;  
+}
+#feature_categories .col-xxl-3:nth-child(8) {
+  /* background-color:#fff; */
+ margin-top:30px;  
+}
+.amaz_home_cartBox .img_box{
+  border: 1px solid white;
+border-radius: 111px;
+background: white;
 }
