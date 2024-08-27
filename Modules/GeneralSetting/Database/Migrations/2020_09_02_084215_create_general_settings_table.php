@@ -74,6 +74,7 @@ class CreateGeneralSettingsTable extends Migration
             $table->string('footer_section_one_title')->default('Company');
             $table->string('footer_section_two_title')->default('My Account');
             $table->string('footer_section_three_title')->default('Services');
+            $table->string('footer_section_four_title')->default('Our Legal');
             $table->string('maintenance_title')->nullable();
             $table->string('maintenance_subtitle')->nullable();
             $table->string('maintenance_banner')->nullable();
