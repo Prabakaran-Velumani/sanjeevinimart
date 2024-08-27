@@ -174,15 +174,22 @@ class ProductRepository
     }
 
     public function recentViewedLast3Product($id){
+  
         if(auth()->check()){
+           
             $ids = RecentViewProduct::where('user_id', auth()->user()->id)->where('seller_product_id','!=',$id)->latest()->take(3)->pluck('seller_product_id')->toArray();
+      
         }elseif(session()->has('recent_viewed_products')){
             $ids = session()->get('recent_viewed_products')->unique('product_id')->where('product_id','!=',$id)->take(3)->pluck('product_id')->toArray();
         }else{
             $ids = [];
         }
-
-        return $this->product::with('product', 'skus')->whereRaw("id in ('". implode("','",$ids)."')")->get();
+        if (empty($attribute_ids)) {
+            return [];
+        }else{
+            return $this->product::with('product', 'skus')->whereRaw("id in ('". implode("','",$ids)."')")->get();
+        }
+        
     }
 
     public function getPickupByCity($data){

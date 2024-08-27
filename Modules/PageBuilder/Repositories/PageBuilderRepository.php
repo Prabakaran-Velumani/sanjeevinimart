@@ -11,11 +11,14 @@ class PageBuilderRepository
     }
     public function create(array $data)
     {
+       
+
         $data['status'] = 1;
         $data['is_static'] = 0;
         $data['is_page_builder'] = 1;
         $page = new DynamicPage();
         $page->fill($data)->save();
+      
     }
     public function find($id)
     {

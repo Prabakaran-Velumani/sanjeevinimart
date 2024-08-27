@@ -252,7 +252,7 @@
         });
     }
     function numbertrans(value){
-        value = value.toString().split('');
+        value = value?.toString()?.split('');
         let transValue = '';
         let numders = [0,1,2,3,4,5,6,7,8,9];
         $.each(value,function(i,val){

@@ -87,7 +87,7 @@
         "use strict";
         var filterType = [];
         $(document).ready(function(){
-            '@if(isset($color) && $color->id == 1)'+
+            '@if($color &&isset($color) && $color->id == 1)'+
             '@foreach ($color->values as $ki => $item)'+
                 $("span.colors_{{ $ki }}").css("background", "{{ $item->value }}");
             '@endforeach'+
