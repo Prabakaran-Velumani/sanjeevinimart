@@ -66,9 +66,7 @@ class MerchantRepository
 
     public function create($data)
     {
-        $role = Role::where('type', 'seller')->first();
-        $currency = Currency::where('code', app('general_setting')->currency)->first();
-        $currencyId = $currency ? $currency->id : null;
+        $role = Role::where('type', 'seller')->first();        
         $user =  User::create([
             'first_name' => $data['name'],
             'email' => $data['email'],
@@ -80,7 +78,7 @@ class MerchantRepository
             'username' => $data['phone_number'],
             'verify_code' => sha1(time()),
             'password' => Hash::make($data['password']),
-            'currency_id' => $currencyId,
+            'currency_id' => app('general_setting')->currency,
             'lang_code' => app('general_setting')->language_code,
             'currency_code' => app('general_setting')->currency_code,
         ]);
