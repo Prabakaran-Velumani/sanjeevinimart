@@ -73,13 +73,13 @@ class ProductRepository
         $infoExist = RecentViewProduct::where('user_id', auth()->user()->id)->where('seller_product_id', $seller_product_id)->first();
         if ($infoExist) {
             return $infoExist->update([
-                'viewed_at' => date('y-m-d')
+                'viewed_at' => date('Y-m-d')
             ]);
         } else {
             return RecentViewProduct::create([
                 'user_id' => auth()->user()->id,
                 'seller_product_id' => $seller_product_id,
-                'viewed_at' => date('y-m-d')
+                'viewed_at' => date('Y-m-d')
             ]);
         }
     }

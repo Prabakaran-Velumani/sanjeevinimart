@@ -38,7 +38,7 @@ class WelcomeController extends Controller
     {
         try {
             $ignored = IgnoreIP::where('ip', request()->ip())->first();
-            $ipExists = VisitorHistory::where('date', Carbon::now()->format('y-m-d'))->where('visitors', request()->ip())->first();
+            $ipExists = VisitorHistory::where('date', Carbon::now()->format('Y-m-d'))->where('visitors', request()->ip())->first();
             if (!$ipExists && !$ignored) {
                 // Location Check
                 $location = Location::get(request()->ip());
@@ -49,7 +49,7 @@ class WelcomeController extends Controller
                 } else {
                     $location = "";
                 }
-                VisitorHistory::create(['visitors' => request()->ip(), 'date' => Carbon::now()->format('y-m-d'), 'agent' => Browser::browserFamily() . '-' . Browser::browserVersion() . '-' . Browser::browserEngine() . '-' . Browser::platformName(), 'device' => Browser::platformName(), 'location' => $location]);
+                VisitorHistory::create(['visitors' => request()->ip(), 'date' => Carbon::now()->format('Y-m-d'), 'agent' => Browser::browserFamily() . '-' . Browser::browserVersion() . '-' . Browser::browserEngine() . '-' . Browser::platformName(), 'device' => Browser::platformName(), 'location' => $location]);
             }
             $CategoryList = collect();
             $widgets = HomePageSection::all();

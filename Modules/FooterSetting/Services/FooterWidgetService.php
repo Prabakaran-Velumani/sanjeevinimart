@@ -7,7 +7,7 @@ use \Modules\FooterSetting\Repositories\FooterWidgetRepository;
 
 class FooterWidgetService{
 
-    
+
     protected $footerWidgetRepository;
 
     public function __construct(FooterWidgetRepository $footerWidgetRepository)
@@ -32,7 +32,11 @@ class FooterWidgetService{
     {
         return $this->footerWidgetRepository->getAllService();
     }
-    
+    public function getAllOurLegal()
+    {
+        return $this->footerWidgetRepository->getAllOurLegal();
+    }
+
     public function save($data){
         return $this->footerWidgetRepository->save($data);
     }

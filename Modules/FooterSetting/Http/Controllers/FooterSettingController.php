@@ -34,8 +34,9 @@ class FooterSettingController extends Controller
             $SectionOnePages  = $this->widgetService->getAllCompany();
             $SectionTwoPages  = $this->widgetService->getAllAccount();
             $SectionThreePages  = $this->widgetService->getAllService();
+            $ourLegalPages  = $this->widgetService->getAllOurLegal();
             $footer_content_new = $this->footerService->getFooterContent();
-            return view('footersetting::footer.index', compact('FooterContent', 'dynamicPageList', 'SectionOnePages', 'SectionTwoPages', 'SectionThreePages','footer_content_new'));
+            return view('footersetting::footer.index', compact('FooterContent', 'dynamicPageList', 'SectionOnePages', 'SectionTwoPages', 'SectionThreePages', 'ourLegalPages', 'footer_content_new'));
         } catch (Exception $e) {
             LogActivity::errorLog($e->getMessage());
             return $e->getMessage();
