@@ -281,6 +281,7 @@ class ProductController extends Controller
         try {
 
             $this->productService->create($request->except("_token"));
+            
             if(auth()->user()->role_id != 1)
             {
                 $notificationSetting = DB::table('notification_settings')->where('slug','seller-product-create')->first();
@@ -289,19 +290,24 @@ class ProductController extends Controller
                     $admin_notification = (array) json_decode($notificationSetting->admin_msg);
                     $langs = getLanguageList();
                     $adminNot = new CustomerNotification();
+
                     foreach($langs as $key => $lang)
                     {
-                       if(isset($admin_notification[$lang->code]))
-                       {
-                           $adminNot->setTranslation('title',$lang->code,$admin_notification[$lang->code]);
+                        if(isset($admin_notification[$lang->code]))
+                        {
+                        if($lang->code && $admin_notification[$lang->code])
+                        {
+                            $adminNot->setTranslation('title',$lang->code,$admin_notification[$lang->code]);
+                        }
                        }
                     }
-                    $adminNot->customer_id = 1;
-                    $adminNot->url = "#";
-                    $adminNot->save();
-
+                    if(isset($adminNot['title']))
+                    {
+                        $adminNot->customer_id = 1;
+                        $adminNot->url = "#";
+                        $adminNot->save();
+                    }
                 }
-
             }
 
             DB::commit();
@@ -315,7 +321,6 @@ class ProductController extends Controller
                 return redirect()->route('admin.my-product.index');
             }
         } catch (\Exception $e) {
-            dd($e);
             DB::rollBack();
             LogActivity::errorLog($e->getMessage());
             Toastr::error(__('common.error_message'));
