@@ -19020,7 +19020,9 @@ header.amazcartui_header .header_area .main_header_area .shop_header_wrapper .ca
 }
 #feature_categories .col-xxl-3:nth-child(6) {
   /* background-color:#fff; */
-  background-image: url('http://192.168.1.51/sanjeevinimart/public/uploads/all/66cd7d53b0a1a.jpeg');
+
+  background-image: url(' http://192.168.1.51/sanjeevinimart/public/uploads/all/66cd845848cdd.jpeg');
+
 
   background-size: cover;
   background-repeat: no-repeat;
@@ -19029,9 +19031,9 @@ header.amazcartui_header .header_area .main_header_area .shop_header_wrapper .ca
  margin-top:30px;  
 }
 #feature_categories .col-xxl-3:nth-child(7) {
+  background-image: url(' http://192.168.1.51/sanjeevinimart/public/uploads/all/66cd85b4ec890.jpeg');
  
   /* background-color:#ccc; */
-  background-image: url(' https://img.freepik.com/free-vector/hand-painted-watercolor-abstract-background_23-2148995297.jpg?t=st=1724744592~exp=1724748192~hmac=b8c77a54d028687e8b90f1fc8d9101384254a629c541606bc96be9edacafb17b&w=900');
 
   background-size: cover;
   background-repeat: no-repeat;
