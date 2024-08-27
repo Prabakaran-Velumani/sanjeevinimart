@@ -236,7 +236,6 @@ class ProductController extends Controller
             }
         }catch(Exception $e){
             Toastr::error(__('common.error_message'),__('common.error'));
-            dd($e);
             LogActivity::errorLog($e->getMessage());
             return back();
         }

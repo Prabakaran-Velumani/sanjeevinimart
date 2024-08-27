@@ -28,6 +28,52 @@
         $headers = \Modules\Appearance\Entities\Header::all();
     @endphp
     <x-slider-component :headers="$headers"/>
+
+<!-- amaz_section::start  -->
+@php
+    $feature_categories = $widgets->where('section_name','feature_categories')->first();
+@endphp
+<div id="feature_categories" class="amaz_section {{$feature_categories->status == 0?'d-none':''}}">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section__title d-flex align-items-center gap-3 mb_30 flex-wrap ">
+                    <h3 id="feature_categories_title" class="m-0 flex-fill">{{$feature_categories->title}}</h3>
+                    <a href="{{url('/category')}}" class="title_link d-flex align-items-center lh-1">
+                        <span class="title_text">{{ __('common.view_all') }}</span>
+                        <span class="title_icon">
+                            <i class="fas fa-chevron-right"></i>
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            @foreach($feature_categories->getCategoryByQuery() as $key => $category)
+                <div class="col-xxl-3 col-lg-4 col-md-6">
+                    <div class="amaz_home_cartBox amaz_cat_bg1 d-flex justify-content-between mb_30">
+                        <div class="img_box">
+                            @if(app('general_setting')->lazyload == 1)
+                             <img class="lazyload" src="{{showImage(themeDefaultImg())}}" data-src="{{showImage(@$category->categoryImage->image?@$category->categoryImage->image:'frontend/default/img/default_category.png')}}" alt="{{@$category->name}}" title="{{@$category->name}}">
+                            @else
+                            <img src="{{showImage(@$category->categoryImage->image?@$category->categoryImage->image:'frontend/default/img/default_category.png')}}" alt="{{@$category->name}}" title="{{@$category->name}}">
+                            @endif
+                        </div>
+                        <div class="amazcat_text_box">
+                            <h4>
+                                <a>{{textLimit($category->name,25)}}</a>
+                            </h4>
+                            <p class="lh-1">{{getNumberTranslate($category->sellerProducts->count())}} {{__('common.products')}}</p>
+                            <a class="shop_now_text" href="{{route('frontend.category-product',['slug' => $category->slug, 'item' =>'category'])}}">{{__('common.shop_now')}} »</a>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </div>
+</div>
+
+
 <!-- home_banner::end  -->
 @php
     $best_deal = $widgets->where('section_name','best_deals')->first();
@@ -216,49 +262,6 @@
                     @endforeach
                 </div>
             </div>
-        </div>
-    </div>
-</div>
-<!-- amaz_section::start  -->
-@php
-    $feature_categories = $widgets->where('section_name','feature_categories')->first();
-@endphp
-<div id="feature_categories" class="amaz_section {{$feature_categories->status == 0?'d-none':''}}">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="section__title d-flex align-items-center gap-3 mb_30 flex-wrap ">
-                    <h3 id="feature_categories_title" class="m-0 flex-fill">{{$feature_categories->title}}</h3>
-                    <a href="{{url('/category')}}" class="title_link d-flex align-items-center lh-1">
-                        <span class="title_text">{{ __('common.view_all') }}</span>
-                        <span class="title_icon">
-                            <i class="fas fa-chevron-right"></i>
-                        </span>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            @foreach($feature_categories->getCategoryByQuery() as $key => $category)
-                <div class="col-xxl-3 col-lg-4 col-md-6">
-                    <div class="amaz_home_cartBox amaz_cat_bg1 d-flex justify-content-between mb_30">
-                        <div class="img_box">
-                            @if(app('general_setting')->lazyload == 1)
-                             <img class="lazyload" src="{{showImage(themeDefaultImg())}}" data-src="{{showImage(@$category->categoryImage->image?@$category->categoryImage->image:'frontend/default/img/default_category.png')}}" alt="{{@$category->name}}" title="{{@$category->name}}">
-                            @else
-                            <img src="{{showImage(@$category->categoryImage->image?@$category->categoryImage->image:'frontend/default/img/default_category.png')}}" alt="{{@$category->name}}" title="{{@$category->name}}">
-                            @endif
-                        </div>
-                        <div class="amazcat_text_box">
-                            <h4>
-                                <a>{{textLimit($category->name,25)}}</a>
-                            </h4>
-                            <p class="lh-1">{{getNumberTranslate($category->sellerProducts->count())}} {{__('common.products')}}</p>
-                            <a class="shop_now_text" href="{{route('frontend.category-product',['slug' => $category->slug, 'item' =>'category'])}}">{{__('common.shop_now')}} »</a>
-                        </div>
-                    </div>
-                </div>
-            @endforeach
         </div>
     </div>
 </div>
@@ -2151,7 +2154,7 @@
                                     </a>
                                 </div>
 
-                                @endif
+                                @endif 
                             </div>
                         </div>
 
@@ -2170,139 +2173,8 @@
     </div>
 </div>
 {{-- for prsanth --}}
-@php
-    $handcarft = $widgets->where('section_name', 'handcarft')->first();
-@endphp
-<div class="amaz_recomanded_area {{$handcarft->status == 0 ? 'd-none' : ''}}">
-    <div id="more_products" class="amaz_recomanded_box banner-image">
-        <div class="amaz_content">
-            <!-- <div class="amaz_recomanded_box_head"> -->
-                <!-- <h4 class="mb-0">{{$handcarft->title}}</h4> -->
-            </div>
-            <!-- <div class="amaz_recomanded_box_body2 dataApp">
-              
-            </div> -->
-            <!-- <button class="shop-now-btn">Shop Now</button> -->
-        </div>
-    </div>
-</div>
-
-<style>
-    
-    .banner-image {
-        background: url('public/uploads/images/24-08-2024/66c9b363c3d91.png') no-repeat center center;
-        background-size: cover;
-        position: relative;
-        height: 60vh;
-        width: 100vw; 
-        margin: 0; 
-    }
-
-    .amaz_content {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%); 
-        color: #fff;
-        text-align: center;
-    }
-/* 
-    .amaz_recomanded_box_head h4 {
-        font-size: 36px;
-        font-weight: bold;
-        color: white;
-    } */
-
-    /* Add the Shop Now button styling */
-    /* .shop-now-btn {
-        position: absolute;
-        bottom: 1px;
-        left: 20%;
-        transform: translateX(-50%);
-        background-color: #ff6f61;
-        color: white;
-        padding: 12px 30px;
-        font-size: 16px;
-        border: none;
-        border-radius: 25px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-    }
-
-    .shop-now-btn:hover {
-        background-color: #e0554e;
-    } */
-</style>
 
 
-
-@php
-    $news_letters = $widgets->where('section_name','news_letters')->first();
-@endphp
-
-<style>
-    .img-container {
-      max-width: 100%;
-      height: auto;
-    }
-    .content {
-      padding: 20px;
-    }
-    .newsletter-container {
-            display: flex;
-            align-items: center;
-            padding: 20px;
-            padding-left: 59px;
-      
-        }
-        .icon {
-            width: 56px; /* Adjust the icon size */
-            height: auto;
-            vertical-align: middle; /* Aligns icon with text */
-            margin-right: 8px; /* Space between icon and text */
-        }
-        .content {
-    display: flex;
-    align-items: flex-start; /* Align items to the top */
-  }
-  .icon {
-    margin-right: 10px; /* Adjust spacing between icon and text */
-  }
-  </style>
-</head>
-<body>
-
-<div class="container mt-4">
-  <div class="row align-items-center">
-    <div class="col-md-6">
-      <img src="public/uploads/images/24-08-2024/ab.jpg" alt="Placeholder Image" class="img-container">
-    </div>
-    <div class="col-md-6">
-      <div class="content">
-      <img src="public/uploads/images/24-08-2024/icon-1.png" alt="Icon" class="icon">
-        <p>
-         
-          Sanjeevini Mart, where every purchase tells a story of empowerment, craftsmanship, and sustainability. Nestled in the heart of Karnataka, our platform is a vibrant celebration of the ingenious creations from the Self-Help Groups.
-    
-    
-          Step into a world where tradition meets innovation, where artisans weave dreams into every thread, carve history into each wooden masterpiece, and infuse love into every jar of homemade delicacy. From intricately designed handicrafts to tantalizing food items, from eco-friendly toys to ethereal cosmetics, our curated collection showcases the essence of Karnataka’s rich cultural heritage.
-</p>
-      </div>
-
-<div class="newsletter-container">
-
-    <div class="newsletter-content">
-        <h2>Join Our Newslatter Now</h2>
-        <p>Don’t miss out on exciting promotions and the latest shopping news</p>
-        <!-- <div class="signup-box"> -->
-            <input type="email" placeholder="Enter your email"style="border-radius:20px;border:1px solid grey">
-            <input type="submit" value="Signup" style="background-color:#7f8534;border-radius:20px;border:1px solid grey">
-        </div>
-    </div>
-</div>
-    </div>
-  </div>
-</div>
 
 
 {{-- for prsanth --}}

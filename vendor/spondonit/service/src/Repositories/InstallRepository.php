@@ -259,7 +259,7 @@ class InstallRepository
         $this->setDBEnv($params);
 
         if (gbv($params, 'force_migrate')) {
-            $this->rollbackDb();
+            // $this->rollbackDb();
         }
 
         return true;
@@ -407,8 +407,6 @@ class InstallRepository
      */
     public function install($params)
     {
-        Log::info('$$$$$$$$$$$$Install');
-
         if ($this->migrateDB()) {
             $ac = Storage::exists('.temp_app_installed') ? Storage::get('.temp_app_installed') : null;
             Storage::put('.app_installed', $ac);

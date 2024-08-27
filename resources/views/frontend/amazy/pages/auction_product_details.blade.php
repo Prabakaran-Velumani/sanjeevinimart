@@ -485,7 +485,7 @@
                                 </div>
                             @endif
                         </div>
-                        @if($recent_viewed_products->count())
+                        @if($recent_viewed_products && $recent_viewed_products->count())
                             <div class="col-12">
                                 <div class="row">
                                     <div class="col-12">
