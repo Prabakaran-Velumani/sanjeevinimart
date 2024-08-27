@@ -13483,8 +13483,8 @@ footer.home_three_footer .copyright_area .payment_imgs {
 }
 .House_Appliances_product .product_widget5 {
   border: 1px solid var(--border_color);
-  margin-left: 20px;
-  margin-top: -1px;
+  margin-left: 23px;
+  margin-top: 12px;
 }
 .House_Appliances_product .product_widget5 .amaz_primary_btn {
   text-indent: -99999999px;
@@ -19082,3 +19082,11 @@ background: #fff;
  #feature_categories {
   margin-top: 55px;
 } 
+.amaz_fieature_active .product_widget5 {
+
+  width: 340px !important;
+}
+
+.footer-top {
+	background-color:#e1e1e1;
+}

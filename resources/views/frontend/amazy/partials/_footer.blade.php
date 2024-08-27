@@ -24,6 +24,36 @@
 </div> --}}
 @endif
 
+<div class="footer-top"> 
+  <div class="container">
+    <div class="row">
+	  <div class="col-xl-1 col-lg-1 col-md-6">
+	    
+	  </div>
+	  <div class="col-xl-2 col-lg-2 col-md-6">
+	    Free Delivery
+	  </div>
+	  <div class="col-xl-2 col-lg-2 col-md-6">
+	    100% Purchase Protection
+	  </div>
+	  <div class="col-xl-2 col-lg-2 col-md-6">
+	    Secure Payment
+	  </div>
+	  <div class="col-xl-2 col-lg-2 col-md-6">
+	    Assured Quality
+	  </div>
+	  <div class="col-xl-2 col-lg-2 col-md-6">
+	    100% Original Products
+	  </div>
+	  <div class="col-xl-1 col-lg-1 col-md-6">
+	    
+	  </div>
+	</div>
+  </div>
+</div>
+
+</div>
+
 <!-- FOOTER::START  -->
     <footer class="home_three_footer">
         <div class="main_footer_wrap">
