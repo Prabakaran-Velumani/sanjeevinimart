@@ -29,8 +29,9 @@
         <div class="main_footer_wrap">
             <div class="container">
                  <div class="row">
-                    <div class="col-xl-3 col-lg-3 col-md-6 footer_links_50 ">
+                    <div class="col-xl-2 col-lg-2 col-md-6 footer_links_50 ">
                         <div class="footer_widget" >
+						    <h3>Section1</h3>
                             <ul class="footer_links">
                                 @foreach($sectionWidgets->where('section','1') as $page)
                                     @if($page->pageData)
@@ -43,8 +44,9 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="col-xl-3 col-lg-3 col-md-6 footer_links_50 ">
+                    <div class="col-xl-2 col-lg-2 col-md-6 footer_links_50 ">
                         <div class="footer_widget">
+						    <h3>Section2</h3>
                             <ul class="footer_links">
                                 @foreach($sectionWidgets->where('section','2') as $page)
                                     @if($page->pageData)
@@ -57,9 +59,17 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-xl-3 col-md-6">
+					<div class="col-xl-2 col-lg-2 col-md-6">
+                        <div class="footer_widget">
+						    <h3>Section3</h3>
+                            <ul class="footer_links">
+                                <li></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-xl-2 col-md-6">
                         <div class="footer_widget" >
-
+                            <h3>Section4</h3>
                             <div class="apps_boxs">
                                 @if($footer_content->show_play_store)
                                 <a href="{{$footer_content->play_store}}" class="google_play_box d-flex align-items-center mb_10">

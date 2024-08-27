@@ -17738,7 +17738,7 @@ section.return_part.padding_top.bg-white {
 }
 
 header.amazcartui_header .header_area .main_header_area .shop_header_wrapper .category_menu .dropdown_menu li .mega_width_menu {
-  width: 833px;
+  width: 950px;
   padding: 31px 0 0px 50px;
   display: flex;
   flex-wrap: wrap;
@@ -18969,32 +18969,84 @@ header.amazcartui_header .header_area .main_header_area .shop_header_wrapper .ca
 }
 
 #feature_categories .col-xxl-3:nth-child(1) {
-  background-color:#ccc;	
+  background-image: url('http://192.168.1.51/sanjeevinimart/public/uploads/all/66cd7bfe1f30c.jpeg'); 
+  
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 #feature_categories .col-xxl-3:nth-child(2) {
-  background-color:#fff;	
+  /* background-color:#fff;	 */
+  padding-left: 5px;
+  background-image: url(' http://192.168.1.51/sanjeevinimart/public/uploads/all/66cd7bfe07816.jpeg'); 
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+ 
 }
 #feature_categories .col-xxl-3:nth-child(3) {
-  background-color:#ccc;	
+  /* background-color:#ccc;	 */
+  background-image: url('http://192.168.1.51/sanjeevinimart/public/uploads/all/66cd7bfe0ce9d.jpeg'); 
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+ 
+ 
+
 }
 #feature_categories .col-xxl-3:nth-child(4) {
-  background-color:#fff;	
+  /* background-color:#fff;	 */
+  background-image: url(' http://192.168.1.51/sanjeevinimart/public/uploads/all/66cd802521e85.jpeg'); 
+
+   /* background-image: url(' ');  */
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  
+   
 }
+
 
 
 #feature_categories .col-xxl-3:nth-child(5) {
-  background-color:#ccc;
+  /* background-color:#ccc; */
+  background-image: url('  http://192.168.1.51/sanjeevinimart/public/uploads/all/66cd81414435f.jpeg');
+
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
   margin-top:30px;  
+ 
 }
 #feature_categories .col-xxl-3:nth-child(6) {
-  background-color:#fff;
+  /* background-color:#fff; */
+
+  background-image: url(' http://192.168.1.51/sanjeevinimart/public/uploads/all/66cd845848cdd.jpeg');
+
+
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+
  margin-top:30px;  
 }
 #feature_categories .col-xxl-3:nth-child(7) {
-  background-color:#ccc;
+  background-image: url(' http://192.168.1.51/sanjeevinimart/public/uploads/all/66cd85b4ec890.jpeg');
+ 
+  /* background-color:#ccc; */
+
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+
  margin-top:30px;  
 }
 #feature_categories .col-xxl-3:nth-child(8) {
-  background-color:#fff;
+  /* background-color:#fff; */
  margin-top:30px;  
+}
+.amaz_home_cartBox .img_box{
+  border: 1px solid white;
+border-radius: 111px;
+background: white;
 }
