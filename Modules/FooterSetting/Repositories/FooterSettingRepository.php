@@ -19,6 +19,7 @@ class FooterSettingRepository {
     }
     public function update($data, $id)
     {
+        
         $item = $this->footer::find($id);
         $data['footer_copy_right'] = isset($data['copy_right'])?$data['copy_right']:$item->footer_copy_right;
         $data['footer_about_title'] = isset($data['about_title'])?$data['about_title']:$item->footer_about_title;

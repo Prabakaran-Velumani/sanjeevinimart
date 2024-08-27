@@ -46,7 +46,7 @@ class FlutterwaveController extends Controller
 
             "customizations" => [
                 "title" => $data['purpose'],
-                "description" => date('y-m-d')
+                "description" => date('Y-m-d')
             ]
         ];
 

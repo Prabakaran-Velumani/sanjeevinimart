@@ -184,10 +184,11 @@
                 });
                 $(document).on('change', '.statusChange', function(event){
                     let item = $(this).data('value');
+                    let status = item.status == true ? 1 : 0
                     var formData = new FormData();
                     formData.append('_token', "{{ csrf_token() }}");
                     formData.append('id', item.id);
-                    formData.append('status', item.status);
+                    formData.append('status', status);
                     $.ajax({
                         url: "{{ route('frontendcms.query.status') }}",
                         type: "POST",

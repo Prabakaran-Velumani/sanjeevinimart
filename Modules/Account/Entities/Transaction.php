@@ -49,19 +49,19 @@ class Transaction extends Model
         $year = Carbon::now()->year;
         $query->where('type', 'in')->whereIn('come_from', ['sales_income','income','wallet_recharge','payroll_expense','installment_income','loan_expense','seller_commision']);
         if ($type == "today") {
-            return $query->whereBetween('created_at', [Carbon::now()->format('y-m-d')." 00:00:00", Carbon::now()->format('y-m-d')." 23:59:59"])->sum('amount');
+            return $query->whereBetween('created_at', [Carbon::now()->format('Y-m-d')." 00:00:00", Carbon::now()->format('Y-m-d')." 23:59:59"])->sum('amount');
         }
         if ($type == "week") {
-            return $query->whereBetween('created_at', [Carbon::now()->subDays(7)->format('y-m-d')." 00:00:00", Carbon::now()->format('y-m-d')." 23:59:59"])->sum('amount');
+            return $query->whereBetween('created_at', [Carbon::now()->subDays(7)->format('Y-m-d')." 00:00:00", Carbon::now()->format('Y-m-d')." 23:59:59"])->sum('amount');
         }
         if ($type == "month") {
             $month = Carbon::now()->month;
             $date_1 = Carbon::create($year, $month)->startOfMonth()->format('Y-m-d')." 00:00:00";
-            return $query->whereBetween('created_at', [$date_1, Carbon::now()->format('y-m-d')." 23:59:59"])->sum('amount');
+            return $query->whereBetween('created_at', [$date_1, Carbon::now()->format('Y-m-d')." 23:59:59"])->sum('amount');
         }
         if ($type == "year") {
             $date_1 = Carbon::create($year, 1)->startOfMonth()->format('Y-m-d')." 00:00:00";
-            return $query->whereBetween('created_at', [$date_1, Carbon::now()->format('y-m-d')." 23:59:59"])->sum('amount');
+            return $query->whereBetween('created_at', [$date_1, Carbon::now()->format('Y-m-d')." 23:59:59"])->sum('amount');
         }
 
     }
@@ -72,19 +72,19 @@ class Transaction extends Model
         $year = Carbon::now()->year;
         $query->where('type', 'out')->whereIn('come_from', ['sales_income','income','expense','wallet_recharge','payroll_expense','installment_income','loan_expense','seller_commision']);
         if ($type == "today") {
-            return $query->whereBetween('created_at', [Carbon::now()->format('y-m-d')." 00:00:00", Carbon::now()->format('y-m-d')." 23:59:59"])->sum('amount');
+            return $query->whereBetween('created_at', [Carbon::now()->format('Y-m-d')." 00:00:00", Carbon::now()->format('Y-m-d')." 23:59:59"])->sum('amount');
         }
         if ($type == "week") {
-            return $query->whereBetween('created_at', [Carbon::now()->subDays(7)->format('y-m-d')." 00:00:00", Carbon::now()->format('y-m-d')." 23:59:59"])->sum('amount');
+            return $query->whereBetween('created_at', [Carbon::now()->subDays(7)->format('Y-m-d')." 00:00:00", Carbon::now()->format('Y-m-d')." 23:59:59"])->sum('amount');
         }
         if ($type == "month") {
             $month = Carbon::now()->month;
             $date_1 = Carbon::create($year, $month)->startOfMonth()->format('Y-m-d')." 00:00:00";
-            return $query->whereBetween('created_at', [$date_1, Carbon::now()->format('y-m-d')." 23:59:59"])->sum('amount');
+            return $query->whereBetween('created_at', [$date_1, Carbon::now()->format('Y-m-d')." 23:59:59"])->sum('amount');
         }
         if ($type == "year") {
             $date_1 = Carbon::create($year, 1)->startOfMonth()->format('Y-m-d')." 00:00:00";
-            return $query->whereBetween('created_at', [$date_1, Carbon::now()->format('y-m-d')." 23:59:59"])->sum('amount');
+            return $query->whereBetween('created_at', [$date_1, Carbon::now()->format('Y-m-d')." 23:59:59"])->sum('amount');
         }
 
     }

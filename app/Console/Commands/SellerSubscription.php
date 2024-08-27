@@ -44,11 +44,11 @@ class SellerSubscription extends Command
         $sellers = User::whereIn('id', $seller_ids)->with('SellerAccount', 'SellerSubscriptions')->get();
         foreach ($sellers as $seller) {
             if ($seller->SellerAccount->subscription_type == "monthly") {
-                if (Carbon::now()->subDays(30)->format('y-m-d') > $seller->SellerSubscriptions->last_payment_date) {
+                if (Carbon::now()->subDays(30)->format('Y-m-d') > $seller->SellerSubscriptions->last_payment_date) {
                     $seller->SellerSubscriptions->update(['is_paid' => 0]);
                 }
             }else {
-                if (Carbon::now()->subDays(365)->format('y-m-d') > $seller->SellerSubscriptions->last_payment_date) {
+                if (Carbon::now()->subDays(365)->format('Y-m-d') > $seller->SellerSubscriptions->last_payment_date) {
                     $seller->SellerSubscriptions->update(['is_paid' => 0]);
                 }
             }

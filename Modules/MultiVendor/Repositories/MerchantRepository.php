@@ -170,7 +170,7 @@ class MerchantRepository
         Event::dispatch(new SellerPickupLocationCreated($user['id']));
         Event::dispatch(new SellerShippingRateEvent($user['id']));
         Event::dispatch(new SellerShippingConfigEvent($user['id']));
-        
+
         $seller_account = SellerAccount::where('user_id', auth()->id())->first();
         if($seller_account){
             $seller_account->update([
@@ -294,5 +294,5 @@ class MerchantRepository
         }
         return Excel::store(new MediaIdsExport, 'seller/media_ids_list.xlsx');
     }
-    
+
 }

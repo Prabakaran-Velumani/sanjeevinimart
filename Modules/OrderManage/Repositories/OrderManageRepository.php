@@ -21,7 +21,7 @@ use Modules\GeneralSetting\Entities\NotificationSetting;
 use Modules\MultiVendor\Entities\PackageWiseSellerCommision;
 use Modules\OrderManage\Entities\DeliveryProcess;
 use Modules\Product\Entities\Category;
-
+use Illuminate\Support\Facades\Log;
 class OrderManageRepository
 {
     use SendMail, Accounts, Notification;
@@ -521,6 +521,7 @@ class OrderManageRepository
     {
         $exists = DigitalFileDownload::where('package_id', $data['package_id'])->where('product_sku_id', $data['product_sku_id'])->where('seller_product_sku_id', $data['seller_product_sku_id'])->first();
         if (!$exists) {
+            Log::info("data['qty'] * 3". $data['qty'] );
             $digital_download = DigitalFileDownload::create([
                 'customer_id' => (!empty('customer_id')) ? $data['customer_id'] : null,
                 'seller_id' => $data['seller_id'],
@@ -528,7 +529,7 @@ class OrderManageRepository
                 'package_id' => $data['package_id'],
                 'seller_product_sku_id' => $data['seller_product_sku_id'],
                 'product_sku_id' => $data['product_sku_id'],
-                'download_limit' => $data['qty'] * 3,
+                'download_limit' => $data['qty'] * 3 ?? 3,
             ]);
         }else{
             $digital_download = $exists;
