@@ -6758,9 +6758,15 @@ header.amazcartui_header .header_area .header_topbar_area .header__wrapper .head
   color: var(--text_color);
   font-size: 14px;
 }
-header.amazcartui_header .header_area .header_top_area {
+/* header.amazcartui_header .header_area .header_top_area {
   background: #fff;
   padding: 25px 0px;
+  border: 0;
+} */
+
+header.amazcartui_header .header_area .header_top_area {
+  background: #fff;
+  padding: 1px 0px;
   border: 0;
 }
 @media (max-width: 991.98px) {
@@ -7634,12 +7640,24 @@ header.amazcartui_header .header_area .contact_wrap .signin a.sign_in:hover {
 header.amazcartui_header .header_area .contact_wrap .contact_btn {
   margin-left: 25px;
 }
-header.amazcartui_header .header_area.navbar_fixed {
+/* header.amazcartui_header .header_area.navbar_fixed {
   z-index: 90;
   box-shadow: 0px 3px 16px 0px rgba(0, 0, 0, 0.03);
   position: fixed;
   width: 100%;
   top: -70px;
+  left: 0;
+  right: 0;
+  transform: translateY(70px);
+  transition: transform 500ms ease, background 500ms ease;
+  -webkit-transition: transform 500ms ease, background 500ms ease;
+} */
+header.amazcartui_header .header_area.navbar_fixed {
+  z-index: 90;
+  box-shadow: 0px 3px 16px 0px rgba(0, 0, 0, 0.03);
+  position: fixed;
+  width: 100%;
+  top: -180px;
   left: 0;
   right: 0;
   transform: translateY(70px);
@@ -18948,4 +18966,35 @@ header.amazcartui_header .header_area .main_header_area .shop_header_wrapper .ca
 .disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+#feature_categories .col-xxl-3:nth-child(1) {
+  background-color:#ccc;	
+}
+#feature_categories .col-xxl-3:nth-child(2) {
+  background-color:#fff;	
+}
+#feature_categories .col-xxl-3:nth-child(3) {
+  background-color:#ccc;	
+}
+#feature_categories .col-xxl-3:nth-child(4) {
+  background-color:#fff;	
+}
+
+
+#feature_categories .col-xxl-3:nth-child(5) {
+  background-color:#ccc;
+  margin-top:30px;  
+}
+#feature_categories .col-xxl-3:nth-child(6) {
+  background-color:#fff;
+ margin-top:30px;  
+}
+#feature_categories .col-xxl-3:nth-child(7) {
+  background-color:#ccc;
+ margin-top:30px;  
+}
+#feature_categories .col-xxl-3:nth-child(8) {
+  background-color:#fff;
+ margin-top:30px;  
 }

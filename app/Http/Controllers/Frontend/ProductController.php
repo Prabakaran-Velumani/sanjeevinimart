@@ -112,7 +112,7 @@ class ProductController extends Controller
             ];
             $this->postEvent($eData);
         }
-      
+       
         //end ga4
         $recent_viewed_products = $this->productService->recentViewedLast3Product($product->id);
         $reasons = $this->reason->get();

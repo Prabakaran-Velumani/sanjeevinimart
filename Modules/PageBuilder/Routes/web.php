@@ -12,3 +12,4 @@ Route::prefix('page-builder/')->middleware(['auth','admin'])->as('page_builder.'
     Route::post('slug-generate', 'PageBuilderController@slugGenerate')->name('slug_generate');
 });
 
+ 
