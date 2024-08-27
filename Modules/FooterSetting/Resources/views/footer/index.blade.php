@@ -146,7 +146,7 @@ $LanguageList = getLanguageList();
                                                                         <p>{{__('frontendCms.play_store_show_in_frontend') }}</p>
                                                                     </li>
                                                                 </ul>
-                    
+
                                                             </div>
                                                             <div class="primary_input">
                                                                 <ul id="theme_nav" class="permission_list sms_list ">
@@ -159,7 +159,7 @@ $LanguageList = getLanguageList();
                                                                         <p>{{ __('frontendCms.app_store_show_in_frontend') }}</p>
                                                                     </li>
                                                                 </ul>
-                    
+
                                                             </div>
                                                             <div class="primary_input">
                                                                 <ul id="theme_nav" class="permission_list sms_list ">
@@ -172,7 +172,7 @@ $LanguageList = getLanguageList();
                                                                         <p>{{ __('frontendCms.payment_image_show_in_frontend') }}</p>
                                                                     </li>
                                                                 </ul>
-                    
+
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-6">
@@ -186,7 +186,7 @@ $LanguageList = getLanguageList();
                                                                     </button>
                                                                 </div>
                                                                 <span class="text-danger"  id="file_error"></span>
-                                                                
+
                                                                 <div class="img_div mt-20">
                                                                    <img id="blogImgShow"
                                                                    src="{{showImage($footer_content_new->payment_image?$footer_content_new->payment_image:'backend/img/default.png')}}" alt="">
