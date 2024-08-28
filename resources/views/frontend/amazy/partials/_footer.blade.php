@@ -93,7 +93,15 @@
                         <div class="footer_widget">
 						    <h4><b>Our legal</b></h4>
                             <ul class="footer_links">
-                                <li></li>
+                                @foreach($sectionWidgets->where('section','4') as $page)
+                                {{-- {{$page}} --}}
+                                    @if($page->pageData)
+                                        @if(!isModuleActive('Lead') && $page->pageData->module == 'Lead')
+                                            @continue
+                                        @endif
+                                        <li><a href="{{ url($page->pageData->slug) }}">{{$page->name}}</a></li>
+                                    @endif
+                                @endforeach
                             </ul>
                         </div>
                     </div>
