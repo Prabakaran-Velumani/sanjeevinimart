@@ -13074,10 +13074,9 @@ footer.home_three_footer .copyright_area .payment_imgs {
   text-transform: uppercase;
   display: block;
   border: none; 
-  border-radius: 18px;
   padding: 5px 3px;
   /* background: linear-gradient(135deg, #ff6f61, #ff3f6c);  */
-  background: red;
+  background:#b90004;
   width: 90px;
   text-align: center;
   box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 10px; 
@@ -17402,7 +17401,8 @@ section.return_part.padding_top.bg-white {
   justify-content: start !important;
   align-items: center;
   grid-gap: 20px;
-  background-color: #eee;
+  /* background-color: #eee; */
+  background-image: url("http://192.168.1.51/sanjeevinimart/public/uploads/all/66cee2203cf87.jpeg");
   margin-bottom: 0;
   transition-duration: 0.8s;
 }
@@ -19111,3 +19111,6 @@ background: #f6f6f6;
 .fotop-txt{
   text-align: center;
 }
+ .ui-resizable{
+  margin-top: 50px;
+ }
