@@ -1984,6 +1984,7 @@
     </div>
 </div>
 
+
 @php
     $news_paper = $widgets->where('section_name','news_paper')->first();
 @endphp

@@ -24,6 +24,36 @@
 </div> --}}
 @endif
 
+<div class="footer-top"> 
+  <div class="container">
+    <div class="row">
+	  <div class="col-xl-1 col-lg-1 col-md-6">
+	    
+	  </div>
+	  <div class="col-xl-2 col-lg-2 col-md-6">
+	    Free Delivery
+	  </div>
+	  <div class="col-xl-2 col-lg-2 col-md-6">
+	    100% Purchase Protection
+	  </div>
+	  <div class="col-xl-2 col-lg-2 col-md-6">
+	    Secure Payment
+	  </div>
+	  <div class="col-xl-2 col-lg-2 col-md-6">
+	    Assured Quality
+	  </div>
+	  <div class="col-xl-2 col-lg-2 col-md-6">
+	    100% Original Products
+	  </div>
+	  <div class="col-xl-1 col-lg-1 col-md-6">
+	    
+	  </div>
+	</div>
+  </div>
+</div>
+
+</div>
+
 <!-- FOOTER::START  -->
     <footer class="home_three_footer">
         <div class="main_footer_wrap">
@@ -31,7 +61,7 @@
                  <div class="row">
                     <div class="col-xl-2 col-lg-2 col-md-6 footer_links_50 ">
                         <div class="footer_widget" >
-						    <h3>Section1</h3>
+						    <h4><b>Information</b></h4>
                             <ul class="footer_links">
                                 @foreach($sectionWidgets->where('section','1') as $page)
                                     @if($page->pageData)
@@ -46,7 +76,7 @@
                     </div>
                     <div class="col-xl-2 col-lg-2 col-md-6 footer_links_50 ">
                         <div class="footer_widget">
-						    <h3>Section2</h3>
+						    <h4><b>My account</b></h4>
                             <ul class="footer_links">
                                 @foreach($sectionWidgets->where('section','2') as $page)
                                     @if($page->pageData)
@@ -61,7 +91,7 @@
                     </div>
 					<div class="col-xl-2 col-lg-2 col-md-6">
                         <div class="footer_widget">
-						    <h3>Section3</h3>
+						    <h4><b>Our legal</b></h4>
                             <ul class="footer_links">
                                 <li></li>
                             </ul>
@@ -69,7 +99,7 @@
                     </div>
                     <div class="col-lg-2 col-xl-2 col-md-6">
                         <div class="footer_widget" >
-                            <h3>Section4</h3>
+                            <h4><b>Get it on</b></h4>
                             <div class="apps_boxs">
                                 @if($footer_content->show_play_store)
                                 <a href="{{$footer_content->play_store}}" class="google_play_box d-flex align-items-center mb_10">
@@ -107,7 +137,7 @@
                     <div class="col-md-12">
                         <div class="copy_right_text d-flex align-items-center gap_20 flex-wrap justify-content-between">
                             @php echo app('general_setting')->footer_copy_right; @endphp
-                            <div class="footer_list_links">
+                            <!--<div class="footer_list_links">
                                 @foreach($sectionWidgets->where('section','3') as $page)
                                     @if($page->pageData)
                                         @if(!isModuleActive('Lead') && $page->pageData->module == 'Lead')
@@ -116,22 +146,23 @@
                                         <a href="{{ url($page->pageData->slug) }}">{{$page->name}}</a>
                                     @endif
                                 @endforeach
-                            </div>
+                            </div>-->
+							<img class="img-fluid" src="{{showImage($footer_content->payment_image)}}" alt="{{__('common.payment_method')}}" title="{{__('common.payment_method')}}">
                         </div>
                     </div>
                 </div>
                 @if($footer_content->show_payment_image != 0 && $footer_content->payment_image)
                     <div class="footer_border m-0"></div>
-                    <div class="row">
+                    <!--<div class="row">
                         <div class="col-12">
                             <div class="payment_imgs text-center ">
                                 <img class="img-fluid" src="{{showImage($footer_content->payment_image)}}" alt="{{__('common.payment_method')}}" title="{{__('common.payment_method')}}">
                             </div>
                         </div>
-                    </div>
+                    </div>-->
                 @endif
             </div>
-        </div>
+        </div><br />
     </footer>
     <!-- FOOTER::END  -->
 @include('frontend.amazy.auth.partials._login_modal')

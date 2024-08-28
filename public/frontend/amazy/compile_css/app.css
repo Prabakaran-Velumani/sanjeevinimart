@@ -7657,7 +7657,7 @@ header.amazcartui_header .header_area.navbar_fixed {
   box-shadow: 0px 3px 16px 0px rgba(0, 0, 0, 0.03);
   position: fixed;
   width: 100%;
-  top: -180px;
+  top: -173px;
   left: 0;
   right: 0;
   transform: translateY(70px);
@@ -9288,7 +9288,7 @@ header.amazcartui_header .header_area .menu_search_popup .menu_search_popup_fiel
 /* -------------------------------------------------------------------------- */
 /*----------------------------------------------------*/
 footer.home_three_footer {
-  background-color: var(--footer_background_color);
+  background-color: #eee;
 }
 footer.home_three_footer .footer_top_area {
   padding-top: 50px;
@@ -9296,7 +9296,7 @@ footer.home_three_footer .footer_top_area {
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 footer.home_three_footer .main_footer_wrap {
-  padding-top: 100px;
+  padding-top: 70px;
   padding-bottom: 24px;
 }
 @media (max-width: 767.98px) {
@@ -9406,11 +9406,12 @@ footer.home_three_footer .copyright_area {
   padding-bottom: 28px;
 }
 footer.home_three_footer .copyright_area .footer_border {
-  border-top: 1px solid #151515;
+  border-top: 1px solid #fff;
   margin-bottom: 23px;
 }
 footer.home_three_footer .copyright_area .copy_right_text {
-  padding: 17px 0;
+  padding: 17px 15px;
+  background-color: #f1f1f1;
 }
 footer.home_three_footer .copyright_area .copy_right_text p {
   margin-bottom: 0;
@@ -9454,22 +9455,23 @@ footer.home_three_footer .copyright_area .payment_imgs {
 }
 
 .google_play_box {
-  background: var(--base_color);
+  background: #fff;
   border-radius: 5px;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.05);
   padding: 11px 30px;
   grid-gap: 15px;
   min-width: 215px;
   max-width: 215px;
+  border:1px solid #ccc;
 }
 .google_play_box:hover {
-  background: var(--text_color);
+  background: #ff0007;
 }
 .google_play_box .google_play_text span {
   font-size: 12px;
   font-weight: 500;
   text-transform: uppercase;
-  color: #fff;
+  color: #ccc;
   line-height: 1;
   display: block;
   margin-bottom: 6px;
@@ -9477,9 +9479,12 @@ footer.home_three_footer .copyright_area .payment_imgs {
 .google_play_box .google_play_text h4 {
   font-size: 20px;
   font-weight: 700;
-  color: #fff;
+  color: #333;
   line-height: 1;
   margin: 0;
+}
+.google_play_box .google_play_text h4:hover {
+    color: #fff;
 }
 
 /*----------------------------------------------------*/
@@ -13033,10 +13038,17 @@ footer.home_three_footer .copyright_area .payment_imgs {
 .amaz_home_cartBox .amazcat_text_box h4 {
   margin-bottom: 0;
 }
-.amaz_home_cartBox .amazcat_text_box h4 a {
+/* .amaz_home_cartBox .amazcat_text_box h4 a {
   font-size: 20px;
   font-weight: 700;
   color: var(--text_color);
+  display: block;
+  text-transform: capitalize;
+} */
+.amaz_home_cartBox .amazcat_text_box h4 a {
+  font-size: 20px;
+  font-weight: 700;
+  color: #000000;
   display: block;
   text-transform: capitalize;
 }
@@ -13045,16 +13057,38 @@ footer.home_three_footer .copyright_area .payment_imgs {
 }
 .amaz_home_cartBox .amazcat_text_box p {
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
   color: #687083;
   margin: 4px 0 20px 0;
 }
-.amaz_home_cartBox .amazcat_text_box .shop_now_text {
+/* .amaz_home_cartBox .amazcat_text_box .shop_now_text {
   font-size: 14px;
   font-weight: 700;
   color: var(--base_color);
   text-transform: uppercase;
   display: block;
+} */.amaz_home_cartBox .amazcat_text_box .shop_now_text {
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff; 
+  text-transform: uppercase;
+  display: block;
+  border: none; 
+  border-radius: 18px;
+  padding: 5px 3px;
+  /* background: linear-gradient(135deg, #ff6f61, #ff3f6c);  */
+  background: red;
+  width: 90px;
+  text-align: center;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 10px; 
+  transition: background 0.3s, transform 0.3s; 
+  cursor: pointer; 
+  outline: none; 
+}
+
+.amaz_home_cartBox .amazcat_text_box .shop_now_text:hover {
+  background: linear-gradient(135deg, #ff3f6c, #ff6f61); 
+  transform: translateY(-2px); 
 }
 
 .amaz_cta_box {
@@ -13449,8 +13483,8 @@ footer.home_three_footer .copyright_area .payment_imgs {
 }
 .House_Appliances_product .product_widget5 {
   border: 1px solid var(--border_color);
-  margin-left: -1px;
-  margin-top: -1px;
+  margin-left: 23px;
+  margin-top: 12px;
 }
 .House_Appliances_product .product_widget5 .amaz_primary_btn {
   text-indent: -99999999px;
@@ -16138,8 +16172,8 @@ h4.test-center.compare_empty {
 }
 
 .amaz_home_cartBox .img_box {
-  width: 110px;
-  height: 110px;
+  width: 150px;
+  height: 150px;
   justify-content: center;
   align-items: center;
   display: flex;
@@ -17372,7 +17406,7 @@ section.return_part.padding_top.bg-white {
 
 .amaz_home_cartBox .img_box {
   display: flex;
-  flex: 110px 0 0;
+  flex: 150px 0 0;
 }
 
 .product_widget5 .product__meta h4,
@@ -18969,8 +19003,7 @@ header.amazcartui_header .header_area .main_header_area .shop_header_wrapper .ca
 }
 
 #feature_categories .col-xxl-3:nth-child(1) {
-  background-image: url('http://192.168.1.51/sanjeevinimart/public/uploads/all/66cd7bfe1f30c.jpeg'); 
-  
+  background: radial-gradient(circle at 10% 20%, rgb(220, 217, 249) 0%, rgb(172, 224, 217) 89.8%);
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -18978,7 +19011,7 @@ header.amazcartui_header .header_area .main_header_area .shop_header_wrapper .ca
 #feature_categories .col-xxl-3:nth-child(2) {
   /* background-color:#fff;	 */
   padding-left: 5px;
-  background-image: url(' http://192.168.1.51/sanjeevinimart/public/uploads/all/66cd7bfe07816.jpeg'); 
+  background: linear-gradient(60deg, #abecd6 0%, #fbed96 100%);
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -18986,7 +19019,7 @@ header.amazcartui_header .header_area .main_header_area .shop_header_wrapper .ca
 }
 #feature_categories .col-xxl-3:nth-child(3) {
   /* background-color:#ccc;	 */
-  background-image: url('http://192.168.1.51/sanjeevinimart/public/uploads/all/66cd7bfe0ce9d.jpeg'); 
+  background-image: linear-gradient(to right, #005aa7, #fffde4);
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -18996,7 +19029,7 @@ header.amazcartui_header .header_area .main_header_area .shop_header_wrapper .ca
 }
 #feature_categories .col-xxl-3:nth-child(4) {
   /* background-color:#fff;	 */
-  background-image: url(' http://192.168.1.51/sanjeevinimart/public/uploads/all/66cd802521e85.jpeg'); 
+  background-image: linear-gradient(to right, #ff6e7f, #bfe9ff);
 
    /* background-image: url(' ');  */
   background-size: cover;
@@ -19006,12 +19039,9 @@ header.amazcartui_header .header_area .main_header_area .shop_header_wrapper .ca
    
 }
 
-
-
 #feature_categories .col-xxl-3:nth-child(5) {
   /* background-color:#ccc; */
-  background-image: url('  http://192.168.1.51/sanjeevinimart/public/uploads/all/66cd81414435f.jpeg');
-
+  background: linear-gradient(115.3deg, rgb(67, 202, 177) 7.4%, rgb(255, 255, 255) 103.1%);
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -19021,8 +19051,7 @@ header.amazcartui_header .header_area .main_header_area .shop_header_wrapper .ca
 #feature_categories .col-xxl-3:nth-child(6) {
   /* background-color:#fff; */
 
-  background-image: url(' http://192.168.1.51/sanjeevinimart/public/uploads/all/66cd845848cdd.jpeg');
-
+  background: linear-gradient(-20deg, #dcb0ed 0%, #99c99c 100%);
 
   background-size: cover;
   background-repeat: no-repeat;
@@ -19031,22 +19060,33 @@ header.amazcartui_header .header_area .main_header_area .shop_header_wrapper .ca
  margin-top:30px;  
 }
 #feature_categories .col-xxl-3:nth-child(7) {
-  background-image: url(' http://192.168.1.51/sanjeevinimart/public/uploads/all/66cd85b4ec890.jpeg');
  
   /* background-color:#ccc; */
+ background: linear-gradient(110.5deg, rgba(248, 196, 249, 0.66) 22.8%, rgba(253, 122, 4, 0.15) 64.6%);
 
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-
  margin-top:30px;  
 }
 #feature_categories .col-xxl-3:nth-child(8) {
   /* background-color:#fff; */
+  background: radial-gradient(circle at 10% 20%, rgb(220, 217, 249) 0%, rgb(172, 224, 217) 89.8%);
  margin-top:30px;  
 }
 .amaz_home_cartBox .img_box{
   border: 1px solid white;
-border-radius: 111px;
-background: white;
+border-radius: 150px;
+background: #fff;
+}
+ #feature_categories {
+  margin-top: 55px;
+} 
+.amaz_fieature_active .product_widget5 {
+
+  width: 340px !important;
+}
+
+.footer-top {
+	background-color:#e1e1e1;
 }

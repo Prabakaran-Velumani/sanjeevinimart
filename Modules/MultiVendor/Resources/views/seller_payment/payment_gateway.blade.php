@@ -174,7 +174,7 @@
                                                     @elseif($payment->method == 'Midtrans')
 
                                                     <input type="hidden" name="ref_no"
-                                                        value="{{ rand(1111,99999).'-'.date('y-m-d').'-'.auth()->user()->id }}">
+                                                        value="{{ rand(1111,99999).'-'.date('Y-m-d').'-'.auth()->user()->id }}">
                                                     @elseif($payment->method == 'PayUMoney')
 
                                                     @elseif($payment->method == 'JazzCash')

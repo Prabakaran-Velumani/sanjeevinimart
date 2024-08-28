@@ -31,7 +31,7 @@ class PaytmController extends Controller
         $this->getCredential();
         $payment = PaytmWallet::with('receive');
         $payment->prepare([
-          'order' => date('y-m-d').'-'.rand(1,9999),
+          'order' => date('Y-m-d').'-'.rand(1,9999),
           'user' => $data['name'],
           'mobile_number' => $data['mobile'],
           'email' => $data['email'],

@@ -160,19 +160,19 @@ class Order extends Model
     {
         $year = Carbon::now()->year;
         if ($type == "today") {
-            return $query->whereBetween('created_at', [Carbon::now()->format('y-m-d')." 00:00:00", Carbon::now()->format('y-m-d')." 23:59:59"])->where('is_confirmed',1)->sum('grand_total');
+            return $query->whereBetween('created_at', [Carbon::now()->format('Y-m-d')." 00:00:00", Carbon::now()->format('Y-m-d')." 23:59:59"])->where('is_confirmed',1)->sum('grand_total');
         }
         if ($type == "week") {
-            return $query->whereBetween('created_at', [Carbon::now()->subDays(7)->format('y-m-d')." 00:00:00", Carbon::now()->format('y-m-d')." 23:59:59"])->where('is_confirmed',1)->sum('grand_total');
+            return $query->whereBetween('created_at', [Carbon::now()->subDays(7)->format('Y-m-d')." 00:00:00", Carbon::now()->format('Y-m-d')." 23:59:59"])->where('is_confirmed',1)->sum('grand_total');
         }
         if ($type == "month") {
             $month = Carbon::now()->month;
             $date_1 = Carbon::create($year, $month)->startOfMonth()->format('Y-m-d')." 00:00:00";
-            return $query->whereBetween('created_at', [$date_1, Carbon::now()->format('y-m-d')." 23:59:59"])->where('is_confirmed',1)->sum('grand_total');
+            return $query->whereBetween('created_at', [$date_1, Carbon::now()->format('Y-m-d')." 23:59:59"])->where('is_confirmed',1)->sum('grand_total');
         }
         if ($type == "year") {
             $date_1 = Carbon::create($year, 1)->startOfMonth()->format('Y-m-d')." 00:00:00";
-            return $query->whereBetween('created_at', [$date_1, Carbon::now()->format('y-m-d')." 23:59:59"])->where('is_confirmed',1)->sum('grand_total');
+            return $query->whereBetween('created_at', [$date_1, Carbon::now()->format('Y-m-d')." 23:59:59"])->where('is_confirmed',1)->sum('grand_total');
         }
 
     }
@@ -181,19 +181,19 @@ class Order extends Model
     {
         $year = Carbon::now()->year;
         if ($type == "today") {
-            $query->whereBetween('created_at', [Carbon::now()->format('y-m-d')." 00:00:00", Carbon::now()->format('y-m-d')." 23:59:59"]);
+            $query->whereBetween('created_at', [Carbon::now()->format('Y-m-d')." 00:00:00", Carbon::now()->format('Y-m-d')." 23:59:59"]);
         }
         elseif ($type == "week") {
-            $query->whereBetween('created_at', [Carbon::now()->subDays(7)->format('y-m-d')." 00:00:00", Carbon::now()->format('y-m-d')." 23:59:59"]);
+            $query->whereBetween('created_at', [Carbon::now()->subDays(7)->format('Y-m-d')." 00:00:00", Carbon::now()->format('Y-m-d')." 23:59:59"]);
         }
         elseif ($type == "month") {
             $month = Carbon::now()->month;
             $date_1 = Carbon::create($year, $month)->startOfMonth()->format('Y-m-d')." 00:00:00";
-            $query->whereBetween('created_at', [$date_1, Carbon::now()->format('y-m-d')." 23:59:59"]);
+            $query->whereBetween('created_at', [$date_1, Carbon::now()->format('Y-m-d')." 23:59:59"]);
         }
         elseif ($type == "year") {
             $date_1 = Carbon::create($year, 1)->startOfMonth()->format('Y-m-d')." 00:00:00";
-            $query->whereBetween('created_at', [$date_1, Carbon::now()->format('y-m-d')." 23:59:59"]);
+            $query->whereBetween('created_at', [$date_1, Carbon::now()->format('Y-m-d')." 23:59:59"]);
         }
 
         if ($state === "all") {
