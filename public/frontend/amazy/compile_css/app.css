@@ -19112,5 +19112,6 @@ background: #f6f6f6;
   text-align: center;
 }
  .ui-resizable{
-  margin-top: 50px;
+ padding-top: 30px;
+ padding-bottom: 30px;
  }
