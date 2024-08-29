@@ -735,5 +735,6 @@ return [
     "wating_for_admin_approval" => "Wating for admin Approval",
     "subscription_plan" => "Subscription Plan",
     "create_date"=> "Create Date",
-
+    'warehouse' => 'Warehouse',
+    'warehouse_address' => 'Warehouse Address',
 ];

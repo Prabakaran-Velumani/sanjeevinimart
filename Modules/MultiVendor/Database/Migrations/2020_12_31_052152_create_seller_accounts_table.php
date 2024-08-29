@@ -20,6 +20,7 @@ class CreateSellerAccountsTable extends Migration
                 $table->id();
                 $table->bigInteger('user_id');
                 $table->tinyInteger('seller_commission_id')->default(0);
+                $table->tinyInteger('wharehouse_id')->default(0);
                 $table->decimal('commission_rate',16,2)->nullable();
                 $table->string('seller_id')->unique();
                 $table->string('banner')->nullable();

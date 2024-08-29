@@ -28,9 +28,9 @@
             </li>
         @endif
 
-        @if (permissionCheck('shipping.pickup_locations.index') && menuManagerCheck(2,41,'shipping.pickup_locations.index')->status == 1)
-            <li data-position="{{ menuManagerCheck(2,41,'shipping.pickup_locations.index')->position }}">
-                <a href="{{route('shipping.pickup_locations.index')}}" @if (request()->routeIs('shipping.pickup_locations.*')) class="active" @endif>{{ __('shipping.pickup_locations') }}</a>
+        @if (permissionCheck('shipping.warehouse.index') && menuManagerCheck(2,41,'shipping.warehouse.index')->status == 1)
+            <li data-position="{{ menuManagerCheck(2,41,'shipping.warehouse.index')->position }}">
+                <a href="{{route('shipping.warehouse.index')}}" @if (request()->routeIs('shipping.warehouse.*')) class="active" @endif>{{ __('shipping.warehouse') }}</a>
             </li>
         @endif
         @if (permissionCheck('shipping.pending_orders.index') && menuManagerCheck(2,41,'shipping.pending_orders.index')->status == 1)

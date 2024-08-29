@@ -126,10 +126,16 @@
     'deliver_to' => 'Deliver To',
     'shipped_by' => ' Shipped By (If undelivered, return to)',
     'delivery_from_pickup_location_always_free_of_cost' => 'Delivery from pickup location always free of cost',
+    'delivery_from_warehouse_always_free_of_cost' => 'Delivery from warehouse always free of cost',
     'estimated_arrival_time' => 'Est arrival time',
     'estimated_arrival_date' => 'Est arrival date',
     'shipping_amount_back_refund_complete' => 'Shipping Amount Back Refund Completed',
     'destination' => "Destination",
     'Return address' => "Return Address",
-    "Print of Manifestation " => "Print of Manifestation "
+    "Print of Manifestation " => "Print of Manifestation ",
+    "add_new_warehouse" => "Add New Warehouse",
+    'warehouse' => 'Warehouse',
+    'warehouses' => 'Warehouses',
+    'warehouses_details' => 'Warehouses Details',
+    'edit_warehouses' => 'Edit Warehouse',
 ];
