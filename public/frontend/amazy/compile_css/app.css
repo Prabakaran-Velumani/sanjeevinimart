@@ -19115,6 +19115,9 @@ background: #f6f6f6;
 .fotop-txt{
   text-align: center;
 }
+.fotop-txt:hover{
+  color: #b90004;
+}
  /* .ui-resizable{
  padding-top: 10px;
  padding-bottom: 10px;
