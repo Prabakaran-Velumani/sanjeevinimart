@@ -13,14 +13,27 @@ class SupportTicketStatusRequest extends FormRequest
      */
     public function rules()
     {
+        // if (isModuleActive('FrontendMultiLang')) {
+        //     $code = auth()->user()->lang_code;
+        //     return [
+        //         'name.'. $code => "required|unique_translation:ticket_statuses,name,{$this->id}",
+        //     ];
+        // }else{
+        //     return [
+        //         'name' => 'required|string|unique:ticket_statuses,name,'.$this->id,
+        //     ];
+        // }
+
+        $id = $this->id ? $this->id : 'NULL';
+
         if (isModuleActive('FrontendMultiLang')) {
             $code = auth()->user()->lang_code;
             return [
-                'name.'. $code => "required|unique_translation:ticket_statuses,name,{$this->id}",
+                'name.' . $code => "required|unique_translation:ticket_statuses,name,{$id},id", // Handle the case where id is null
             ];
-        }else{
+        } else {
             return [
-                'name' => 'required|string|unique:ticket_statuses,name,'.$this->id,
+                'name' => 'required|string|unique:ticket_statuses,name,' . $id . ',id', // Ensure id is properly set or NULL
             ];
         }
     }

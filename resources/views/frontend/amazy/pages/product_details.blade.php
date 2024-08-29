@@ -442,7 +442,38 @@
                                                     </div>
                                                 @elseif($product->stock_manage == 0)
                                                     <div class="col-6">
-                                                        <button type="button" id="add_to_cart_btn" class="amaz_primary_btn style2 mb_20  add_to_cart text-uppercase add_to_cart_btn flex-fill text-center w-100">{{__('common.add_to_cart')}}</button>
+                                                        @php
+                                                            if (@$product->thum_img != null) {
+                                                                $thumbnail = showImage(@$product->thum_img);
+                                                            } else {
+                                                                $thumbnail = showImage(@$product->product->thumbnail_image_source);
+                                                            }
+
+                                                            $price_qty = getProductDiscountedPrice(@$product);
+                                                            $showData = [
+                                                                'name' => @$product->product_name,
+                                                                'url' => singleProductURL(@$product->seller->slug, @$product->slug),
+                                                                'price' => $price_qty,
+                                                                'thumbnail' => $thumbnail,
+                                                            ];
+                                                        @endphp
+                                                        <button type="button" id="add_to_cart_btn" class="amaz_primary_btn style2 mb_20  add_to_cart text-uppercase add_to_cart_btn flex-fill text-center w-100 addToCartFromThumnail" data-producttype="{{ @$product->product->product_type }}" data-seller={{ $product->user_id }} data-product-sku={{ @$product->skus->first()->id }}
+                                                        @if (@$product->hasDeal)
+                                                            data-base-price={{ selling_price(@$product->skus->first()->sell_price,@$product->hasDeal->discount_type,@$product->hasDeal->discount) }}
+                                                        @else
+                                                            @if (@$product->hasDiscount == 'yes')
+                                                                data-base-price={{ selling_price(@$product->skus->first()->sell_price,@$product->discount_type,@$product->discount) }}
+                                                            @else
+                                                                data-base-price={{ @$product->skus->first()->sell_price }}
+                                                            @endif
+                                                        @endif
+                                                        data-shipping-method=0
+                                                        data-product-id={{ $product->id }}
+                                                        data-stock_manage="{{$product->stock_manage}}"
+                                                        data-stock="{{@$product->skus->first()->product_stock}}"
+                                                        data-min_qty="{{@$product->product->minimum_order_qty}}"
+                                                        data-prod_info="{{ json_encode($showData) }}"
+                                                        >{{__('common.add_to_cart')}}</button>
                                                     </div>
                                                     <div class="col-6">
                                                         <button type="button" id="butItNow" class="amaz_primary_btn3 mb_20  w-100 text-center justify-content-center text-uppercase buy_now_btn" data-id="{{$product->id}}" data-type="product">{{__('common.buy_now')}}</button>
