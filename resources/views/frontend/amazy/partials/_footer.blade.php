@@ -128,7 +128,7 @@
                                 @if($footer_content->show_app_store)
                                 <a href="{{$footer_content->app_store}}" class="google_play_box d-flex align-items-center">
                                     <div class="icon">
-                                        <img src="{{url('/')}}/public/frontend/amazy/img/amaz_icon/apple_icon.svg" alt="{{__('amazy.Apple Store')}}"  title="{{__('amazy.Apple Store')}}">
+                                        <img src="{{url('/')}}/public/frontend/amazy/img/amaz_icon/aplg.png" alt="{{__('amazy.Apple Store')}}"  title="{{__('amazy.Apple Store')}}">
                                     </div>
                                     <div class="google_play_text">
                                         <span>{{__('amazy.Get it on')}}</span>
