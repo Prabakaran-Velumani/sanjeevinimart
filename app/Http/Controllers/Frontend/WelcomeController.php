@@ -53,6 +53,7 @@ class WelcomeController extends Controller
             }
             $CategoryList = collect();
             $widgets = HomePageSection::all();
+            $DynamicPages = DynamicPage::all();
             $previous_route = session()->get('previous_user_last_route');
             $previous_user_id = session()->get('previous_user_id');
             if ($previous_route != null) {
@@ -60,7 +61,7 @@ class WelcomeController extends Controller
                 session()->forget('previous_user_last_route');
                 return redirect($previous_route);
             } else {
-                return view(theme('welcome'), compact('CategoryList', 'widgets'));
+                return view(theme('welcome'), compact('CategoryList', 'widgets','DynamicPages'));
             }
         } catch (Exception $e) {
             LogActivity::errorLog($e->getMessage());

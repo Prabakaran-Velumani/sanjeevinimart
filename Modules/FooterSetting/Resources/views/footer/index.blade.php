@@ -47,7 +47,8 @@ $LanguageList = getLanguageList();
                                             <a class="nav-link {{ $footerTab == 5?'active':'' }} show active_section_class" href="#footer_4" role="tab" data-toggle="tab" id="5" data-id="5" aria-selected="true">{{$FooterContent->footer_section_three_title}}</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link {{ $footerTab == 7?'active':'' }} show active_section_class" href="#footer_5" role="tab" data-toggle="tab" id="7" data-id="7" aria-selected="true">{{$FooterContent->footer_section_four_title}}</a>
+                                            <a class="nav-link {{ $footerTab == 7?'active':'' }} show active_section_class" href="#footer_5" role="tab" data-toggle="tab" id="7" data-id="7" aria-selected="true">
+                                            {{$FooterContent->footer_section_four_title}}</a>
                                         </li>
                                     </ul>
                                 </div>

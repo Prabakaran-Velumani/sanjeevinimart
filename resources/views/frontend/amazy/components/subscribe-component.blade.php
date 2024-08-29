@@ -1,4 +1,4 @@
-<div class="col-lg-3  col-md-6">
+<div class="col-lg-4  col-md-6">
     <div class="footer_widget">
         <div class="footer_title">
             <h3>{{ @$subscribeContent->title }}</h3>

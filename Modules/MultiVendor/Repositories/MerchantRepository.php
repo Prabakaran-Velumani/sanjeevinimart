@@ -66,7 +66,7 @@ class MerchantRepository
 
     public function create($data)
     {
-        $role = Role::where('type', 'seller')->first();
+        $role = Role::where('type', 'seller')->first();        
         $user =  User::create([
             'first_name' => $data['name'],
             'email' => $data['email'],
