@@ -1993,8 +1993,19 @@
     <div class="container">
         <div class="row">
             <div class="product__meta px-3 text-center">
-                <h5>{{$news_paper->title}}</h5>
+                <!-- <h5>{{$news_paper->title}}</h5> -->
             </div>
+                @foreach($DynamicPages as $key => $pages)
+                @if($pages->slug === 'handicarft')
+                <!-- <div class="amaz_recomanded_box_body2 dataApp"> -->
+                    <div class="">
+
+                    @php
+                        echo $pages->description;
+                    @endphp
+                </div>
+                @endif
+                @endforeach
         </div>
     </div>
 </div>

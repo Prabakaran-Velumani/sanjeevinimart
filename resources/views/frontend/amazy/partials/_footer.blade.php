@@ -24,26 +24,31 @@
 </div> --}}
 @endif
 
-<div class="footer-top"> 
-  <div class="container">
+<div class="footer-top" style="background-image: url('http://192.168.1.51/sanjeevinimart/public/uploads/all/66cec1a66c853.png'); ">
+  <div class="container" >
     <div class="row">
 	  <div class="col-xl-1 col-lg-1 col-md-6">
 	    
 	  </div>
-	  <div class="col-xl-2 col-lg-2 col-md-6">
-	    Free Delivery
+	  <div class="col-xl-2 col-lg-2 col-md-6 footer_links_50">
+      <center><img src="http://192.168.1.51/sanjeevinimart/public/uploads/all/66ceb51342575.png" alt="Italian Trulli"></center>
+	    <div class="fotop-txt">Free Delivery</div>
 	  </div>
-	  <div class="col-xl-2 col-lg-2 col-md-6">
-	    100% Purchase Protection
+	  <div class="col-xl-2 col-lg-2 col-md-6 footer_links_50">
+      <center><img src="http://192.168.1.51/sanjeevinimart/public/uploads/all/66ceb58091987.png" alt="Italian Trulli"></center>
+	    <div class="fotop-txt">100% Purchase Protection</div>
 	  </div>
-	  <div class="col-xl-2 col-lg-2 col-md-6">
-	    Secure Payment
+	  <div class="col-xl-2 col-lg-2 col-md-6 footer_links_50">
+      <center><img src="http://192.168.1.51/sanjeevinimart/public/uploads/all/66ceb58092fbd.png" alt="Italian Trulli"></center>
+	    <div class="fotop-txt">Secure Payment</div>
 	  </div>
-	  <div class="col-xl-2 col-lg-2 col-md-6">
-	    Assured Quality
+	  <div class="col-xl-2 col-lg-2 col-md-6 footer_links_50">
+      <center><img src="http://192.168.1.51/sanjeevinimart/public/uploads/all/66ceb5808e056.png" alt="Italian Trulli"></center>
+	    <div class="fotop-txt">Assured Quality</div>
 	  </div>
-	  <div class="col-xl-2 col-lg-2 col-md-6">
-	    100% Original Products
+	  <div class="col-xl-2 col-lg-2 col-md-6 footer_links_50">
+      <center><img src="http://192.168.1.51/sanjeevinimart/public/uploads/all/66ceb580912b5.png" alt="Italian Trulli"></center>
+	    <div class="fotop-txt">100% Original Products</div>
 	  </div>
 	  <div class="col-xl-1 col-lg-1 col-md-6">
 	    
@@ -93,7 +98,15 @@
                         <div class="footer_widget">
 						    <h4><b>Our legal</b></h4>
                             <ul class="footer_links">
-                                <li></li>
+                                @foreach($sectionWidgets->where('section','4') as $page)
+                                {{-- {{$page}} --}}
+                                    @if($page->pageData)
+                                        @if(!isModuleActive('Lead') && $page->pageData->module == 'Lead')
+                                            @continue
+                                        @endif
+                                        <li><a href="{{ url($page->pageData->slug) }}">{{$page->name}}</a></li>
+                                    @endif
+                                @endforeach
                             </ul>
                         </div>
                     </div>
