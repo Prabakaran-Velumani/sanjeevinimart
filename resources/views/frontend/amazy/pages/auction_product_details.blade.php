@@ -667,7 +667,9 @@
                                         <option data-display="Choose pickup warehouse" disabled>{{__('amazy.Choose pickup warehouse')}}</option>
                                         @if($pickup_locations)
                                         @foreach($pickup_locations as $pickup_location)
-                                            <option value="{{$pickup_location->id}}" {{$pickup_location->is_default?'selected':''}}>{{$pickup_location->address}}</option>
+                                            <option value="{{$pickup_location->id}}" 
+                                                {{-- {{$pickup_location->is_default?'selected':''}} --}}
+                                                >{{$pickup_location->address}}</option>
                                         @endforeach
                                         @endif
                                     </select>
@@ -1490,7 +1492,7 @@
                     }
                     if (response.pickup_location != null) {
                         $('#warehouse').text(`
-                            {{__('shipping.delivery_from_warehouse_always_free_of_cost')}} {{__('common.warehouse_address')}}: ${response.pickup_location.address}.
+                             ${response.pickup_location.address}.
                             {{__('common.country')}}: ${response.pickup_location.country.name} {{__('common.state')}}: ${response.pickup_location.state.name} {{__('common.city')}}: ${response.pickup_location.city.name} {{__('common.postcode')}}: ${response.pickup_location.pin_code}
                         `);
                     }

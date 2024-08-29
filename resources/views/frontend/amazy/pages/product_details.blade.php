@@ -874,7 +874,9 @@
                                         <option data-display="Choose warehouse location" disabled>{{__('amazy.Choose warehouse location')}}</option>
                                         @if($pickup_locations)
                                         @foreach($pickup_locations as $pickup_location)
-                                            <option value="{{$pickup_location->id}}" {{$pickup_location->is_default?'selected':''}}>{{$pickup_location->address}}</option>
+                                             <option value="{{$pickup_location->id}}" 
+                                              {{--  {{$pickup_location->is_default?'selected':''}} --}} 
+                                                >{{$pickup_location->address}}</option>
                                         @endforeach
                                         @endif
                                     </select>
@@ -895,7 +897,7 @@
                                 </div>
                                 <div class="amazcart_delivery_wiz_content">
                                     <h4 class="font_16 f_w_700 mb_6">{{__('amazy.warehouse location')}}</h4>
-                                    <p class="delivery_text font_14 f_w_400 mb-0" id="pickup_location"></p>
+                                    <p class="delivery_text font_14 f_w_400 mb-0" id="warehouse"></p>
                                 </div>
                             </div>
                         </div>
@@ -1943,8 +1945,8 @@
                         }
                     }
                     if (response.pickup_location != null) {
-                        $('#pickup_location').text(`
-                            {{__('shipping.delivery_from_pickup_location_always_free_of_cost')}} {{__('common.pickup_address')}}: ${response.pickup_location.address}.
+                        $('#warehouse').text(`
+                          ${response.pickup_location.address}.
                             {{__('common.country')}}: ${response.pickup_location.country.name} {{__('common.state')}}: ${response.pickup_location.state.name} {{__('common.city')}}: ${response.pickup_location.city.name} {{__('common.postcode')}}: ${response.pickup_location.pin_code}
                         `);
                     }
