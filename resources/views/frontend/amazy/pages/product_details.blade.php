@@ -442,7 +442,7 @@
                                                     </div>
                                                 @elseif($product->stock_manage == 0)
                                                     <div class="col-6">
-                                                        <button type="button" id="add_to_cart_btn" class="amaz_primary_btn style2 mb_20  add_to_cart text-uppercase add_to_cart_btn flex-fill text-center w-100">{{__('common.add_to_cart')}}</button>
+                                                        <button type="button" id="add_to_cart_btn" class="amaz_primary_btn style2 mb_20  add_to_cart text-uppercase add_to_cart_btn flex-fill text-center w-100" >{{__('common.add_to_cart')}}</button>
                                                     </div>
                                                     <div class="col-6">
                                                         <button type="button" id="butItNow" class="amaz_primary_btn3 mb_20  w-100 text-center justify-content-center text-uppercase buy_now_btn" data-id="{{$product->id}}" data-type="product">{{__('common.buy_now')}}</button>

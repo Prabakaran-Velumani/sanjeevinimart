@@ -168,13 +168,13 @@ class GeneralSettingController extends Controller
         }
 
         if ($request->favicon_logo != null) {
-            $url = $this->saveSettingsImages($request->favicon_logo,50,50);
+            $url = $this->saveSettingsImage($request->favicon_logo,50,50);
             $this->deleteImage(app('general_setting')->favicon);
             $this->savePWAIcon($request->favicon_logo);
             $request->merge(["favicon" => $url]);
         }
         if ($request->site_logo != null) {
-            $url = $this->saveSettingsImages($request->site_logo,50, 193);
+            $url = $this->saveSettingsImage($request->site_logo,50, 193);
             $this->deleteImage(app('general_setting')->logo);
             $this->savePWASplash($request->site_logo);
             $request->merge(["logo" => $url]);
