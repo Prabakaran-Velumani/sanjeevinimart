@@ -24,7 +24,7 @@
 @section('content')
     <!-- home_banner::start  -->
     @php
-    
+
         $headers = \Modules\Appearance\Entities\Header::all();
     @endphp
     <x-slider-component :headers="$headers"/>
@@ -1450,6 +1450,7 @@
                         <!-- conttent  -->
                         <div class="amaz_fieature_active fieature_crousel_area owl-carousel">
                             @foreach($top_rating->getHomePageProductByQuery() as $key => $product)
+
                             <div class="product_widget5 mb_30 style5">
                                 <div class="product_thumb_upper">
                                     @php
@@ -2180,7 +2181,7 @@
                                     </a>
                                 </div>
 
-                                @endif 
+                                @endif
                             </div>
                         </div>
 
