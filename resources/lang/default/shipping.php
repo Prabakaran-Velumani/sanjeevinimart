@@ -135,6 +135,7 @@
     "Print of Manifestation " => "Print of Manifestation ",
     "add_new_warehouse" => "Add New Warehouse",
     'warehouse' => 'Warehouse',
+    'warehouse_location' => 'Warehouse Location',
     'warehouses' => 'Warehouses',
     'warehouses_details' => 'Warehouses Details',
     'edit_warehouses' => 'Edit Warehouse',

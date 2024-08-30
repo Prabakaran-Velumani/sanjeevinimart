@@ -11,9 +11,9 @@
             <input type="hidden" value="{{$row->id}}" id="rowId">
             <div class="col-lg-12">
                 <div class="primary_input mb-15">
-                    <label class="primary_input_label" for="warehouse"> {{__("shipping.warehouse")}} <span class="text-danger">*</span></label>
-                    <input class="primary_input_field" name="pickup_location" id="pickup_location" placeholder="{{__("shipping.warehouse")}}" type="text" value="{{$row->pickup_location}}">
-                    <span class="text-danger" id="error_pickup_location"></span>
+                    <label class="primary_input_label" for="warehouse"> {{__("shipping.warehouse_location")}} <span class="text-danger">*</span></label>
+                    <input class="primary_input_field" name="warehouse_location" id="warehouse_location" placeholder="{{__("shipping.warehouse")}}" type="text" value="{{$row->pickup_location}}">
+                    <span class="text-danger" id="error_warehouse_location"></span>
                 </div>
             </div>
 

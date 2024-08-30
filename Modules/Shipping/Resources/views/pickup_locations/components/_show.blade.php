@@ -17,7 +17,7 @@
                                     <table class="table pos_table pt-0 shadow_none pb-0 bg-transparent ">
                                         <tbody>
                                             <tr>
-                                                <th scope="col">{{__('shipping.warehouse')}}</th>
+                                                <th scope="col">{{__('shipping.warehouse_location')}}</th>
                                                 <td>{{ $row->pickup_location }}</td>
                                             </tr>
                                             <tr>
