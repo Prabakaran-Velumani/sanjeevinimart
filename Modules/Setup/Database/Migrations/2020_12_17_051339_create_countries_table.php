@@ -23,7 +23,7 @@ class CreateCountriesTable extends Migration
 
         $sql_path = base_path('static_sql/countries.sql');
         DB::unprepared(file_get_contents($sql_path));
-        
+        DB::statement("SELECT setval(pg_get_serial_sequence('countries', 'id'), (SELECT MAX(id) FROM countries) + 1);");
     }
 
     

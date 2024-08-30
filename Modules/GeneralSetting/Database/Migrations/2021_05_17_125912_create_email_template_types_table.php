@@ -20,7 +20,7 @@ class CreateEmailTemplateTypesTable extends Migration
             $table->string('module')->nullable();
             $table->timestamps();
         });
-        Log::info('****** exsist 1******* ');
+        //Log::info('****** exsist 1******* ');
         DB::statement("INSERT INTO email_template_types (id, type, created_at, updated_at) VALUES
             (1, 'order_invoice_template', NULL, '2021-01-20 12:40:47'),
             (2, 'order_pending_template', NULL, '2021-01-20 12:40:47'),
@@ -53,7 +53,7 @@ class CreateEmailTemplateTypesTable extends Migration
         ");
         // last id 43
       // Reset the sequence to start after the highest existing ID
-      DB::statement("ALTER SEQUENCE email_template_types_id_seq RESTART WITH 33");
+    DB::statement("SELECT setval('attributes_id_seq', (SELECT COALESCE(MAX(id) + 1, 1) FROM email_template_types), true)");
     }
 
 
