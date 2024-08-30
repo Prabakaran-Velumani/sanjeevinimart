@@ -50,7 +50,7 @@
         </div>
         <div class="row">
             @foreach($feature_categories->getCategoryByQuery() as $key => $category)
-                <div class="col-xxl-3 col-lg-4 col-md-6">
+                <div class="col-xxl-3 col-lg-3 col-md-6">
                     <div class="amaz_home_cartBox amaz_cat_bg1 d-flex justify-content-between mb_30">
                         <div class="img_box">
                             @if(app('general_setting')->lazyload == 1)
@@ -657,7 +657,6 @@
 
 <div id="filter_category_2" class="amaz_section section_spacing2 {{@$filter_category_2->status == 0?'d-none':''}}">
     <div class="container ">
-        {{-- {{$category->subCategories}} --}}
         @if($category)
             <div class="row no-gutters">
                 <div class="col-xl-5 p-0 col-lg-12">
@@ -691,16 +690,7 @@
                                 <div class="tab-pane fade {{$key == 0?'show active':''}}" id="fashion_tab_pane_subcat_{{$subcat->id}}" role="tabpanel" aria-labelledby="Dining-tab">
                                     <!-- content  -->
                                     <div class="House_Appliances_product">
-                                        @php 
-                                        $i = 1;
-                                    @endphp
-                                    {{$subcat}}
-                                    @foreach($subcat->sellerProductTake() as $product)
-        
-                                        @php echo $i; $i++; @endphp
-                                    @endforeach
                                         @foreach($subcat->sellerProductTake() as $product)
-                                        {{$product}}
                                         <div class="product_widget5 style4 mb-0 style5">
                                             <div class="product_thumb_upper">
                                                 @php
