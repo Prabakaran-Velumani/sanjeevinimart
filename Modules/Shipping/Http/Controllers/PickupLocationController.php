@@ -90,7 +90,7 @@ class PickupLocationController extends Controller
     {
         try {
             $this->pickupLocationRepo->update($request->validated(),$id);
-            LogActivity::successLog('Pickup location updated');
+            LogActivity::successLog('Warehouse updated');
             Toastr::success(__('common.updated_successfully'),__('common.success'));
             return $this->reloadWithData();
         } catch (\Exception $e) {
@@ -107,11 +107,11 @@ class PickupLocationController extends Controller
         try {
             $result = $this->pickupLocationRepo->delete($request->id);
             if($result){
-                LogActivity::successLog('Pickup Location has been destroyed.');
+                LogActivity::successLog('Warehouse has been destroyed.');
                 return $this->reloadWithData();
             }else{
                 return response()->json([
-                    'msg' => 'Default pickup location is not deletable.'
+                    'msg' => 'Default Warehouse is not deletable.'
                 ]);
             }
         } catch (\Exception $e) {

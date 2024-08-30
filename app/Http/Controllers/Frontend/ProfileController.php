@@ -113,10 +113,10 @@ class ProfileController extends Controller
                 $data['graph_total_sales'] = Order::count();
                 $data['graph_cancelled_sales'] = count(Order::where('is_cancelled', 1)->get());
                 $data['graph_completed_sales'] = count(Order::where('is_completed', 1)->get());
-                $data['graph_sales_today'] = count(Order::where('is_confirmed', 0)->whereBetween('created_at', [Carbon::now()->format('y-m-d')." 00:00:00", Carbon::now()->format('y-m-d')." 23:59:59"])->get());
-                $data['graph_pending_sales_today'] = count(Order::where('is_confirmed', 0)->whereBetween('created_at', [Carbon::now()->format('y-m-d')." 00:00:00", Carbon::now()->format('y-m-d')." 23:59:59"])->get());
-                $data['graph_processing_sales_today'] = count(Order::where('is_confirmed', 1)->whereBetween('created_at', [Carbon::now()->format('y-m-d')." 00:00:00", Carbon::now()->format('y-m-d')." 23:59:59"])->get());
-                $data['graph_completed_sales_today'] = count(Order::where('is_completed', 1)->whereBetween('created_at', [Carbon::now()->format('y-m-d')." 00:00:00", Carbon::now()->format('y-m-d')." 23:59:59"])->get());
+                $data['graph_sales_today'] = count(Order::where('is_confirmed', 0)->whereBetween('created_at', [Carbon::now()->format('Y-m-d')." 00:00:00", Carbon::now()->format('Y-m-d')." 23:59:59"])->get());
+                $data['graph_pending_sales_today'] = count(Order::where('is_confirmed', 0)->whereBetween('created_at', [Carbon::now()->format('Y-m-d')." 00:00:00", Carbon::now()->format('Y-m-d')." 23:59:59"])->get());
+                $data['graph_processing_sales_today'] = count(Order::where('is_confirmed', 1)->whereBetween('created_at', [Carbon::now()->format('Y-m-d')." 00:00:00", Carbon::now()->format('Y-m-d')." 23:59:59"])->get());
+                $data['graph_completed_sales_today'] = count(Order::where('is_completed', 1)->whereBetween('created_at', [Carbon::now()->format('Y-m-d')." 00:00:00", Carbon::now()->format('Y-m-d')." 23:59:59"])->get());
                 $data['graph_total_sellers'] = isModuleActive('MultiVendor')?count(SellerAccount::all()):0;
                 $data['graph_normal_sellers'] = isModuleActive('MultiVendor')?count(SellerAccount::where('is_trusted', 0)->get()):0;
                 $data['graph_trusted_sellers'] = isModuleActive('MultiVendor')?count(SellerAccount::where('is_trusted', 1)->get()):0;
@@ -133,8 +133,8 @@ class ProfileController extends Controller
                                                     ->orderBy('total','desc')
                                                     ->take(10)
                                                     ->get(['seller_id']);
-                $data['graph_total_authorized_order'] = count(Order::where('customer_id', '!=', null)->whereBetween('created_at', [Carbon::now()->format('y-m-d')." 00:00:00", Carbon::now()->format('y-m-d')." 23:59:59"])->get());;
-                $data['graph_total_guest_order'] = count(Order::where('customer_id', null)->whereBetween('created_at', [Carbon::now()->format('y-m-d')." 00:00:00", Carbon::now()->format('y-m-d')." 23:59:59"])->get());;
+                $data['graph_total_authorized_order'] = count(Order::where('customer_id', '!=', null)->whereBetween('created_at', [Carbon::now()->format('Y-m-d')." 00:00:00", Carbon::now()->format('Y-m-d')." 23:59:59"])->get());;
+                $data['graph_total_guest_order'] = count(Order::where('customer_id', null)->whereBetween('created_at', [Carbon::now()->format('Y-m-d')." 00:00:00", Carbon::now()->format('Y-m-d')." 23:59:59"])->get());;
                 $data['total_product_in_cart'] = Cart::TotalCart('today');
                 return view('backEnd.dashboard', $data);
             }else {

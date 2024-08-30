@@ -9,14 +9,14 @@ class SellerRepository {
     public function orderCommissionForAdmin($data){
         $year = Carbon::now()->year;
         if($data == 'today'){
-            $payments = OrderPayment::whereBetween('created_at', [Carbon::now()->format('y-m-d')." 00:00:00", Carbon::now()->format('y-m-d')." 23:59:59"])->where('amount_goes_to_seller', 1)->where('commision_amount', '>', 0)->whereHas('order', function($query){
+            $payments = OrderPayment::whereBetween('created_at', [Carbon::now()->format('Y-m-d')." 00:00:00", Carbon::now()->format('Y-m-d')." 23:59:59"])->where('amount_goes_to_seller', 1)->where('commision_amount', '>', 0)->whereHas('order', function($query){
                 return $query->whereHas('packages', function($q){
                     return $q->where('seller_id', getParentSellerId());
                 });
             })->sum('commision_amount');
         }
         elseif($data == 'week'){
-            $payments = OrderPayment::whereBetween('created_at', [Carbon::now()->subDays(7)->format('y-m-d')." 00:00:00", Carbon::now()->format('y-m-d')." 23:59:59"])->where('amount_goes_to_seller', 1)->where('commision_amount', '>', 0)->whereHas('order', function($query){
+            $payments = OrderPayment::whereBetween('created_at', [Carbon::now()->subDays(7)->format('Y-m-d')." 00:00:00", Carbon::now()->format('Y-m-d')." 23:59:59"])->where('amount_goes_to_seller', 1)->where('commision_amount', '>', 0)->whereHas('order', function($query){
                 return $query->whereHas('packages', function($q){
                     return $q->where('seller_id', getParentSellerId());
                 });
@@ -25,7 +25,7 @@ class SellerRepository {
         elseif($data == 'month'){
             $month = Carbon::now()->month;
             $date_1 = Carbon::create($year, $month)->startOfMonth()->format('Y-m-d')." 00:00:00";
-            $payments = OrderPayment::whereBetween('created_at', [$date_1, Carbon::now()->format('y-m-d')." 23:59:59"])->where('amount_goes_to_seller', 1)->where('commision_amount', '>', 0)->whereHas('order', function($query){
+            $payments = OrderPayment::whereBetween('created_at', [$date_1, Carbon::now()->format('Y-m-d')." 23:59:59"])->where('amount_goes_to_seller', 1)->where('commision_amount', '>', 0)->whereHas('order', function($query){
                 return $query->whereHas('packages', function($q){
                     return $q->where('seller_id', getParentSellerId());
                 });
@@ -33,7 +33,7 @@ class SellerRepository {
         }
         elseif($data == 'year'){
             $date_1 = Carbon::create($year, 1)->startOfMonth()->format('Y-m-d')." 00:00:00";
-            $payments = OrderPayment::whereBetween('created_at', [$date_1, Carbon::now()->format('y-m-d')." 23:59:59"])->where('amount_goes_to_seller', 1)->where('commision_amount', '>', 0)->whereHas('order', function($query){
+            $payments = OrderPayment::whereBetween('created_at', [$date_1, Carbon::now()->format('Y-m-d')." 23:59:59"])->where('amount_goes_to_seller', 1)->where('commision_amount', '>', 0)->whereHas('order', function($query){
                 return $query->whereHas('packages', function($q){
                     return $q->where('seller_id', getParentSellerId());
                 });
@@ -45,14 +45,14 @@ class SellerRepository {
     public function orderCommissionForAdminViaFilter($data = 'today'){
         $year = Carbon::now()->year;
         if($data == 'today'){
-            $payments = OrderPayment::whereBetween('created_at', [Carbon::now()->format('y-m-d')." 00:00:00", Carbon::now()->format('y-m-d')." 23:59:59"])->where('amount_goes_to_seller', 1)->where('commision_amount', '>', 0)->whereHas('order', function($query){
+            $payments = OrderPayment::whereBetween('created_at', [Carbon::now()->format('Y-m-d')." 00:00:00", Carbon::now()->format('Y-m-d')." 23:59:59"])->where('amount_goes_to_seller', 1)->where('commision_amount', '>', 0)->whereHas('order', function($query){
                 return $query->whereHas('packages', function($q){
                     return $q->where('seller_id', getParentSellerId());
                 });
             });
         }
         elseif($data == 'week'){
-            $payments = OrderPayment::whereBetween('created_at', [Carbon::now()->subDays(7)->format('y-m-d')." 00:00:00", Carbon::now()->format('y-m-d')." 23:59:59"])->where('amount_goes_to_seller', 1)->where('commision_amount', '>', 0)->whereHas('order', function($query){
+            $payments = OrderPayment::whereBetween('created_at', [Carbon::now()->subDays(7)->format('Y-m-d')." 00:00:00", Carbon::now()->format('Y-m-d')." 23:59:59"])->where('amount_goes_to_seller', 1)->where('commision_amount', '>', 0)->whereHas('order', function($query){
                 return $query->whereHas('packages', function($q){
                     return $q->where('seller_id', getParentSellerId());
                 });
@@ -61,7 +61,7 @@ class SellerRepository {
         elseif($data == 'month'){
             $month = Carbon::now()->month;
             $date_1 = Carbon::create($year, $month)->startOfMonth()->format('Y-m-d')." 00:00:00";
-            $payments = OrderPayment::whereBetween('created_at', [$date_1, Carbon::now()->format('y-m-d')." 23:59:59"])->where('amount_goes_to_seller', 1)->where('commision_amount', '>', 0)->whereHas('order', function($query){
+            $payments = OrderPayment::whereBetween('created_at', [$date_1, Carbon::now()->format('Y-m-d')." 23:59:59"])->where('amount_goes_to_seller', 1)->where('commision_amount', '>', 0)->whereHas('order', function($query){
                 return $query->whereHas('packages', function($q){
                     return $q->where('seller_id', getParentSellerId());
                 });
@@ -69,7 +69,7 @@ class SellerRepository {
         }
         elseif($data == 'year'){
             $date_1 = Carbon::create($year, 1)->startOfMonth()->format('Y-m-d')." 00:00:00";
-            $payments = OrderPayment::whereBetween('created_at', [$date_1, Carbon::now()->format('y-m-d')." 23:59:59"])->where('amount_goes_to_seller', 1)->where('commision_amount', '>', 0)->whereHas('order', function($query){
+            $payments = OrderPayment::whereBetween('created_at', [$date_1, Carbon::now()->format('Y-m-d')." 23:59:59"])->where('amount_goes_to_seller', 1)->where('commision_amount', '>', 0)->whereHas('order', function($query){
                 return $query->whereHas('packages', function($q){
                     return $q->where('seller_id', getParentSellerId());
                 });

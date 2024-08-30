@@ -1984,6 +1984,32 @@
     </div>
 </div>
 
+
+@php
+    $news_paper = $widgets->where('section_name','news_paper')->first();
+@endphp
+
+<div id="news_paper" class="amaz_section amaz_deal_area {{$news_paper->status == 0?'d-none':''}}">
+    <div class="container">
+        <div class="row">
+            <div class="product__meta px-3 text-center">
+                <!-- <h5>{{$news_paper->title}}</h5> -->
+            </div>
+                @foreach($DynamicPages as $key => $pages)
+                @if($pages->slug === 'handicarft')
+                <!-- <div class="amaz_recomanded_box_body2 dataApp"> -->
+                    <div class="">
+
+                    @php
+                        echo $pages->description;
+                    @endphp
+                </div>
+                @endif
+                @endforeach
+        </div>
+    </div>
+</div>
+
 <!-- amaz_recomanded::start  -->
 
 @php

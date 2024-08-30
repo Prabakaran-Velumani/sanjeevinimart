@@ -66,9 +66,8 @@ class MerchantRepository
 
     public function create($data)
     {
-        $role = Role::where('type', 'seller')->first();
-        $currency = Currency::where('code', app('general_setting')->currency)->first();
-        $currencyId = $currency ? $currency->id : null;
+        Log::info('$data');
+        $role = Role::where('type', 'seller')->first();        
         $user =  User::create([
             'first_name' => $data['name'],
             'email' => $data['email'],
@@ -80,7 +79,7 @@ class MerchantRepository
             'username' => $data['phone_number'],
             'verify_code' => sha1(time()),
             'password' => Hash::make($data['password']),
-            'currency_id' => $currencyId,
+            'currency_id' => app('general_setting')->currency,
             'lang_code' => app('general_setting')->language_code,
             'currency_code' => app('general_setting')->currency_code,
         ]);
@@ -92,6 +91,7 @@ class MerchantRepository
         Event::dispatch(new SellerPickupLocationCreated($user['id']));
         Event::dispatch(new SellerShippingRateEvent($user['id']));
         Event::dispatch(new SellerShippingConfigEvent($user['id']));
+        
         SellerAccount::create([
             'user_id' => $user['id'],
             'seller_id' => 'BDEXCJ' . rand(99999, 10000000),
@@ -99,7 +99,8 @@ class MerchantRepository
             'seller_commission_id' => (!empty($data['commission_id'])) ? $data['commission_id'] : 1,
             'commission_rate' => (!empty($data['commission_rate'])) ? $data['commission_rate'] : 0,
             'subscription_type' => 'monthly',
-            'seller_phone' => $data['phone_number']
+            'seller_phone' => $data['phone_number'],
+            "warehouse_id" => $data['warehouse_id'],
         ]);
         SellerBusinessInformation::create([
             'user_id' => $user['id'],
@@ -172,7 +173,7 @@ class MerchantRepository
         Event::dispatch(new SellerPickupLocationCreated($user['id']));
         Event::dispatch(new SellerShippingRateEvent($user['id']));
         Event::dispatch(new SellerShippingConfigEvent($user['id']));
-        
+
         $seller_account = SellerAccount::where('user_id', auth()->id())->first();
         if($seller_account){
             $seller_account->update([
@@ -296,5 +297,5 @@ class MerchantRepository
         }
         return Excel::store(new MediaIdsExport, 'seller/media_ids_list.xlsx');
     }
-    
+
 }

@@ -66,19 +66,19 @@ class RefundRequestDetail extends Model
         $year = Carbon::now()->year;
         $query = WalletBalance::query();
         if ($type == "today") {
-            $query->whereBetween('created_at', [Carbon::now()->format('y-m-d')." 00:00:00", Carbon::now()->format('y-m-d')." 23:59:59"]);
+            $query->whereBetween('created_at', [Carbon::now()->format('Y-m-d')." 00:00:00", Carbon::now()->format('Y-m-d')." 23:59:59"]);
         }
         if ($type == "week") {
-            $query->whereBetween('created_at', [Carbon::now()->subDays(7)->format('y-m-d')." 00:00:00", Carbon::now()->format('y-m-d')." 23:59:59"]);
+            $query->whereBetween('created_at', [Carbon::now()->subDays(7)->format('Y-m-d')." 00:00:00", Carbon::now()->format('Y-m-d')." 23:59:59"]);
         }
         if ($type == "month") {
             $month = Carbon::now()->month;
             $date_1 = Carbon::create($year, $month)->startOfMonth()->format('Y-m-d')." 00:00:00";
-            $query->whereBetween('created_at', [$date_1, Carbon::now()->format('y-m-d')." 23:59:59"]);
+            $query->whereBetween('created_at', [$date_1, Carbon::now()->format('Y-m-d')." 23:59:59"]);
         }
         if ($type == "year") {
             $date_1 = Carbon::create($year, 1)->startOfMonth()->format('Y-m-d')." 00:00:00";
-            $query->whereBetween('created_at', [$date_1, Carbon::now()->format('y-m-d')." 23:59:59"]);
+            $query->whereBetween('created_at', [$date_1, Carbon::now()->format('Y-m-d')." 23:59:59"]);
         }
         $w = WalletBalance::where('user_id', $seller_id)->where('type', 'Refund')->sum('amount');
         return $w;

@@ -136,19 +136,19 @@ class OrderPackageDetail extends Model
         $seller_id = getParentSellerId();
         $year = Carbon::now()->year;
         if ($type == "today") {
-            $query->whereBetween('created_at', [Carbon::now()->format('y-m-d')." 00:00:00", Carbon::now()->format('y-m-d')." 23:59:59"]);
+            $query->whereBetween('created_at', [Carbon::now()->format('Y-m-d')." 00:00:00", Carbon::now()->format('Y-m-d')." 23:59:59"]);
         }
         if ($type == "week") {
-            $query->whereBetween('created_at', [Carbon::now()->subDays(7)->format('y-m-d')." 00:00:00", Carbon::now()->format('y-m-d')." 23:59:59"]);
+            $query->whereBetween('created_at', [Carbon::now()->subDays(7)->format('Y-m-d')." 00:00:00", Carbon::now()->format('Y-m-d')." 23:59:59"]);
         }
         if ($type == "month") {
             $month = Carbon::now()->month;
             $date_1 = Carbon::create($year, $month)->startOfMonth()->format('Y-m-d')." 00:00:00";
-            $query->whereBetween('created_at', [$date_1, Carbon::now()->format('y-m-d')." 23:59:59"]);
+            $query->whereBetween('created_at', [$date_1, Carbon::now()->format('Y-m-d')." 23:59:59"]);
         }
         if ($type == "year") {
             $date_1 = Carbon::create($year, 1)->startOfMonth()->format('Y-m-d')." 00:00:00";
-            $query->whereBetween('created_at', [$date_1, Carbon::now()->format('y-m-d')." 23:59:59"]);
+            $query->whereBetween('created_at', [$date_1, Carbon::now()->format('Y-m-d')." 23:59:59"]);
         }
         return $query->with('order', 'seller', 'order.customer')->where('seller_id',$seller_id)->get()->count();
     }
@@ -158,19 +158,19 @@ class OrderPackageDetail extends Model
         $seller_id = getParentSellerId();
         $year = Carbon::now()->year;
         if ($type == "today") {
-            $query->whereBetween('updated_at', [Carbon::now()->format('y-m-d')." 00:00:00", Carbon::now()->format('y-m-d')." 23:59:59"]);
+            $query->whereBetween('updated_at', [Carbon::now()->format('Y-m-d')." 00:00:00", Carbon::now()->format('Y-m-d')." 23:59:59"]);
         }
         if ($type == "week") {
-            $query->whereBetween('updated_at', [Carbon::now()->subDays(7)->format('y-m-d')." 00:00:00", Carbon::now()->format('y-m-d')." 23:59:59"]);
+            $query->whereBetween('updated_at', [Carbon::now()->subDays(7)->format('Y-m-d')." 00:00:00", Carbon::now()->format('Y-m-d')." 23:59:59"]);
         }
         if ($type == "month") {
             $month = Carbon::now()->month;
             $date_1 = Carbon::create($year, $month)->startOfMonth()->format('Y-m-d')." 00:00:00";
-            $query->whereBetween('updated_at', [$date_1, Carbon::now()->format('y-m-d')." 23:59:59"]);
+            $query->whereBetween('updated_at', [$date_1, Carbon::now()->format('Y-m-d')." 23:59:59"]);
         }
         if ($type == "year") {
             $date_1 = Carbon::create($year, 1)->startOfMonth()->format('Y-m-d')." 00:00:00";
-            $query->whereBetween('updated_at', [$date_1, Carbon::now()->format('y-m-d')." 23:59:59"]);
+            $query->whereBetween('updated_at', [$date_1, Carbon::now()->format('Y-m-d')." 23:59:59"]);
         }
         if ($state == "delivered") {
             return $query->with('order', 'seller', 'order.customer')->where('seller_id',$seller_id)->where('delivery_status','>=',5)->get()->count();
@@ -191,19 +191,19 @@ class OrderPackageDetail extends Model
         $seller_id = getParentSellerId();
         $year = Carbon::now()->year;
         if ($type == "today") {
-            $query->whereBetween('created_at', [Carbon::now()->format('y-m-d')." 00:00:00", Carbon::now()->format('y-m-d')." 23:59:59"]);
+            $query->whereBetween('created_at', [Carbon::now()->format('Y-m-d')." 00:00:00", Carbon::now()->format('Y-m-d')." 23:59:59"]);
         }
         if ($type == "week") {
-            $query->whereBetween('created_at', [Carbon::now()->subDays(7)->format('y-m-d')." 00:00:00", Carbon::now()->format('y-m-d')." 23:59:59"]);
+            $query->whereBetween('created_at', [Carbon::now()->subDays(7)->format('Y-m-d')." 00:00:00", Carbon::now()->format('Y-m-d')." 23:59:59"]);
         }
         if ($type == "month") {
             $month = Carbon::now()->month;
             $date_1 = Carbon::create($year, $month)->startOfMonth()->format('Y-m-d')." 00:00:00";
-            $query->whereBetween('created_at', [$date_1, Carbon::now()->format('y-m-d')." 23:59:59"]);
+            $query->whereBetween('created_at', [$date_1, Carbon::now()->format('Y-m-d')." 23:59:59"]);
         }
         if ($type == "year") {
             $date_1 = Carbon::create($year, 1)->startOfMonth()->format('Y-m-d')." 00:00:00";
-            $query->whereBetween('created_at', [$date_1, Carbon::now()->format('y-m-d')." 23:59:59"]);
+            $query->whereBetween('created_at', [$date_1, Carbon::now()->format('Y-m-d')." 23:59:59"]);
         }
         $shipping_cost = $query->where('seller_id',$seller_id)->sum('shipping_cost');
         $tax_amount = $query->where('seller_id',$seller_id)->sum('tax_amount');
@@ -219,19 +219,19 @@ class OrderPackageDetail extends Model
         $seller_id = getParentSellerId();
         $year = Carbon::now()->year;
         if ($type == "today") {
-            $query->whereBetween('created_at', [Carbon::now()->format('y-m-d')." 00:00:00", Carbon::now()->format('y-m-d')." 23:59:59"]);
+            $query->whereBetween('created_at', [Carbon::now()->format('Y-m-d')." 00:00:00", Carbon::now()->format('Y-m-d')." 23:59:59"]);
         }
         if ($type == "week") {
-            $query->whereBetween('created_at', [Carbon::now()->subDays(7)->format('y-m-d')." 00:00:00", Carbon::now()->format('y-m-d')." 23:59:59"]);
+            $query->whereBetween('created_at', [Carbon::now()->subDays(7)->format('Y-m-d')." 00:00:00", Carbon::now()->format('Y-m-d')." 23:59:59"]);
         }
         if ($type == "month") {
             $month = Carbon::now()->month;
             $date_1 = Carbon::create($year, $month)->startOfMonth()->format('Y-m-d')." 00:00:00";
-            $query->whereBetween('created_at', [$date_1, Carbon::now()->format('y-m-d')." 23:59:59"]);
+            $query->whereBetween('created_at', [$date_1, Carbon::now()->format('Y-m-d')." 23:59:59"]);
         }
         if ($type == "year") {
             $date_1 = Carbon::create($year, 1)->startOfMonth()->format('Y-m-d')." 00:00:00";
-            $query->whereBetween('created_at', [$date_1, Carbon::now()->format('y-m-d')." 23:59:59"]);
+            $query->whereBetween('created_at', [$date_1, Carbon::now()->format('Y-m-d')." 23:59:59"]);
         }
         $orderPackageIds = $query->where('seller_id',$seller_id)->pluck('id');
         return OrderProductDetail::whereIn('package_id', $orderPackageIds)->sum('total_price');

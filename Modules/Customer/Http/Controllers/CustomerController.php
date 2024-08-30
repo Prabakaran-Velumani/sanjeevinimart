@@ -306,7 +306,7 @@ class CustomerController extends Controller
                  if ($user->avatar) {
                      $this->deleteImage($user->avatar);
                  }
-                 $data['avatar']=$this->profileImage($file,200,200);
+                 $data['avatar']=$this->saveImage($file,200,200);
             }
 
             $user->update($data);

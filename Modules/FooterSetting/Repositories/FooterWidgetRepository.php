@@ -3,7 +3,7 @@ namespace Modules\FooterSetting\Repositories;
 
 use \Modules\FooterSetting\Entities\FooterWidget;
 use \Modules\FrontendCMS\Entities\DynamicPage;
-
+use Illuminate\Support\Facades\Log;
 class FooterWidgetRepository {
 
     protected $widget;
@@ -27,9 +27,13 @@ class FooterWidgetRepository {
     public function getAllService(){
         return $this->widget::where('section','3')->orderBy('id','ASC')->get();
     }
-    
+    public function getAllOurLegal(){
+        return $this->widget::where('section','4')->orderBy('id','ASC')->get();
+    }
+
 
     public function save($data){
+        Log::info('*****data'.json_encode($data));
         $page = DynamicPage::findOrFail($data['page']);
         $data['slug'] = $page->slug;
         $data['status'] = 1;

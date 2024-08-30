@@ -26,6 +26,7 @@ use Modules\GeneralSetting\Entities\NotificationSetting;
 use Modules\MultiVendor\Repositories\CommisionRepository;
 use Modules\GeneralSetting\Entities\UserNotificationSetting;
 use Modules\MultiVendor\Http\Requests\SellerPassordChangeRequest;
+use Modules\Shipping\Entities\PickupLocation;
 
 class MerchantController extends Controller
 {
@@ -229,6 +230,8 @@ class MerchantController extends Controller
     {
         $commisionRepo = new CommisionRepository();
         $data['commissions'] = $commisionRepo->getAllActive();
+        $warehouseAll = PickupLocation::where('status', 'true')->orderBy('id')->get();
+        $data['warehouse'] = $warehouseAll;
         return view('multivendor::merchants.create', $data);
     }
 
@@ -243,7 +246,8 @@ class MerchantController extends Controller
             "phone_number" => "required",
             "password" => "required|min:8",
             "password_confirmation" => "required|min:8",
-            "shop_name" => "required"
+            "shop_name" => "required",
+            "warehouse_id" => "required",
 
         ],[
             "commission_id.required" => "Subscription type is required",

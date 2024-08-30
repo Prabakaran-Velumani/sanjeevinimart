@@ -21,7 +21,8 @@ class GeneralSetting extends Model
     {
         parent::__construct($attributes);
         if (isModuleActive('FrontendMultiLang')) {
-            $this->translatable = ['footer_copy_right','footer_about_title','footer_about_description','footer_section_one_title','footer_section_two_title','footer_section_three_title','meta_site_title','meta_description','up_sale_product_display_title','cross_sale_product_display_title'];
+            $this->translatable = ['footer_copy_right','footer_about_title','footer_about_description','footer_section_one_title','footer_section_two_title','footer_section_three_title',//'footer_section_four_title',
+            'meta_site_title','meta_description','up_sale_product_display_title','cross_sale_product_display_title'];
         }
     }
 
