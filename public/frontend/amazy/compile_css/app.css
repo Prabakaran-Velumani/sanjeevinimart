@@ -7017,7 +7017,7 @@ header.amazcartui_header .header_area .main_header_area .shop_header_wrapper .ca
   justify-content: space-between;
   display: flex;
   align-items: center;
-  color: #b90004 !important;
+  color: #000 !important;
   cursor: pointer;
   /* background: var(--base_color); */
 }
@@ -7027,7 +7027,7 @@ header.amazcartui_header .header_area .main_header_area .shop_header_wrapper .ca
   }
 }
 header.amazcartui_header .header_area .main_header_area .shop_header_wrapper .category_menu > a i {
-  color: #b90004 ;
+  color:#000 ;
   font-size: 10px;
 }
 header.amazcartui_header .header_area .main_header_area .shop_header_wrapper .category_menu > a::before {
@@ -7037,8 +7037,8 @@ header.amazcartui_header .header_area .main_header_area .shop_header_wrapper .ca
   top: 50%;
   height: 12px;
   width: 20px;
-  border-bottom: 2px solid #b90004 ;
-  border-top: 2px solid #b90004 ;
+  border-bottom: 2px solid #000 ;
+  border-top: 2px solid #000;
   transform: translateY(-50%);
 }
 header.amazcartui_header .header_area .main_header_area .shop_header_wrapper .category_menu > a::after {
@@ -7048,7 +7048,7 @@ header.amazcartui_header .header_area .main_header_area .shop_header_wrapper .ca
   top: 50%;
   height: 2px;
   width: 20px;
-  border-bottom: 2px solid #b90004;
+  border-bottom: 2px solid #000;
   transform: translateY(-50%);
 }
 header.amazcartui_header .header_area .main_header_area .shop_header_wrapper .category_menu .dropdown_menu {
@@ -10396,6 +10396,7 @@ footer.home_three_footer .copyright_area .payment_imgs {
   background-color: #4277FF;
 }
 .product_widget5 .product_star {
+  display: none !important  ;
   background-color: #FEB74C;
   color: #fff;
   width: -moz-max-content;
@@ -13046,7 +13047,7 @@ footer.home_three_footer .copyright_area .payment_imgs {
   text-transform: capitalize;
 } */
 .amaz_home_cartBox .amazcat_text_box h4 a {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 700;
   color: #000000;
   display: block;
@@ -17415,7 +17416,7 @@ section.return_part.padding_top.bg-white {
 }
 
 .amaz_home_cartBox {
-  padding: 20px 30px;
+  padding: 20px 15px;
   justify-content: start !important;
   align-items: center;
   grid-gap: 20px;
@@ -19156,4 +19157,25 @@ background: #f6f6f6;
   color: #000;
   line-height: 1;
   margin: 0;
+}
+
+@media screen and (min-width: 1200px) and (max-width: 1366px) {
+  .amaz_home_cartBox .img_box {
+    width: 150px;
+    height: 130px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+  }
+  .amaz_home_cartBox .img_box {
+    display: flex;
+    flex: 130px 0 0;
+  }
+  
+}
+@media (min-width: 1300px) and (max-width: 1366px) {
+  .checkout_v3_area {
+    display: grid !important;
+    grid-template-columns: auto 525px !important;
+  }
 }

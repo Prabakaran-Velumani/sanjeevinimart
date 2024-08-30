@@ -50,7 +50,7 @@
         </div>
         <div class="row">
             @foreach($feature_categories->getCategoryByQuery() as $key => $category)
-                <div class="col-xxl-3 col-lg-4 col-md-6">
+                <div class="col-xxl-3 col-lg-3 col-md-6">
                     <div class="amaz_home_cartBox amaz_cat_bg1 d-flex justify-content-between mb_30">
                         <div class="img_box">
                             @if(app('general_setting')->lazyload == 1)
