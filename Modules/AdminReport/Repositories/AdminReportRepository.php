@@ -40,10 +40,16 @@ class AdminReportRepository
 
     public function topCustomer()
     {
-        return OrderPayment::whereNotNull('user_id')->select(DB::raw('user_id as user_id'), DB::raw('sum(amount) as total'))
-            ->groupBy(DB::raw('user_id'))
-            ->with('user')
-            ->orderBy('total', 'desc');
+        // return OrderPayment::whereNotNull('user_id')->select(DB::raw('user_id as user_id'), DB::raw('sum(amount) as total'))
+        //     ->groupBy(DB::raw('user_id'))
+        //     ->with('user')
+        //     ->orderBy('total', 'desc');
+
+        return OrderPayment::whereNotNull('user_id')
+        ->select('user_id','id', DB::raw('sum(amount) as total'))
+        ->groupBy('user_id','id')
+        ->with('user')
+        ->orderBy('total', 'desc');
     }
 
     public function topSellingItem()
@@ -53,17 +59,30 @@ class AdminReportRepository
 
     public function productReview()
     {
+        // return ProductReview::where('status', 1)
+        //     ->select('product_id', DB::raw('avg(rating) as rating'), DB::raw('count(*) as number_of_review'))
+        //     ->groupBy('product_id')
+        //     ->with('product');
         return ProductReview::where('status', 1)
-            ->select('product_id', DB::raw('avg(rating) as rating'), DB::raw('count(*) as number_of_review'))
-            ->groupBy('product_id')
+            ->select('product_id', 'id', 
+                DB::raw('avg(rating) as rating'), 
+                DB::raw('count(*) as number_of_review'))
+            ->groupBy('product_id', 'id')
             ->with('product');
+
     }
 
     public function sellerReview()
     {
+        // return SellerReview::where('status', 1)
+        //     ->select('seller_id', DB::raw('avg(rating) as rating'), DB::raw('count(*) as number_of_review'))
+        //     ->groupBy('seller_id')
+        //     ->with('seller');
         return SellerReview::where('status', 1)
-            ->select('seller_id', DB::raw('avg(rating) as rating'), DB::raw('count(*) as number_of_review'))
-            ->groupBy('seller_id')
+            ->select('seller_id','id', 
+                DB::raw('avg(rating) as rating'), 
+                DB::raw('count(*) as number_of_review'))
+            ->groupBy('seller_id', 'id')
             ->with('seller');
     }
 
