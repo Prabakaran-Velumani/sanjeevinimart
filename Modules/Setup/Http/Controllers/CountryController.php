@@ -25,9 +25,10 @@ class CountryController extends Controller
 
         try{
             $countries = $this->countryService->getAll();
-            $continents = $this->countryService->getContinent();
+            // $continents = $this->countryService->getContinent();
 
-            return view('setup::location.country.index', compact('countries','continents'));
+            // return view('setup::location.country.index', compact('countries','continents'));
+            return view('setup::location.country.index', compact('countries'));
         }catch(Exception $e){
             LogActivity::errorLog($e->getMessage());
             Toastr::error($e->getMessage(), 'Error!!');
@@ -36,11 +37,11 @@ class CountryController extends Controller
     }
 
     public function store(Request $request){
-
+    Log::info('********* request'. json_encode($request));
 
         $request->validate([
             'name' =>'required|max:255|unique:countries',
-            'continent_id' =>'required',
+            // 'continent_id' =>'required',
             'code' => 'required|max:255|unique:countries',
             'phonecode' => 'required|max:255',
             'flag' => 'nullable|mimes:jpg,jpeg,bmp,png'
@@ -64,8 +65,9 @@ class CountryController extends Controller
 
         try{
             $country = $this->countryService->getById($id);
-            $continents = $this->countryService->getContinent();
-            return view('setup::location.country.components.edit',compact('country','continents'));
+            // $continents = $this->countryService->getContinent();
+            // return view('setup::location.country.components.edit',compact('country','continents'));
+            return view('setup::location.country.components.edit',compact('country'));
         }catch(Exception $e){
             LogActivity::errorLog($e->getMessage());
             Toastr::error($e->getMessage(), 'Error!!');
@@ -127,11 +129,13 @@ class CountryController extends Controller
 
         try{
             $countries = $this->countryService->getAll();
-            $continents = $this->countryService->getContinent();
+            // $continents = $this->countryService->getContinent();
             return response()->json([
 
-                'TableData' =>  (string)view('setup::location.country.components.list', compact('countries','continents')),
-                'createForm' =>  (string)view('setup::location.country.components.create',compact('continents'))
+                // 'TableData' =>  (string)view('setup::location.country.components.list', compact('countries','continents')),
+                // 'createForm' =>  (string)view('setup::location.country.components.create',compact('continents'))
+                'TableData' =>  (string)view('setup::location.country.components.list', compact('countries')),
+                'createForm' =>  (string)view('setup::location.country.components.create',compact('countries'))
             ],200);
         }catch(Exception $e){
             LogActivity::errorLog($e->getMessage());

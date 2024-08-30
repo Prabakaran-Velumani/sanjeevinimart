@@ -27,21 +27,22 @@ use Modules\MultiVendor\Repositories\CommisionRepository;
 use Modules\GeneralSetting\Entities\UserNotificationSetting;
 use Modules\MultiVendor\Http\Requests\SellerPassordChangeRequest;
 use Modules\Shipping\Entities\PickupLocation;
-
+use Modules\Shipping\Repositories\PickupLocationRepository;
 class MerchantController extends Controller
 {
     use Notification;
 
-    protected $merchantService, $profileService, $refundRepository, $ordermanageService;
+    protected $merchantService, $profileService, $refundRepository, $ordermanageService,$pickupLocationRepo;
 
 
-    public function __construct(MerchantService $merchantService, ProfileService $profileService ,RefundRepository $refundRepository ,OrderManageService $ordermanageService)
+    public function __construct(MerchantService $merchantService, ProfileService $profileService ,RefundRepository $refundRepository ,OrderManageService $ordermanageService ,PickupLocationRepository $pickupLocationRepo)
     {
         $this->middleware('maintenance_mode');
         $this->merchantService = $merchantService;
         $this->profileService = $profileService;
         $this->refundRepository = $refundRepository;
         $this->ordermanageService = $ordermanageService;
+        $this->pickupLocationRepo = $pickupLocationRepo;
     }
 
     public function index()
@@ -230,7 +231,7 @@ class MerchantController extends Controller
     {
         $commisionRepo = new CommisionRepository();
         $data['commissions'] = $commisionRepo->getAllActive();
-        $warehouseAll = PickupLocation::where('status', 'true')->orderBy('id')->get();
+        $warehouseAll = $this->pickupLocationRepo->all();
         $data['warehouse'] = $warehouseAll;
         return view('multivendor::merchants.create', $data);
     }

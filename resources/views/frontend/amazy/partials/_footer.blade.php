@@ -126,7 +126,7 @@
                                 </a>
                                 @endif
                                 @if($footer_content->show_app_store)
-                                <a href="{{$footer_content->app_store}}" class="google_play_box d-flex align-items-center">
+                                <a href="{{$footer_content->app_store}}" class="google_play_box1 d-flex align-items-center">
                                     <div class="icon">
                                         <img src="{{url('/')}}/public/frontend/amazy/img/amaz_icon/aplg.png" alt="{{__('amazy.Apple Store')}}"  title="{{__('amazy.Apple Store')}}">
                                     </div>

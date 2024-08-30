@@ -37,31 +37,31 @@ class AmazCartService
             return $next($request);
         }
 
-       $temp = Storage::exists('.temp_app_installed') ? Storage::get('.temp_app_installed') : false;
-        
-        if (!$temp) {
-            $database = $this->service_repo->checkDatabase();
-            $logout = Storage::exists('.logout') ? Storage::get('.logout') : false;
-            
-            if (!$database and !$logout) {
-                Log::info($request->url());
-                Log::info('Table not found');
-                Storage::put('.logout', 'true');
-                Storage::delete(['.access_code', '.account_email']);
-                Storage::put('.app_installed', '');
+        /** Skip Installation */
+        // $temp = Storage::exists('.temp_app_installed') ? Storage::get('.temp_app_installed') : false;
+        $temp = true;
+        /** Skip Installation */
+       if (!$temp) {
+           $database = $this->service_repo->checkDatabase();
+           $logout = Storage::exists('.logout') ? Storage::get('.logout') : false;
+           
+           if (!$database and !$logout) {
+               Log::info($request->url());
+               Log::info('Table not found');
+               Storage::put('.logout', 'true');
+               Storage::delete(['.access_code', '.account_email']);
+               Storage::put('.app_installed', '');
             }
         }
-
-        $c = Storage::exists('.app_installed') ? Storage::get('.app_installed') : false;
+        /** Skip Installation */
+        // $c = Storage::exists('.app_installed') ? Storage::get('.app_installed') : false;
+        $c = true;
+        /** Skip Installation */
         if (!$c) {
             return redirect('/install');
         }
-
         $this->repo->config();
-
         return $next($request);
-
-
     }
 
       /**
@@ -75,7 +75,6 @@ class AmazCartService
 
     protected function inExceptArray($request)
     {
-
         foreach ($this->except as $except) {
             if ($except !== '/') {
                 $except = trim($except, '/');
@@ -84,7 +83,6 @@ class AmazCartService
                 return true;
             }
         }
-
         return false;
     }
 }

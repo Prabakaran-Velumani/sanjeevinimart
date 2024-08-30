@@ -5,6 +5,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['namespace' => 'SpondonIt\Service\Controllers', 'middleware' => 'web'], function () {
     Route::group(['prefix' => 'install'], function(){
+        Route::get('/', function() {
+            return redirect('/');
+        });
         Route::get('pre-requisite', 'InstallController@preRequisite')->name('service.preRequisite');
         Route::get('license', 'InstallController@license')->name('service.license');
         Route::post('license', 'InstallController@post_license');

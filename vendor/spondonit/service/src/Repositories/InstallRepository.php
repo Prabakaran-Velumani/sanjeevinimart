@@ -243,10 +243,8 @@ class InstallRepository
             }
             else if($db_connection == 'pgsql') {
                 $count_table_query = pg_query($link, "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = 'public'");
-                Log::info('count_table_query***********');
                 
                 $result = pg_fetch_result($count_table_query, 0, 0);
-                Log::info("*****result  - $result");
     
                 if ($result) {
                     throw ValidationException::withMessages(['message' => trans('service::install.existing_table_in_database')]);
@@ -279,7 +277,6 @@ class InstallRepository
         // $db_username = env('DB_USERNAME');
         // $db_password = env('DB_PASSWORD');
         // $db_database = env('DB_DATABASE');
-        Log::info('********DB_DATABASE********');
         $db_host = 'localhost';
         $db_port = 5432;
         $db_username = env('DB_USERNAME');
@@ -390,7 +387,7 @@ class InstallRepository
         $status = gbv($response, 'status');
 
         if (!$status) {
-            Log::info('License Verification failed');
+
             Storage::delete(['.access_code', '.account_email']);
             Storage::deleteDirectory(config('app.item'));
             Storage::put('.temp_app_installed', '');

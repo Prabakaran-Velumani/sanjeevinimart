@@ -18,7 +18,8 @@ class SpondonItServiceProvider extends ServiceProvider
     public function register()
     {
         App::macro('isInstalled',function (){
-            return  Storage::exists('.app_installed') &&  Storage::get('.app_installed');
+            // return  Storage::exists('.app_installed') &&  Storage::get('.app_installed');
+            return true;
         });
     }
 
