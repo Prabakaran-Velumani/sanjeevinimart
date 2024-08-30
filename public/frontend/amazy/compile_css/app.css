@@ -7007,18 +7007,19 @@ header.amazcartui_header .header_area .main_header_area .shop_header_wrapper .th
 }
 header.amazcartui_header .header_area .main_header_area .shop_header_wrapper .category_menu > a {
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 800;
   box-shadow: none;
   font-family: "Circular Std Book";
   position: relative;
   padding: 13px 30px 13px 65px;
-  width: 254px;
+  /* width: 254px; */
+  width: 227px;
   justify-content: space-between;
   display: flex;
   align-items: center;
-  color: #fff !important;
+  color: #b90004 !important;
   cursor: pointer;
-  background: var(--base_color);
+  /* background: var(--base_color); */
 }
 @media (max-width: 991.98px) {
   header.amazcartui_header .header_area .main_header_area .shop_header_wrapper .category_menu > a {
@@ -7026,7 +7027,7 @@ header.amazcartui_header .header_area .main_header_area .shop_header_wrapper .ca
   }
 }
 header.amazcartui_header .header_area .main_header_area .shop_header_wrapper .category_menu > a i {
-  color: #fff;
+  color: #b90004 ;
   font-size: 10px;
 }
 header.amazcartui_header .header_area .main_header_area .shop_header_wrapper .category_menu > a::before {
@@ -7036,8 +7037,8 @@ header.amazcartui_header .header_area .main_header_area .shop_header_wrapper .ca
   top: 50%;
   height: 12px;
   width: 20px;
-  border-bottom: 2px solid #fff;
-  border-top: 2px solid #fff;
+  border-bottom: 2px solid #b90004 ;
+  border-top: 2px solid #b90004 ;
   transform: translateY(-50%);
 }
 header.amazcartui_header .header_area .main_header_area .shop_header_wrapper .category_menu > a::after {
@@ -7047,7 +7048,7 @@ header.amazcartui_header .header_area .main_header_area .shop_header_wrapper .ca
   top: 50%;
   height: 2px;
   width: 20px;
-  border-bottom: 2px solid #fff;
+  border-bottom: 2px solid #b90004;
   transform: translateY(-50%);
 }
 header.amazcartui_header .header_area .main_header_area .shop_header_wrapper .category_menu .dropdown_menu {
@@ -9627,8 +9628,12 @@ footer.home_three_footer .copyright_area .payment_imgs {
 }
 
 .brand_banner {
-  background: var(--base_color);
-  height: 380px;
+
+
+  background: url(../img/bgings.jpg) center no-repeat fixed;
+  padding: 68px 0 68px 0;
+  border-bottom: solid 1px #cdcdcd;
+  background-size: cover;
 }
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
   .brand_banner {
@@ -17416,7 +17421,7 @@ section.return_part.padding_top.bg-white {
   grid-gap: 20px;
   margin-top: 20px;
   /* background-color: #eee; */
-  background-image: url("http://192.168.1.51/sanjeevinimart/public/uploads/all/66cee2203cf87.jpeg");
+  background-image: url("../img/abg.jpeg");
   margin-bottom: 0;
   transition-duration: 0.8s;
 }
@@ -17809,14 +17814,17 @@ header.amazcartui_header .header_area .main_header_area .shop_header_wrapper .ca
 }
 
 .brand_banner {
-  background: var(--base_color);
-  height: 144px;
+
+  background: url(../img/bgings.jpg) center no-repeat fixed;
+  padding: 68px 0 68px 0;
+  border-bottom: solid 1px #cdcdcd;
+  background-size: cover;
 }
 .brand_banner .branding_text {
   font-family: "Circular Std Book";
   font-size: 38px !important;
   text-transform: uppercase;
-  color: #fff;
+  color: #000;
   font-weight: 700;
   margin-bottom: 0 !important;
 }
