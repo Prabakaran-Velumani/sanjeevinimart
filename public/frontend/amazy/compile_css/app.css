@@ -9464,9 +9464,7 @@ footer.home_three_footer .copyright_area .payment_imgs {
   max-width: 215px;
   border: 1px solid #000;
 }
-.google_play_box:hover {
-  background: #b90004;
-}
+
 .google_play_box .google_play_text span {
   font-size: 12px;
   font-weight: 500;
@@ -9482,9 +9480,6 @@ footer.home_three_footer .copyright_area .payment_imgs {
   color: #000;
   line-height: 1;
   margin: 0;
-}
-.google_play_box .google_play_text h4:hover {
-    color: #fff;
 }
 
 /*----------------------------------------------------*/
@@ -19128,4 +19123,31 @@ background: #f6f6f6;
   padding: 9px;
   border-radius: 4px;
   margin-bottom: 20px;
+}
+.google_play_box1 {
+  background: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.05);
+  padding: 4px 30px;
+  grid-gap: 15px;
+  min-width: 215px;
+  max-width: 215px;
+  border: 1px solid #000;
+}
+.google_play_box1 .google_play_text span {
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  color: #000000;
+  line-height: 1;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.google_play_box1 .google_play_text h4 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #000;
+  line-height: 1;
+  margin: 0;
 }
