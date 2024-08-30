@@ -50,9 +50,9 @@
                                                         <a href="{{singleProductURL(@$package_product->seller_product_sku->product->seller->slug, @$package_product->seller_product_sku->product->slug)}}" class="d-flex align-items-center gap_20 w-100 flex-fill @if(!$loop->last) amazy_bb3 @endif cart_thumb_div">
                                                             <div class="thumb">
                                                                 @if (@$package_product->seller_product_sku->sku->product->product_type == 1)
-                                                                    <img src="{{showImage(@$package_product->seller_product_sku->product->thum_img??@$package_product->seller_product_sku->sku->product->thumbnail_image_source)}}" alt="{{ textLimit(@$package_product->seller_product_sku->product->product_name, 28) }}" title="{{ textLimit(@$package_product->seller_product_sku->product->product_name, 28) }}">
+                                                                    <img src="{{showImage(@$package_product->seller_product_sku->product->thumbnail_image_source??@$package_product->seller_product_sku->sku->product->thumbnail_image_source)}}" alt="{{ textLimit(@$package_product->seller_product_sku->product->product_name, 28) }}" title="{{ textLimit(@$package_product->seller_product_sku->product->product_name, 28) }}">
                                                                 @else
-                                                                    <img src="{{showImage((@$package_product->seller_product_sku->sku->variant_image?@$package_product->seller_product_sku->sku->variant_image:@$package_product->seller_product_sku->product->thum_img)??@$package_product->seller_product_sku->product->product->thumbnail_image_source)}}" alt="{{ textLimit(@$package_product->seller_product_sku->product->product_name, 28) }}" title="{{ textLimit(@$package_product->seller_product_sku->product->product_name, 28) }}">
+                                                                    <img src="{{showImage((@$package_product->seller_product_sku->sku->variant_image?@$package_product->seller_product_sku->sku->variant_image:@$package_product->seller_product_sku->product->thumbnail_image_source)??@$package_product->seller_product_sku->sku->product->thumbnail_image_source)}}" alt="{{ textLimit(@$package_product->seller_product_sku->product->product_name, 28) }}" title="{{ textLimit(@$package_product->seller_product_sku->product->product_name, 28) }}">
                                                                 @endif
                                                             </div>
                                                             <div class="summery_pro_content">
@@ -74,7 +74,7 @@
                                                     @endif
                                                 @endforeach
                                             </div>
-                                            
+
                                             <h4 class="font_16 f_w_500 m-0 text-capitalize">{{ $package->shipping_date }}</h4>
                                         </div>
                                     </div>

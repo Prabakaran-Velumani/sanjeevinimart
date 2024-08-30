@@ -264,6 +264,52 @@
                     });
                 });
 
+                $(document).on('submit', '#ourLegalForm', function(event) {
+                    event.preventDefault();
+                    $("#ourLegalBtn").prop('disabled', true);
+                    $('#ourLegalBtn').text('{{ __('common.updating') }}');
+                    $('#pre-loader').removeClass('d-none');
+                    $('#error_our_legal_title').text('');
+                    if($('#company_title').val() == ''){
+                        $('#ourLegalBtn').text('{{__('common.update')}}');
+                        $("#ourLegalBtn").prop('disabled', false);
+                        $('#pre-loader').addClass('d-none');
+                        $('#error_our_legal_title').text("{{__('validation.this_field_is_required')}}");
+                        return false;
+                    }
+                    var formElement = $(this).serializeArray()
+                    var formData = new FormData();
+                    formElement.forEach(element => {
+                        formData.append(element.name, element.value);
+                    });
+                    formData.append('_token', "{{ csrf_token() }}");
+                    $.ajax({
+                        url: "{{ route('footerSetting.footer.content-update') }}",
+                        type: "POST",
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        data: formData,
+                        success: function(response) {
+                            toastr.success("{{__('common.updated_successfully')}}","{{__('common.success')}}");
+                            $('#ourLegalBtn').text('{{__('common.update')}}');
+                            $("#ourLegalBtn").prop('disabled', false);
+                            $('#pre-loader').addClass('d-none');
+                        },
+                        error: function(response) {
+                            $('#ourLegalBtn').text('{{__('common.update')}}');
+                            $("#ourLegalBtn").prop('disabled', false);
+                            $('#pre-loader').addClass('d-none');
+                            if(response.responseJSON.error){
+                                toastr.error(response.responseJSON.error ,"{{__('common.error')}}");
+                                $('#pre-loader').addClass('d-none');
+                                return false;
+                            }
+
+                        }
+                    });
+                });
+
                 $(document).on('click', '.active_section_class', function(event){
                     let id = $(this).data('id');
                     let url = "/footer/footer-setting/tab/" + id;

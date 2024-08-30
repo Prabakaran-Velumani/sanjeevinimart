@@ -19,7 +19,7 @@ class FooterSettingRepository {
     }
     public function update($data, $id)
     {
-        
+
         $item = $this->footer::find($id);
         $data['footer_copy_right'] = isset($data['copy_right'])?$data['copy_right']:$item->footer_copy_right;
         $data['footer_about_title'] = isset($data['about_title'])?$data['about_title']:$item->footer_about_title;
@@ -27,6 +27,7 @@ class FooterSettingRepository {
         $data['footer_section_one_title'] = isset($data['company_title'])?$data['company_title']:$item->footer_section_one_title;
         $data['footer_section_two_title'] = isset($data['account_title'])?$data['account_title']:$item->footer_section_two_title;
         $data['footer_section_three_title'] = isset($data['service_title'])?$data['service_title']:$item->footer_section_three_title;
+        $data['footer_section_four_title'] = isset($data['our_legal_title'])?$data['our_legal_title']:$item->footer_section_four_title;
         $item->fill($data)->save();
     }
     public function updateAppLink($data){

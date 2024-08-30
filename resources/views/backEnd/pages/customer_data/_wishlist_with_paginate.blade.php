@@ -79,7 +79,7 @@
               </div>
               <div class="product_text">
                 <h5>
-                  <a href="{{singleProductURL($product->seller->slug, $product->slug)}}" target="_blank">@if (@$product->product->product_name) {{substr(@$product->product->product_name,0,35)}} @if(strlen(@$product->product->product_name) > 35)... @endif @else {{substr(@$product->product->product->product_name,0,35)}} @if(strlen(@$product->product->product->product_name) > 35)... @endif @endif</a>
+                  <a href="{{singleProductURL($product->seller->slug, $product->slug.Str::slug($product->product->product_name ?? @$product->product->product->product_name))}}" target="_blank">@if (@$product->product->product_name) {{substr(@$product->product->product_name,0,35)}} @if(strlen(@$product->product->product_name) > 35)... @endif @else {{substr(@$product->product->product->product_name,0,35)}} @if(strlen(@$product->product->product->product_name) > 35)... @endif @endif</a>
                 </h5>
                 <div class="product_review_star d-flex justify-content-between align-items-center flex-wrap">
                   <p class="text-nowrap">
