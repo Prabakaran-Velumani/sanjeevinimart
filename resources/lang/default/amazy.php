@@ -79,4 +79,7 @@ return [
     'name' => 'name',
     'Followers' => 'Followers',
     'Please send reset password' => 'Please send reset password',
+    'warehouse' => 'Warehouse',
+    'Choose warehouse location' => 'Choose warehouse location',
+    'warehouse location' => 'Warehouse Location',
 ];

@@ -1,6 +1,6 @@
 <div class="box_header common_table_header">
     <div class="main-title d-md-flex">
-        <h3 class="mb-0 mr-30 mb_xs_15px mb_sm_20px">{{ __('shipping.edit_pickup_location') }}</h3>
+        <h3 class="mb-0 mr-30 mb_xs_15px mb_sm_20px">{{ __('shipping.edit_warehouses') }}</h3>
     </div>
 </div>
 <form method="POST" enctype="multipart/form-data" id="editForm">
@@ -11,8 +11,8 @@
             <input type="hidden" value="{{$row->id}}" id="rowId">
             <div class="col-lg-12">
                 <div class="primary_input mb-15">
-                    <label class="primary_input_label" for="pickup_location"> {{__("shipping.pickup_location")}} <span class="text-danger">*</span></label>
-                    <input class="primary_input_field" name="pickup_location" id="pickup_location" placeholder="{{__("shipping.pickup_location")}}" type="text" value="{{$row->pickup_location}}">
+                    <label class="primary_input_label" for="warehouse"> {{__("shipping.warehouse")}} <span class="text-danger">*</span></label>
+                    <input class="primary_input_field" name="pickup_location" id="pickup_location" placeholder="{{__("shipping.warehouse")}}" type="text" value="{{$row->pickup_location}}">
                     <span class="text-danger" id="error_pickup_location"></span>
                 </div>
             </div>

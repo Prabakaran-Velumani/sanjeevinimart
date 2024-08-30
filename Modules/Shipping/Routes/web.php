@@ -57,11 +57,11 @@ Route::middleware(['auth','seller'])->prefix('shipping')->as('shipping.')->group
     Route::post('/carrier-change', 'ShippingOrderController@carrierChange')->name('carrier_change');
 
     //pickup_locations
-    Route::resource('pickup_locations', 'PickupLocationController')->except(['create','destroy'])->middleware(['permission']);
-    Route::post('pickup_location/delete', 'PickupLocationController@destroy')->name('pickup_locations.destroy')->middleware(['permission','prohibited_demo_mode']);
-    Route::post('pickup_location/status', 'PickupLocationController@status')->name('pickup_locations.status')->middleware(['permission','prohibited_demo_mode']);
-    Route::post('pickup_location/set-default', 'PickupLocationController@setDefault')->name('pickup_locations.set_default')->middleware(['permission','prohibited_demo_mode']);
-    Route::get('set/pickup_location/{id}', 'PickupLocationController@setPickupLocation')->name('pickup_locations.set')->middleware(['permission','prohibited_demo_mode']);
+    Route::resource('warehouse', 'PickupLocationController')->except(['create','destroy'])->middleware(['permission']);
+    Route::post('warehouse/delete', 'PickupLocationController@destroy')->name('warehouse.destroy')->middleware(['permission','prohibited_demo_mode']);
+    Route::post('warehouse/status', 'PickupLocationController@status')->name('warehouse.status')->middleware(['permission','prohibited_demo_mode']);
+    Route::post('warehouse/set-default', 'PickupLocationController@setDefault')->name('warehouse.set_default')->middleware(['permission','prohibited_demo_mode']);
+    Route::get('set/warehouse/{id}', 'PickupLocationController@setPickupLocation')->name('warehouse.set')->middleware(['permission','prohibited_demo_mode']);
 
     //carriers
     Route::resource('carriers', 'CarrierController');
