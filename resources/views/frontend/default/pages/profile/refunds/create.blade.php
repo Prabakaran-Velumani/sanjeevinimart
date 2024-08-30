@@ -99,10 +99,10 @@
                                                 <div class="product_img_div">
                                                     <a href="{{singleProductURL($package_product->seller_product_sku->product->seller->slug, $package_product->seller_product_sku->product->slug)}}" target="_blank">
                                                         @if (@$package_product->seller_product_sku->sku->product->product_type == 1)
-                                                            <img src="{{showImage(@$package_product->seller_product_sku->product->thum_img??@$package_product->seller_product_sku->sku->product->thumbnail_image_source)}}" alt="#">
+                                                            <img src="{{showImage(@$package_product->seller_product_sku->product->thumbnail_image_source??@$package_product->seller_product_sku->sku->product->thumbnail_image_source)}}" alt="#">
                                                         @else
 
-                                                            <img src="{{showImage((@$package_product->seller_product_sku->sku->variant_image?@$package_product->seller_product_sku->sku->variant_image:@$package_product->seller_product_sku->product->thum_img)??@$package_product->seller_product_sku->product->product->thumbnail_image_source)}}" alt="#">
+                                                            <img src="{{showImage((@$package_product->seller_product_sku->sku->variant_image?@$package_product->seller_product_sku->sku->variant_image:@$package_product->seller_product_sku->product->thumbnail_image_source)??@$package_product->seller_product_sku->sku->product->thumbnail_image_source)}}" alt="#">
                                                         @endif
                                                     </a>
                                                 </div>
