@@ -1,10 +1,38 @@
-<div class="header_topbar_area {{$top_bar->status == 0 ? 'd-none':''}}" id="top_bar">
+<style>
+    /* Custom styles for Google Translate element */
+    #google_translate_element {
+      font-family: Arial, sans-serif;
+      margin: 20px 0;
+    }
+    
+    /* Style for the dropdown container */
+    .goog-te-combo {
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      padding: 5px;
+      background-color: #f9f9f9;
+      font-size: 14px;
+      color: #333;
+    }
+
+    /* Style for the dropdown */
+    .goog-te-combo option {
+      padding: 10px;
+    }
+    
+    /* Optional: Add a hover effect */
+    .goog-te-combo:hover {
+      border-color: #007BFF;
+    }
+  </style>
+  <div class="header_topbar_area {{$top_bar->status == 0 ? 'd-none':''}}" id="top_bar">
     <div class="container">
         <div class="row">
             <div class="col-12">
                 <div class="header__wrapper">
                     <!-- header__left__start  -->
                     <div class="header__left d-flex align-items-center dynamic_svg">
+                        <div id="google_translate_element" style="margin-top:auto;overflow:auto;"></div>
                         @if($topnavbar_left_menu)
                             @foreach($topnavbar_left_menu->elements->where('has_parent',null) as $element)
                                 @if($element->type == 'link')
@@ -421,3 +449,11 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+}
+</script>
+
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
