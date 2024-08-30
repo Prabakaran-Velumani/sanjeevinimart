@@ -315,7 +315,8 @@
                 }
 
                 function showValidationErrors(formType, errors){
-                    $(formType +' #error_pickup_location').text(errors.pickup_location);
+                    console.log('errors',errors)
+                    $(formType +' #error_warehouse_location').text(errors.warehouse_location);
                     $(formType +' #error_name').text(errors.name);
                     $(formType +' #error_email').text(errors.email);
                     $(formType +' #error_phone').text(errors.phone);
