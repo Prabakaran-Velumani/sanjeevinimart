@@ -21,8 +21,8 @@ class GiftCardImport implements ToModel, WithHeadingRow
             'selling_price' => $row['selling_price'],
             'discount' => $row['discount'],
             'discount_type' => $row['discount_type'],
-            'start_date' => Carbon::now()->format('y-m-d'),
-            'end_date' => Carbon::now()->format('y-m-d'),
+            'start_date' => Carbon::now()->format('Y-m-d'),
+            'end_date' => Carbon::now()->format('Y-m-d'),
             'status' => 1,
             'description' => $row['description'],
             'shipping_id' => 1

@@ -2,7 +2,7 @@
     <div class="modal-dialog modal_800px modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">{{__('shipping.pickup_location_details') }}</h4>
+                <h4 class="modal-title">{{__('shipping.warehouses_details') }}</h4>
                 <button type="button" class="close" data-dismiss="modal">
                     <i class="ti-close "></i>
                 </button>
@@ -17,7 +17,7 @@
                                     <table class="table pos_table pt-0 shadow_none pb-0 bg-transparent ">
                                         <tbody>
                                             <tr>
-                                                <th scope="col">{{__('shipping.pickup_location')}}</th>
+                                                <th scope="col">{{__('shipping.warehouse')}}</th>
                                                 <td>{{ $row->pickup_location }}</td>
                                             </tr>
                                             <tr>

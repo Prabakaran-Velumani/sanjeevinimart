@@ -35,6 +35,7 @@ class PageBuilderController extends Controller
     }
     public function store(CustomPageRequest $request)
     {
+       
         try{
             $this->pageBuilderRepo->create($request->validated());
             return $this->reloadWithData();

@@ -39,7 +39,7 @@ class ResetRecentViewedProduct extends Command
     public function handle()
     {
         $num_of_days = app('recently_viewed_config')['number_of_days'];
-        $recentViewedProducts = RecentViewProduct::where('viewed_at', '<=', \Carbon\Carbon::now()->subDays($num_of_days)->format('y-m-d'))->get();
+        $recentViewedProducts = RecentViewProduct::where('viewed_at', '<=', \Carbon\Carbon::now()->subDays($num_of_days)->format('Y-m-d'))->get();
         foreach ($recentViewedProducts as $key => $recentViewedProduct) {
             $recentViewedProduct->delete();
         }

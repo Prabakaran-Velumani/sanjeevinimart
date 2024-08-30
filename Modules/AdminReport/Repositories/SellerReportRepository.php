@@ -36,8 +36,8 @@ class SellerReportRepository
     {
         return SellerReview::where('seller_id', auth()->id())
             ->where('status', 1)
-            ->select('seller_id', DB::raw('avg(rating) as rating'), DB::raw('count(*) as number_of_review'))
-            ->groupBy('seller_id')
+            ->select('seller_id','id', DB::raw('avg(rating) as rating'), DB::raw('count(*) as number_of_review'))
+            ->groupBy('seller_id','id')
             ->with('seller');
     }
     public function products()

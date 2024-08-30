@@ -442,7 +442,7 @@
                                                     </div>
                                                 @elseif($product->stock_manage == 0)
                                                     <div class="col-6">
-                                                        <button type="button" id="add_to_cart_btn" class="amaz_primary_btn style2 mb_20  add_to_cart text-uppercase add_to_cart_btn flex-fill text-center w-100">{{__('common.add_to_cart')}}</button>
+                                                        <button type="button" id="add_to_cart_btn" class="amaz_primary_btn style2 mb_20  add_to_cart text-uppercase add_to_cart_btn flex-fill text-center w-100" >{{__('common.add_to_cart')}}</button>
                                                     </div>
                                                     <div class="col-6">
                                                         <button type="button" id="butItNow" class="amaz_primary_btn3 mb_20  w-100 text-center justify-content-center text-uppercase buy_now_btn" data-id="{{$product->id}}" data-type="product">{{__('common.buy_now')}}</button>
@@ -871,10 +871,12 @@
                                         $pickup_locations = \Modules\Shipping\Entities\PickupLocation::where('created_by', $product->user_id)->where('status', 1)->get();
                                     @endphp
                                     <select class="amaz_select2 w-100" id="selectPickup">
-                                        <option data-display="Choose pickup location" disabled>{{__('amazy.Choose pickup location')}}</option>
+                                        <option data-display="Choose warehouse location" disabled>{{__('amazy.Choose warehouse location')}}</option>
                                         @if($pickup_locations)
                                         @foreach($pickup_locations as $pickup_location)
-                                            <option value="{{$pickup_location->id}}" {{$pickup_location->is_default?'selected':''}}>{{$pickup_location->address}}</option>
+                                             <option value="{{$pickup_location->id}}" 
+                                              {{--  {{$pickup_location->is_default?'selected':''}} --}} 
+                                                >{{$pickup_location->address}}</option>
                                         @endforeach
                                         @endif
                                     </select>
@@ -891,11 +893,11 @@
                             </div>
                             <div class="amazcart_delivery_wiz_sep d-flex gap_15 ">
                                 <div class="icon d-flex align-items-center justify-content-center ">
-                                    <img src="{{url('/')}}/public/frontend/amazy/img/product_details/details_pickup.svg" alt="{{__('amazy.Pickup Location')}}" title="{{__('amazy.Pickup Location')}}">
+                                    <img src="{{url('/')}}/public/frontend/amazy/img/product_details/details_pickup.svg" alt="{{__('amazy.warehouse location')}}" title="{{__('amazy.warehouse location')}}">
                                 </div>
                                 <div class="amazcart_delivery_wiz_content">
-                                    <h4 class="font_16 f_w_700 mb_6">{{__('amazy.Pickup Location')}}</h4>
-                                    <p class="delivery_text font_14 f_w_400 mb-0" id="pickup_location"></p>
+                                    <h4 class="font_16 f_w_700 mb_6">{{__('amazy.warehouse location')}}</h4>
+                                    <p class="delivery_text font_14 f_w_400 mb-0" id="warehouse"></p>
                                 </div>
                             </div>
                         </div>
@@ -1909,7 +1911,7 @@
                 $.post("{{route('frontend.item.get_pickup_by_city')}}",data,function(response){
                     $('#selectPickup').empty();
                     $('#selectPickup').append(
-                        `<option selected disabled data-display="Choose pickup location">{{__('amazy.Choose pickup location')}}</option>`
+                        `<option selected disabled data-display="Choose warehouse location">{{__('amazy.Choose warehouse location')}}</option>`
                     );
                     $.each(response, function(index, pickup) {
                         $('#selectPickup').append('<option value="' + pickup.id + '">' + pickup.address + '</option>');
@@ -1943,8 +1945,8 @@
                         }
                     }
                     if (response.pickup_location != null) {
-                        $('#pickup_location').text(`
-                            {{__('shipping.delivery_from_pickup_location_always_free_of_cost')}} {{__('common.pickup_address')}}: ${response.pickup_location.address}.
+                        $('#warehouse').text(`
+                          ${response.pickup_location.address}.
                             {{__('common.country')}}: ${response.pickup_location.country.name} {{__('common.state')}}: ${response.pickup_location.state.name} {{__('common.city')}}: ${response.pickup_location.city.name} {{__('common.postcode')}}: ${response.pickup_location.pin_code}
                         `);
                     }

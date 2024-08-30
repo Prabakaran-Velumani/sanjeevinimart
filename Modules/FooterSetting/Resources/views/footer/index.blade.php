@@ -46,6 +46,12 @@ $LanguageList = getLanguageList();
                                         <li class="nav-item">
                                             <a class="nav-link {{ $footerTab == 5?'active':'' }} show active_section_class" href="#footer_4" role="tab" data-toggle="tab" id="5" data-id="5" aria-selected="true">{{$FooterContent->footer_section_three_title}}</a>
                                         </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link {{ $footerTab == 7?'active':'' }} show active_section_class" href="#footer_5" role="tab" data-toggle="tab" id="7" data-id="7" aria-selected="true">
+                                                {{-- {{$FooterContent->footer_section_four_title}} --}}
+                                                Our Legal
+                                            </a>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -146,7 +152,7 @@ $LanguageList = getLanguageList();
                                                                         <p>{{__('frontendCms.play_store_show_in_frontend') }}</p>
                                                                     </li>
                                                                 </ul>
-                    
+
                                                             </div>
                                                             <div class="primary_input">
                                                                 <ul id="theme_nav" class="permission_list sms_list ">
@@ -159,7 +165,7 @@ $LanguageList = getLanguageList();
                                                                         <p>{{ __('frontendCms.app_store_show_in_frontend') }}</p>
                                                                     </li>
                                                                 </ul>
-                    
+
                                                             </div>
                                                             <div class="primary_input">
                                                                 <ul id="theme_nav" class="permission_list sms_list ">
@@ -172,7 +178,7 @@ $LanguageList = getLanguageList();
                                                                         <p>{{ __('frontendCms.payment_image_show_in_frontend') }}</p>
                                                                     </li>
                                                                 </ul>
-                    
+
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-6">
@@ -186,7 +192,7 @@ $LanguageList = getLanguageList();
                                                                     </button>
                                                                 </div>
                                                                 <span class="text-danger"  id="file_error"></span>
-                                                                
+
                                                                 <div class="img_div mt-20">
                                                                    <img id="blogImgShow"
                                                                    src="{{showImage($footer_content_new->payment_image?$footer_content_new->payment_image:'backend/img/default.png')}}" alt="">
@@ -645,6 +651,121 @@ $LanguageList = getLanguageList();
                                                                                     <a data-toggle="modal" data-target="#editModal" class="dropdown-item edit_page" data-value="{{$page}}">{{ __('common.edit') }}</a>
                                                                                 @endif
                                                                                 @if (permissionCheck('footerSetting.footer.widget-delete'))
+                                                                                    <a class="dropdown-item delete_page" data-id="{{$page->id}}">{{ __('common.delete') }}</a>
+                                                                                @endif
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @if (permissionCheck('footerSetting.footer.widget-store'))
+                                    @include('footersetting::footer.components.widget_create')
+                                @endif
+                                <div role="tabpanel" class="tab-pane {{ $footerTab == 7?'active show':'' }} fade" id="footer_5">
+                                    <div class="row">
+                                        <div class="col-lg-3 mt-30">
+                                            <div class="col-lg-12">
+                                                <div class="main-title">
+                                                    <h3 class="mb-30">{{__('common.update')}} </button> </h3>
+                                                </div>
+                                                <form method="POST" action="" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data" id="ourLegalForm">
+                                                    <input type="hidden" name="id" value="{{$FooterContent->id}}">
+                                                    <div class="white-box">
+                                                        <div class="add-visitor">
+                                                            <div class="row">
+                                                                @if(isModuleActive('FrontendMultiLang'))
+                                                                    <div class="col-lg-12">
+                                                                        <ul class="nav nav-tabs justify-content-start mt-sm-md-20 mb-30 ml-0" role="tablist">
+                                                                            @foreach ($LanguageList as $key => $language)
+                                                                                <li class="nav-item">
+                                                                                    <a class="nav-link anchore_color @if (auth()->user()->lang_code == $language->code) active @endif" href="#maselement{{$language->code}}" role="tab" data-toggle="tab" aria-selected="@if (auth()->user()->lang_code == $language->code) true @else false @endif">{{ $language->native }} </a>
+                                                                                </li>
+                                                                            @endforeach
+                                                                        </ul>
+                                                                        <div class="tab-content">
+                                                                            @foreach ($LanguageList as $key => $language)
+                                                                                <div role="tabpanel" class="tab-pane fade @if (auth()->user()->lang_code == $language->code) show active @endif" id="maselement{{$language->code}}">
+                                                                                    <div class="primary_input mb-25">
+                                                                                        <label class="primary_input_label" for="our_legal_title">{{__('frontendCms.section_name')}} <span class="text-danger">*</span></label>
+                                                                                        <input name="our_legal_title[{{$language->code}}]" id="our_legal_title" class="primary_input_field" placeholder="-" type="text" value="{{isset($FooterContent)?$FooterContent->getTranslation('footer_our_legal_title',$language->code):old('our_legal_title.'.$language->code)}}">
+                                                                                        <span class="text-danger"  id="error_our_legal_title"></span>
+                                                                                    </div>
+                                                                                </div>
+                                                                            @endforeach
+                                                                        </div>
+                                                                    </div>
+                                                                @else
+                                                                    <div class="col-lg-12">
+                                                                        <div class="primary_input mb-25">
+                                                                            <label class="primary_input_label" for="our_legal_title">{{__('frontendCms.section_name')}} <span class="text-danger">*</span></label>
+                                                                            <input name="our_legal_title" id="our_legal_title" class="primary_input_field" placeholder="-" type="text" value="{{ old('our_legal_title') ? old('our_legal_title') :
+                                                                            //  $FooterContent->footer_section_four_title
+                                                                             'Our Legal' }}">
+                                                                            <span class="text-danger"  id="error_our_legal_title"></span>
+                                                                        </div>
+                                                                    </div>
+                                                                @endif
+                                                            </div>
+                                                            @if (permissionCheck('company_content_update'))
+                                                                <div class="row mt-40">
+                                                                    <div class="col-lg-12 text-center tooltip-wrapper" data-title=""
+                                                                        data-original-title="" title="">
+                                                                        <button class="primary-btn fix-gr-bg tooltip-wrapper "
+                                                                            data-original-title="" title="" id="ourLegalBtn">
+                                                                            <span class="ti-check"></span>
+                                                                            {{__('common.update')}} </button>
+                                                                    </div>
+                                                                </div>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-9 mt-50">
+                                            @if (permissionCheck('footerSetting.footer.widget-store'))
+                                                <a href="" data-id="4" class="primary-btn small fix-gr-bg create_page_btn">{{__('frontendCms.add_new_page')}}</a>
+                                            @endif
+                                            <div class="QA_section QA_section_heading_custom check_box_table">
+                                                <div class="QA_table">
+                                                    <table class="table Crm_table_active3">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col" width="15%">{{ __('common.sl') }}</th>
+                                                                <th scope="col" width="45%">{{ __('common.name') }}</th>
+                                                                <th scope="col" width="15%">{{ __('common.status') }}</th>
+                                                                <th scope="col" width="25%">{{ __('common.action') }}</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach($ourLegalPages as $key => $page)
+                                                                <tr>
+                                                                    <td>{{getNumberTranslate($key +1)}}</td>
+                                                                    <td>{{$page->name}}</td>
+                                                                    <td>
+                                                                        <label class="switch_toggle" for="checkbox{{ $page->id }}">
+                                                                            <input type="checkbox" id="checkbox{{ $page->id }}" {{$page->status?'checked':''}} value="{{$page->id}}" data-value="{{$page}}" class="statusChange">
+                                                                            <div class="slider round"></div>
+                                                                        </label>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="dropdown CRM_dropdown">
+                                                                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
+                                                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                                {{ __('common.select') }}
+                                                                            </button>
+                                                                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu2">
+                                                                                @if (permissionCheck('footerSetting.footer.widget-update'))
+                                                                                    <a class="dropdown-item edit_page" data-value="{{$page}}">{{ __('common.edit') }}</a>
+                                                                                @endif
+                                                                                @if (permissionCheck('footer.widget-delete'))
                                                                                     <a class="dropdown-item delete_page" data-id="{{$page->id}}">{{ __('common.delete') }}</a>
                                                                                 @endif
                                                                             </div>

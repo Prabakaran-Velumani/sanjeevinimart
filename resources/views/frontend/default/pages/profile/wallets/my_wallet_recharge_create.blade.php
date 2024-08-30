@@ -193,7 +193,7 @@
                                             @csrf
                                             <input type="hidden" name="method" value="Midtrans">
                                             <input type="hidden" name="amount" value="{{ $recharge_amount * 100 }}">
-                                            <input type="hidden" name="ref_no" value="{{ rand(1111,99999).'-'.date('y-m-d').'-'.auth()->user()->id }}">
+                                            <input type="hidden" name="ref_no" value="{{ rand(1111,99999).'-'.date('Y-m-d').'-'.auth()->user()->id }}">
                                             <button type="submit">
                                                 <img src="{{showImage($gateway_activations->where('method', 'Midtrans')->first()->logo)}}" alt="">
                                             </button>
