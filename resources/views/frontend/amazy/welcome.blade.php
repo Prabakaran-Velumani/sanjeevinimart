@@ -276,6 +276,7 @@
 
 <div id="filter_category_1" class="amaz_section section_spacing2 {{@$filter_category_1->status == 0?'d-none':''}}">
     <div class="container ">
+      
         @if($category)
             <div class="row no-gutters">
                 <div class="col-xl-5 p-0 col-lg-12">
@@ -656,6 +657,7 @@
 
 <div id="filter_category_2" class="amaz_section section_spacing2 {{@$filter_category_2->status == 0?'d-none':''}}">
     <div class="container ">
+        {{-- {{$category->subCategories}} --}}
         @if($category)
             <div class="row no-gutters">
                 <div class="col-xl-5 p-0 col-lg-12">
@@ -663,6 +665,7 @@
                         <div class="House_Appliances_widget_left d-flex flex-column flex-fill">
                             <h4 id="filter_category_title">{{$filter_category_2->title}}</h4>
                             <ul class="nav nav-tabs flex-fill flex-column border-0" id="myTab10" role="tablist">
+                              
                                 @foreach(@$category->subCategories as $key => $subcat)
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link {{$key == 0?'active':''}}" id="tab_link_{{$subcat->id}}" data-bs-toggle="tab" data-bs-target="#fashion_tab_pane_subcat_{{$subcat->id}}" type="button" role="tab" aria-controls="Dining" aria-selected="true">{{$subcat->name}}</button>
@@ -688,7 +691,16 @@
                                 <div class="tab-pane fade {{$key == 0?'show active':''}}" id="fashion_tab_pane_subcat_{{$subcat->id}}" role="tabpanel" aria-labelledby="Dining-tab">
                                     <!-- content  -->
                                     <div class="House_Appliances_product">
+                                        @php 
+                                        $i = 1;
+                                    @endphp
+                                    {{$subcat}}
+                                    @foreach($subcat->sellerProductTake() as $product)
+        
+                                        @php echo $i; $i++; @endphp
+                                    @endforeach
                                         @foreach($subcat->sellerProductTake() as $product)
+                                        {{$product}}
                                         <div class="product_widget5 style4 mb-0 style5">
                                             <div class="product_thumb_upper">
                                                 @php
