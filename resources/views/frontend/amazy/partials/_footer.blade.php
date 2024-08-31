@@ -78,7 +78,6 @@
                                     <li><a href="{{ url($page->pageData->slug) }}">{{$page->name}}</a></li>
                                     @endif
                                 @endforeach
-                                <li><a href="{{ url($page->pageData->slug) }}" data-section="{{ $sectionWidgets->where('section','1') }}">{{$page->name}}</a></li>
                             </ul>
                         </div>
                     </div>
