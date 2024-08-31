@@ -117,6 +117,23 @@
     flex-wrap: wrap;
     justify-content: space-between;
 }
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .category-card {
+        width: 48%;
+        margin-bottom: 16px;
+        padding: 10px;
+        border-radius: 6px;
+    }
+}
+
+@media (max-width: 480px) {
+    .category-card {
+        width: 100%;
+        margin-bottom: 12px;
+    }
+
+}
 
 
 </style>
