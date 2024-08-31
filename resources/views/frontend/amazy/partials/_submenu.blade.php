@@ -464,7 +464,7 @@
 
 <script type="text/javascript">
     function googleTranslateElementInit() {
-      new google.translate.TranslateElement({includedLanguages: 'en,hi,kn',layout: google.translate.TranslateElement}, 'google_translate_element');
+      new google.translate.TranslateElement({includedLanguages: 'en,hi,kn'}, 'google_translate_element');
       console.log('translate')
     }
     document.getElementById('google_translate_element').addEventListener('change', function(event) {
