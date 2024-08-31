@@ -12,7 +12,7 @@ class PickupLocationRequest extends FormRequest
     public function rules()
     {
         return [
-            'pickup_location' => 'required',
+            'warehouse_location' => 'required',
             'name' => 'required',
             'email' => 'required',
             'phone' => 'required',
