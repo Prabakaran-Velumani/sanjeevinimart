@@ -44,7 +44,8 @@
                 <div class="header__wrapper">
                     <!-- header__left__start  -->
                     <div class="header__left d-flex align-items-center dynamic_svg">
-                        <div id="google_translate_element" style="margin-top:auto;overflow:auto;"></div>
+                      {{-- {{$topnavbar_left_menu}} --}}
+                      <div id="google_translate_element" style="margin-top:auto;overflow:auto;"></div>
                         @if($topnavbar_left_menu)
                             @foreach($topnavbar_left_menu->elements->where('has_parent',null) as $element)
                                 @if($element->type == 'link')
@@ -464,20 +465,25 @@
 
 <script type="text/javascript">
     function googleTranslateElementInit() {
-      new google.translate.TranslateElement({includedLanguages: 'en,hi,kn'}, 'google_translate_element');
-      console.log('translate')
+      new google.translate.TranslateElement(
+        {
+          includedLanguages: 'en,hi,kn',
+        },
+        'google_translate_element'
+      );
+      console.log('Translate widget initialized');
+      setDefault();
+      // Ensure English is selected
+     
     }
-    document.getElementById('google_translate_element').addEventListener('change', function(event) {
-  // Your code to handle the event
-  console.log('Language changed to: ', event.target.value);
-});
-setTimeout(function() {
-    var select = document.querySelector('.goog-te-combo');
-    if (select) {
-      select.value = 'en';
-      select.dispatchEvent(new Event('change'));
-    }
-  }, 1000); // Adjust timeout if necessary
+    function setDefault()
+    {
+        var select = document.querySelector('.goog-te-combo');
+        if (select) {
+          select.value = 'en';
+          select.dispatchEvent(new Event('change'));
+        }
+    }   
     </script>
     
     <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
