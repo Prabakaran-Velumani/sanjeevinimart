@@ -703,9 +703,7 @@ $LanguageList = getLanguageList();
                                                                     <div class="col-lg-12">
                                                                         <div class="primary_input mb-25">
                                                                             <label class="primary_input_label" for="our_legal_title">{{__('frontendCms.section_name')}} <span class="text-danger">*</span></label>
-                                                                            <input name="our_legal_title" id="our_legal_title" class="primary_input_field" placeholder="-" type="text" value="{{ old('our_legal_title') ? old('our_legal_title') :
-                                                                            //  $FooterContent->footer_section_four_title
-                                                                             'Our Legal' }}">
+                                                                            <input name="our_legal_title" id="our_legal_title" class="primary_input_field" placeholder="-" type="text" value="{{ old('our_legal_title') ? old('our_legal_title') : $FooterContent->footer_section_four_title }}">
                                                                             <span class="text-danger"  id="error_our_legal_title"></span>
                                                                         </div>
                                                                     </div>

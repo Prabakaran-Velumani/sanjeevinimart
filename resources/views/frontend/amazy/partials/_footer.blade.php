@@ -28,7 +28,7 @@
   <div class="container" >
     <div class="row">
 	  <div class="col-xl-1 col-lg-1 col-md-6">
-	    
+
 	  </div>
 	  <div class="col-xl-2 col-lg-2 col-md-6 footer_links_50">
       <center><img src="http://192.168.1.51/sanjeevinimart/public/uploads/all/66ceb51342575.png" alt="Italian Trulli"></center>
@@ -51,7 +51,7 @@
 	    <div class="fotop-txt">100% Original Products</div>
 	  </div>
 	  <div class="col-xl-1 col-lg-1 col-md-6">
-	    
+
 	  </div>
 	</div>
   </div>
@@ -76,6 +76,7 @@
                                     <li><a href="{{ url($page->pageData->slug) }}">{{$page->name}}</a></li>
                                     @endif
                                 @endforeach
+                                <li><a href="{{ url($page->pageData->slug) }}" data-section="{{ $sectionWidgets->where('section','1') }}">{{$page->name}}</a></li>
                             </ul>
                         </div>
                     </div>
