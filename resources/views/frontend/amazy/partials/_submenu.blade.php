@@ -15,6 +15,17 @@
       color: #333;
     }
 
+    .goog-te-gadget {
+        font-family: arial;
+        font-size: 11px;
+        color: #f4f7f9 !important;
+        white-space: nowrap;
+    }
+
+    .VIpgJd-ZVi9od-l4eHX-hSRGPd {
+    display: none; /* Hide the "Powered by" link */
+    }
+
     /* Style for the dropdown */
     .goog-te-combo option {
       padding: 10px;
@@ -24,7 +35,8 @@
     .goog-te-combo:hover {
       border-color: #007BFF;
     }
-  </style>
+</style>
+
   <div class="header_topbar_area {{$top_bar->status == 0 ? 'd-none':''}}" id="top_bar">
     <div class="container">
         <div class="row">
@@ -451,9 +463,21 @@
 </div>
 
 <script type="text/javascript">
-function googleTranslateElementInit() {
-  new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
-}
-</script>
-
-<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({includedLanguages: 'en,hi,kn'}, 'google_translate_element');
+      console.log('translate')
+    }
+    document.getElementById('google_translate_element').addEventListener('change', function(event) {
+  // Your code to handle the event
+  console.log('Language changed to: ', event.target.value);
+});
+setTimeout(function() {
+    var select = document.querySelector('.goog-te-combo');
+    if (select) {
+      select.value = 'en';
+      select.dispatchEvent(new Event('change'));
+    }
+  }, 1000); // Adjust timeout if necessary
+    </script>
+    
+    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
