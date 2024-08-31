@@ -49,7 +49,7 @@
 }
 
 .parent-name {
-    font-size: 18px;
+    font-size: 19px;
     color: #333333;
     font-weight: 700;
 }
@@ -63,7 +63,7 @@
 
 .child-category {
     color: #555555;
-    font-size: 15px;
+    font-size: 18px;
     font-weight: 600;
     display: block;
     margin-bottom: 8px;
@@ -115,7 +115,7 @@
 .row {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content:space-around;
 }
 /* Mobile Responsive */
 @media (max-width: 768px) {
