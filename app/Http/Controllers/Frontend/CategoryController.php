@@ -184,7 +184,7 @@ class CategoryController extends Controller
     public function productByCategory(Request $request, $slug)
     {
 
-       
+
         $request->validate([
             'item' => 'required'
         ]);
@@ -200,9 +200,9 @@ class CategoryController extends Controller
             $paginate = $request->paginate;
             $data['paginate'] = $request->paginate;
         }
-        
+
         $item = $request->item;
-       
+
 
         if ($item == 'category') {
             $catRepo = new CategoryRepository(new Category());
@@ -223,9 +223,9 @@ class CategoryController extends Controller
                 $data['max_price_highest'] = $product_max_price;
                 $attributeRepo = new AttributeRepository;
                 $data['attributeLists'] = $attributeRepo->getAttributeForSpecificCategory($category_id, $category_ids);
-              
+
                 $data['category_id'] = $category_id;
-                
+
                 $data['color'] = $attributeRepo->getColorAttributeForSpecificCategory($category_id, $category_ids);
             }else{
                 return abort(404);
@@ -233,7 +233,7 @@ class CategoryController extends Controller
         }
         if ($item == 'brand') {
             $brandRepo = new BrandRepository(new Brand());
-          
+
             $brand = $brandRepo->findBySlug($slug);
             if($brand){
                 $brand_id = $brand->id;
@@ -264,44 +264,44 @@ class CategoryController extends Controller
             $data['tag'] = $section->title;
             $data['item'] = $request->item;
             $data['section_name'] = $slug;
-            
-         
+
+
             $mainProducts = Product::where('products.status', 1)->select(['products.id','products.brand_id'])->join('seller_products', function($q)use($section_product_ids){
                 return $q->on('products.id','=','seller_products.product_id')->whereRaw("seller_products.id in ('". implode("','",$section_product_ids). "')");
             });
-          
+
             $main_product_ids = $mainProducts->pluck('id')->toArray();
-          
+
             $brand_ids = $mainProducts->distinct('brand_id')->pluck('brand_id')->toArray();
-            
+
             $category_ids = CategoryProduct::whereRaw("product_id in ('". implode("','",$main_product_ids)."')")->distinct()->pluck('category_id')->toArray();
             $data['CategoryList'] = Category::whereRaw("id in ('". implode("','",$category_ids). "')")->where('parent_id',0)->where('status', 1)->take(10)->get();
-           
+
             if(is_null($brand_ids)){
                 $data['brandList'] = Brand::whereRaw("id in ('". implode("','",$brand_ids). "')")->where('status', 1)->take(10)->get();
-            
+
             }
-            
+
             $attribute_ids = ProductVariations::whereRaw("product_id in ('". implode("','",$main_product_ids)."')")->distinct()->pluck('attribute_id')->toArray();
-            
+
             if(is_null($attribute_ids)){
             $data['attributeLists'] =  Attribute::with('values')->whereRaw("id in ('". implode("','", $attribute_ids). "')")->where('id','>',1)->where('status', 1)->take(1)->get();
             $data['color'] = Attribute::with('values')->whereRaw("id in ('". implode("','", $attribute_ids). "')")->where('id',1)->where('status', 1)->first();
             }
-           
-           
-        
+
+
+
             $data['products'] = $this->filterService->sortAndPaginate($products, $sort_by, $paginate);
-        
+
             $product_min_price = $this->filterService->filterProductMinPrice($products->pluck('id')->toArray());
             $product_max_price = $this->filterService->filterProductMaxPrice($products->pluck('id')->toArray());
             $product_min_price = $this->filterService->getConvertedMin($product_min_price);
             $product_max_price = $this->filterService->getConvertedMax($product_max_price);
             $data['min_price_lowest'] = $product_min_price;
             $data['max_price_highest'] = $product_max_price;
-           
-            
-        
+            //return $data;
+
+
         }
 
         if ($item == 'tag') {
@@ -363,15 +363,86 @@ class CategoryController extends Controller
                 });
             })->select(['*', 'name as product_name','sku as slug'])->get();
             // $digitalgiftCards = DigitalGiftCard::Where('gift_name', 'LIKE', "%{$slug}%")->select(['*', 'gift_name as product_name'])->get();
-            $category_ids = CategoryProduct::whereRaw("product_id in ('". implode("','",$main_product_ids)."')")->distinct()->pluck('category_id')->toArray();
-            $data['CategoryList'] = Category::whereRaw("id in ('". implode("','",$category_ids)."')")->where('status', 1)->take(20)->get();
-            $products = SellerProduct::activeSeller()->with('product')->select('seller_products.*')->join('products', function($q) use($main_product_ids,$slug){
-                $q->on('seller_products.product_id','=','products.id');
-            })->whereRaw("seller_products.product_id in ('". implode("','",$main_product_ids). "')")->orWhere('products.product_name','LIKE', "%{$slug}%")->where('seller_products.status', 1)->activeSeller()->orWhere('seller_products.product_name', 'LIKE', "%{$slug}%")->activeSeller()->where('seller_products.status', 1)->take(100)->get();
-            $data['brandList'] = Brand::whereRaw("id in ('". implode("','",$main_product_ids)."')")->where('status', 1)->take(10)->get();
-            $attribute_ids = ProductVariations::whereRaw("product_id in ('". implode("','",$main_product_ids). "')")->distinct()->pluck('attribute_id')->toArray();
-            $data['attributeLists'] =  Attribute::with('values')->whereRaw("id in ('". implode("','", $attribute_ids). "')")->where('id','>',1)->where('status', 1)->take(2)->get();
-            $data['color'] = Attribute::with('values')->whereRaw("id in ('". implode("','", $attribute_ids). "')")->where('status', 1)->first();
+            if(!empty($main_product_ids)) { $category_ids = CategoryProduct::whereRaw("product_id in ('". implode("','",$main_product_ids)."')")->distinct()->pluck('category_id')->toArray(); } else { $category_ids = collect(); }
+
+            // if(!empty($category_ids)) { $data['CategoryList'] = Category::whereRaw("id in ('". implode("','",$category_ids)."')")->where('status', 1)->take(20)->get(); } else { $data['CategoryList'] = collect(); }
+
+            if (!empty($category_ids)) {
+                // Convert to array if it's a Collection
+                $category_ids_array = is_array($category_ids) ? $category_ids : $category_ids->toArray();
+            
+                // Ensure the array is not empty
+                if (!empty($category_ids_array)) {
+                    $data['CategoryList'] = Category::whereIn('id', $category_ids_array) // Use whereIn instead of whereRaw
+                        ->where('status', 1)
+                        ->take(20)
+                        ->get();
+                } else {
+                    // Handle the case where the array is empty
+                    $data['CategoryList'] = collect();
+                }
+            } else {
+                $data['CategoryList'] = collect();
+            }
+            
+            
+
+            // $products = SellerProduct::activeSeller()->with('product')->select('seller_products.*')->join('products', function($q) use($main_product_ids,$slug){
+            //     $q->on('seller_products.product_id','=','products.id');
+            // })->whereRaw("seller_products.product_id in ('". implode("','",$main_product_ids). "')")->orWhere('products.product_name','LIKE', "%{$slug}%")->where('seller_products.status', 1)->activeSeller()->orWhere('seller_products.product_name', 'LIKE', "%{$slug}%")->activeSeller()->where('seller_products.status', 1)->take(100)->get();
+
+            // Ensure $main_product_ids is not empty
+            if (!empty($main_product_ids)) {
+                $products = SellerProduct::activeSeller()
+                    ->with('product')
+                    ->select('seller_products.*')
+                    ->join('products', function($q) use ($main_product_ids, $slug) {
+                        $q->on('seller_products.product_id', '=', 'products.id');
+                    })
+                    ->whereIn('seller_products.product_id', $main_product_ids)  // Use whereIn instead of whereRaw
+                    ->orWhere('products.product_name', 'LIKE', "%{$slug}%")
+                    ->where('seller_products.status', 1)
+                    ->take(100)
+                    ->get();
+                
+                // Brand query
+                $data['brandList'] = Brand::whereIn('id', $main_product_ids)  // Use whereIn instead of whereRaw
+                    ->where('status', 1)
+                    ->take(10)
+                    ->get();
+
+                // Attribute query
+                $attribute_ids = ProductVariations::whereIn('product_id', $main_product_ids)  // Use whereIn instead of whereRaw
+                    ->distinct()
+                    ->pluck('attribute_id')
+                    ->toArray();
+            } else {
+                // Handle the case where $main_product_ids is empty
+                $products = collect();
+                $data['brandList'] = collect();
+                $attribute_ids = [];
+            }
+
+
+            // $data['brandList'] = Brand::whereRaw("id in ('". implode("','",$main_product_ids)."')")->where('status', 1)->take(10)->get();
+
+            if (!empty($main_product_ids)) {
+                // Safely query the brands using whereIn
+                $data['brandList'] = Brand::whereIn('id', $main_product_ids)  // Use whereIn instead of whereRaw
+                    ->where('status', 1)
+                    ->take(10)
+                    ->get();
+            } else {
+                // Handle the case where $main_product_ids is empty
+                $data['brandList'] = collect();
+            }
+
+            if (!empty($main_product_ids)) { $attribute_ids = ProductVariations::whereRaw("product_id in ('". implode("','",$main_product_ids). "')")->distinct()->pluck('attribute_id')->toArray(); } else { $attribute_ids = collect(); }
+
+            if(!empty($attribute_ids) && count($attribute_ids) > 0) {$data['attributeLists'] =  Attribute::with('values')->whereRaw("id in ('". implode("','", $attribute_ids). "')")->where('id','>',1)->where('status', 1)->take(2)->get(); } else { $data['attributeLists'] = collect(); }
+
+            if(!empty($attribute_ids) && count($attribute_ids) > 0) { $data['color'] = Attribute::with('values')->whereRaw("id in ('". implode("','", $attribute_ids). "')")->where('status', 1)->first(); } else { $data['attributeLists'] = collect(); }
+
             $product_min_price = $this->filterService->filterProductMinPrice($products->pluck('id')->toArray());
             $product_max_price = $this->filterService->filterProductMaxPrice($products->pluck('id')->toArray());
             $giftcard_min_price = $giftCards->min('selling_price')??0;
@@ -391,7 +462,7 @@ class CategoryController extends Controller
             if (session()->has('filterDataFromCat')) {
                 session()->forget('filterDataFromCat');
             }
-      
+
 
             // return print_r($request->has);;
 
