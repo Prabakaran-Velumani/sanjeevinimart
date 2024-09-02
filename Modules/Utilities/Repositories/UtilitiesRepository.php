@@ -191,7 +191,7 @@ class UtilitiesRepository
         ];
         $payment_methods = PaymentMethod::all();
         $modules = Module::all();
-        rate:fresh',array('--force' => true));
+        Artisan::call('rate:fresh',array('--force' => true));
         User::where('id', 1)->update($data);
         InfixModuleManager::query()->truncate();
         Module::query()->truncate();
@@ -296,7 +296,7 @@ class UtilitiesRepository
         DB::statement("SET foreign_key_checks=1");
 
         DB::statement("SET AUTOCOMMIT=1");
-        rate',array('--force' => true));
+        Artisan::call('rate',array('--force' => true));
 
 
         User::where('id', 1)->update($data);

@@ -299,7 +299,7 @@ class CategoryController extends Controller
             $product_max_price = $this->filterService->getConvertedMax($product_max_price);
             $data['min_price_lowest'] = $product_min_price;
             $data['max_price_highest'] = $product_max_price;
-            //return $data;
+            return $data;
 
 
         }
