@@ -194,9 +194,7 @@ class UtilitiesRepository
         $payment_methods = PaymentMethod::all();
         log::info($payment_methods);
         $modules = Module::all();
-        log::info($modules);
-        $artisan = Artisan::call('rate:fresh',array('--force' => true));
-        log::info($artisan);
+        Artisan::call('rate:fresh',array('--force' => true));
         User::where('id', 1)->update($data);
         log::info('User');
         InfixModuleManager::query()->truncate();
@@ -361,6 +359,67 @@ class UtilitiesRepository
             Log::error('Error in import_demo_database: ' . $e->getMessage());
             throw $e;
         }
+<<<<<<< HEAD
+=======
+
+        $zip = new ZipArchive;
+        $res = $zip->open(asset_path('demo_db/demo_uploads.zip'));
+        if ($res === true) {
+            $zip->extractTo(storage_path('app/tempDemoFile'));
+            $zip->close();
+        } else {
+            abort(500, 'Error! Could not open File');
+        }
+        $src = storage_path('app/tempDemoFile');
+        $dst = asset_path('uploads');
+        $this->recurse_copy($src, $dst);
+
+        if(file_exists(storage_path('app/tempDemoFile'))){
+            $this->delete_directory(storage_path('app/tempDemoFile'));
+        }
+
+        set_time_limit(2700);
+
+        DB::statement("SET foreign_key_checks=0");
+
+        Artisan::call('db:wipe',array('--force' => true));
+        if(app('theme')->folder_path == 'amazy'){
+            $sql = asset_path('demo_db/amazy_demo.sql');
+        }else{
+            $sql = asset_path('demo_db/amazcart_demo.sql');
+        }
+        DB::unprepared(file_get_contents($sql));
+
+        DB::statement("SET foreign_key_checks=1");
+
+        DB::statement("SET AUTOCOMMIT=1");
+        Artisan::call('rate',array('--force' => true));
+
+
+        User::where('id', 1)->update($data);
+        InfixModuleManager::query()->truncate();
+        Module::query()->truncate();
+        foreach($infix_modules as $module){
+            InfixModuleManager::create([
+                'name' => $module->name,
+                'email' => $module->email
+            ]);
+        }
+
+        foreach($modules as $module){
+            $module = $module->toArray();
+            Module::create($module);
+        }
+        foreach($payment_methods as $payment_method){
+            PaymentMethod::where('id', $payment_method->id)->update([
+                'active_status' => 1
+            ]);
+        }
+        GeneralSetting::first()->update($setting);
+        Artisan::call('optimize:clear');
+        return true;
+
+>>>>>>> ba0b5249f9502e9ba36ce75de87b357f1d9bc31b
     }
     
     public function remove_Visitor(){
