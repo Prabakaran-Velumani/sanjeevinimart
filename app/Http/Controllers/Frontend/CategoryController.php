@@ -146,6 +146,7 @@ class CategoryController extends Controller
 
     public function sortFilterIndexByType(Request $request)
     {
+        $data = [];
         if (session()->has('filterDataFromCat')) {
             $data['products'] = $this->filterService->filterSortProductBlade($request->except("_token"),session()->get('filterDataFromCat'));
         }else {
@@ -177,6 +178,7 @@ class CategoryController extends Controller
         if ($request->has('paginate')) {
             $data['paginate'] = $request->paginate;
         }
+        // return $data;
         return view(theme('partials.listing_paginate_data'), $data);
     }
 
