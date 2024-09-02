@@ -30,13 +30,14 @@ class ServiceMiddleware
         if ($logout) {
             $request->session()->flush();
             Storage::delete('.logout');
-            return redirect('/install');
+            // return redirect('/install');
+            return redirect('/');
         }
-
-        if (Auth::check() and Auth::user()->role_id == 1) {
-            $this->service_repo->check();
-        }
-
+        // return url('/');
+        
+        // if (Auth::check() and Auth::user()->role_id == 1) {
+        //     $this->service_repo->check();
+        // }
         return $next($request);
     }
 }

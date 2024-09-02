@@ -76,7 +76,10 @@ class CartController extends Controller
     }
     public function store(Request $request){
         try{
-            $result = $this->cartService->store($request->except('_token'));
+            $data = $request->except('_token');
+            $data['shipping_method_id'] = $data['shipping_method_id'] === 'undefined' ? null : $data['shipping_method_id'];
+            $result = $this->cartService->store($data);
+            // $result = $this->cartService->store($request->except('_token'));
             if($result == 'out_of_stock'){
                 return 'out_of_stock';
             }else{

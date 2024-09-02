@@ -2,6 +2,8 @@
     $footer_content = \Modules\FooterSetting\Entities\FooterContent::first();
     $subscribeContent = \Modules\FrontendCMS\Entities\SubscribeContent::find(1);
     $about_section = Modules\FrontendCMS\Entities\HomePageSection::where('section_name','about_section')->first();
+    $appUrl = config('app.url');
+    // echo $appUrl;
 @endphp
 @if(url()->current() == url('/'))
 {{-- <div id="about_section" class="amaz_section section_spacing4 {{ ($about_section)? ($about_section->status == 0?'d-none':'') : ''}}">
@@ -24,30 +26,30 @@
 </div> --}}
 @endif
 
-<div class="footer-top" style="background-image: url('http://192.168.1.51/sanjeevinimart/public/uploads/all/66cec1a66c853.png'); ">
+<div class="footer-top" style="background-image: url('{{ $appUrl }}/public/uploads/all/66cec1a66c853.png'); ">
   <div class="container" >
     <div class="row">
 	  <div class="col-xl-1 col-lg-1 col-md-6">
 	    
 	  </div>
 	  <div class="col-xl-2 col-lg-2 col-md-6 footer_links_50">
-      <center><img src="http://192.168.1.51/sanjeevinimart/public/uploads/all/66ceb51342575.png" alt="Italian Trulli"></center>
+      <center><img src="{{ $appUrl }}/public/frontend/amazy/img/free.png" alt=""></center>
 	    <div class="fotop-txt">Free Delivery</div>
 	  </div>
 	  <div class="col-xl-2 col-lg-2 col-md-6 footer_links_50">
-      <center><img src="http://192.168.1.51/sanjeevinimart/public/uploads/all/66ceb58091987.png" alt="Italian Trulli"></center>
+      <center><img src="{{ $appUrl }}/public/frontend/amazy/img/pro.png" alt=""></center>
 	    <div class="fotop-txt">100% Purchase Protection</div>
 	  </div>
 	  <div class="col-xl-2 col-lg-2 col-md-6 footer_links_50">
-      <center><img src="http://192.168.1.51/sanjeevinimart/public/uploads/all/66ceb58092fbd.png" alt="Italian Trulli"></center>
+      <center><img src="{{ $appUrl }}/public/frontend/amazy/img/sec.png" alt=""></center>
 	    <div class="fotop-txt">Secure Payment</div>
 	  </div>
 	  <div class="col-xl-2 col-lg-2 col-md-6 footer_links_50">
-      <center><img src="http://192.168.1.51/sanjeevinimart/public/uploads/all/66ceb5808e056.png" alt="Italian Trulli"></center>
+      <center><img src="{{ $appUrl }}/public/frontend/amazy/img/qual.png" alt=""></center>
 	    <div class="fotop-txt">Assured Quality</div>
 	  </div>
 	  <div class="col-xl-2 col-lg-2 col-md-6 footer_links_50">
-      <center><img src="http://192.168.1.51/sanjeevinimart/public/uploads/all/66ceb580912b5.png" alt="Italian Trulli"></center>
+      <center><img src="{{ $appUrl }}/public/frontend/amazy/img/org.png" alt=""></center>
 	    <div class="fotop-txt">100% Original Products</div>
 	  </div>
 	  <div class="col-xl-1 col-lg-1 col-md-6">
@@ -126,9 +128,9 @@
                                 </a>
                                 @endif
                                 @if($footer_content->show_app_store)
-                                <a href="{{$footer_content->app_store}}" class="google_play_box d-flex align-items-center">
+                                <a href="{{$footer_content->app_store}}" class="google_play_box1 d-flex align-items-center">
                                     <div class="icon">
-                                        <img src="{{url('/')}}/public/frontend/amazy/img/amaz_icon/apple_icon.svg" alt="{{__('amazy.Apple Store')}}"  title="{{__('amazy.Apple Store')}}">
+                                        <img src="{{url('/')}}/public/frontend/amazy/img/amaz_icon/aplg.png" alt="{{__('amazy.Apple Store')}}"  title="{{__('amazy.Apple Store')}}">
                                     </div>
                                     <div class="google_play_text">
                                         <span>{{__('amazy.Get it on')}}</span>

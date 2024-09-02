@@ -36,6 +36,12 @@ class InstallController extends Controller{
         if($ac){
             abort(404);
         }
+        //Log::info('InstallController 39 Pre Requisite');
+        /** Skip Installation */
+        return redirect('/');
+        /** End Skip Installation */
+        //Log::info('InstallController 43 after redirect');
+
         $checks = $this->repo->getPreRequisite();
 		$server_checks = $checks['server'];
 		$folder_checks = $checks['folder'];
@@ -98,7 +104,6 @@ class InstallController extends Controller{
     }
 
     public function post_database(DatabaseRequest $request){
-        Log::info("post_database ");
         $this->repo->validateDatabase($request->all());
 		return response()->json(['message' => __('service::install.connection_established'), 'goto' => route('service.user')]);
     }
@@ -110,7 +115,6 @@ class InstallController extends Controller{
         $data['pass'] = Storage::exists('.user_pass') ? Storage::get('.user_pass') : null;
 
         if($data['user'] and $data['pass']){
-            Log::info('done');
             Storage::delete(['.user_email', '.user_pass']);
             Storage::put('.install_count', 1);
             return view('service::install.done', $data);

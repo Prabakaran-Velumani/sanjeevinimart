@@ -38,7 +38,7 @@ class PickupLocationRepository
     {
         $user_id = getParentSellerId();
         $location =  PickupLocation::create([
-            'pickup_location'=>$data['pickup_location'],
+            'pickup_location'=>$data['warehouse_location'],
             'name'=>$data['name'],
             'email'=>$data['email'],
             'phone'=>$data['phone'],
@@ -79,7 +79,7 @@ class PickupLocationRepository
     {
         $user_id = getParentSellerId();
         return PickupLocation::where('id',$id)->where('created_by', $user_id)->update([
-            'pickup_location'=>$data['pickup_location'],
+            'pickup_location'=>$data['warehouse_location'],
             'name'=>$data['name'],
             'email'=>$data['email'],
             'phone'=>$data['phone'],

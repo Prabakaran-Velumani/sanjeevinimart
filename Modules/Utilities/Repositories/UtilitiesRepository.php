@@ -27,7 +27,7 @@ use Modules\PaymentGateway\Entities\PaymentMethod;
 use Modules\Utilities\Entities\XmlSitemap;
 use Modules\Visitor\Entities\VisitorHistory;
 use ZipArchive;
-
+use Illuminate\Support\Facades\log;
 class UtilitiesRepository
 {
     use UploadTheme;
@@ -177,12 +177,14 @@ class UtilitiesRepository
     public function reset_database($request)
     {
         $user = DB::table('users')->where('id', 1)->first();
+        log::info(json_encode($user));
         $data = (array) $user;
         $data['lang_code'] = 'en';
         $data['currency_id'] = 2;
         $data['currency_code'] = "USD";
         $data['is_verified'] = 1;
         $infix_modules = InfixModuleManager::all();
+        log::info($infix_modules);
         $setting = [
             'system_domain' => app('general_setting')->system_domain,
             'copyright_text' => app('general_setting')->copyright_text,
@@ -190,10 +192,13 @@ class UtilitiesRepository
             'system_version' => app('general_setting')->system_version
         ];
         $payment_methods = PaymentMethod::all();
+        log::info($payment_methods);
         $modules = Module::all();
         Artisan::call('rate:fresh',array('--force' => true));
         User::where('id', 1)->update($data);
+        log::info('User');
         InfixModuleManager::query()->truncate();
+        log::info('InfixModuleManager');
         Module::query()->truncate();
         foreach($infix_modules as $module){
             $module = $module->toArray();
@@ -245,25 +250,117 @@ class UtilitiesRepository
     }
 
     public function import_demo_database($request){
-        $user = DB::table('users')->where('id', 1)->first();
-        $data = (array) $user;
-        $data['lang_code'] = 'en';
-        $data['currency_id'] = 2;
-        $data['currency_code'] = "USD";
-        $data['is_verified'] = 1;
-        $setting = [
-            'system_domain' => app('general_setting')->system_domain,
-            'copyright_text' => app('general_setting')->copyright_text,
-            'software_version' => app('general_setting')->software_version,
-            'system_version' => app('general_setting')->system_version
-        ];
-        $modules = Module::all();
-        $infix_modules = InfixModuleManager::all();
-        $payment_methods = PaymentMethod::all();
+        DB::beginTransaction(); // Start the transaction
+    
+        try {
+            $user = DB::table('users')->where('id', 1)->first();
+            $data = (array) $user;
+            $data['lang_code'] = 'en';
+            $data['currency_id'] = 2;
+            $data['currency_code'] = "USD";
+            $data['is_verified'] = 1;
+            $setting = [
+                'system_domain' => app('general_setting')->system_domain,
+                'copyright_text' => app('general_setting')->copyright_text,
+                'software_version' => app('general_setting')->software_version,
+                'system_version' => app('general_setting')->system_version
+            ];
+            $modules = Module::all();
+            $infix_modules = InfixModuleManager::all();
+            $payment_methods = PaymentMethod::all();
+    
+            if(file_exists(asset_path('uploads'))){
+                $this->delete_directory(asset_path('uploads'));
+            }
+    
+            $zip = new ZipArchive;
+            $res = $zip->open(asset_path('demo_db/demo_uploads.zip'));
+            if ($res === true) {
+                $zip->extractTo(storage_path('app/tempDemoFile'));
+                $zip->close();
+            } else {
+                abort(500, 'Error! Could not open File');
+            }
+            $src = storage_path('app/tempDemoFile');
+            $dst = asset_path('uploads');
+            $this->recurse_copy($src, $dst);
+    
+            if(file_exists(storage_path('app/tempDemoFile'))){
+                $this->delete_directory(storage_path('app/tempDemoFile'));
+            }
+    
+            set_time_limit(2700);
+    
+            Log::info('Disabling foreign key checks.');
+                                                         
+            DB::statement('SET CONSTRAINTS ALL DEFERRED');
+            Log::info('Checked.');
+    
+            Artisan::call('db:wipe', ['--force' => true]);
+            Log::info('err.');
+            if(app('theme')->folder_path == 'amazy'){
+                Log::info('code.');
+                $sql = asset_path('demo_db/amazy_demo.sql');
+                Log::info('code1.');
+            }else{
+                Log::info('coder.');
+                $sql = asset_path('demo_db/amazcart_demo.sql');
+                Log::info('coder1.');
+            }
+            if (file_exists($sql)) {
+                $sqlContent = file_get_contents($sql);
+                Log::info('SQL file read successfully. Length: ' . strlen($sqlContent));
+                $sqlrec = str_replace('`', '"', $sql);
+                Log::info('SQL Content: ' . substr($sql, 0, 200));
+                // Log::info('Unprepare: ' . DB::unprepared($sqlrec));
+                DB::unprepared($sqlrec);
+            } else {
+                Log::error('SQL file not found: ' . $sql);
+                throw new Exception('SQL file not found.');
+            }
+            // DB::unprepared(file_get_contents($sql));
+            Log::info('pre.');
+            DB::statement("SET CONSTRAINTS ALL IMMEDIATE");
+            Log::info('chk1.');
+            DB::statement("SET AUTOCOMMIT=1");
+            Artisan::call('rate', ['--force' => true]);
+            Log::info('err232.');
+    
+    
+            User::where('id', 1)->update($data);
+            InfixModuleManager::query()->truncate();
+            Module::query()->truncate();
+            foreach($infix_modules as $module){
+                InfixModuleManager::create([
+                    'name' => $module->name,
+                    'email' => $module->email
+                ]);
+            }
+    
+            foreach($modules as $module){
+                $module = $module->toArray();
+                Module::create($module);
+            }
+            foreach($payment_methods as $payment_method){
+                PaymentMethod::where('id', $payment_method->id)->update([
+                    'active_status' => 1
+                ]);
+            }
+            GeneralSetting::first()->update($setting);
+            Artisan::call('optimize:clear');
+            Log::info('done.');
 
-        if(file_exists(asset_path('uploads'))){
-            $this->delete_directory(asset_path('uploads'));
+            DB::commit();
+
+            return true;  
+    
+        } catch (Exception $e) {
+            DB::rollBack(); // Rollback the transaction on error
+            Log::error('Error in import_demo_database: ' . $e->getMessage());
+            throw $e;
         }
+<<<<<<< HEAD
+=======
 
         $zip = new ZipArchive;
         $res = $zip->open(asset_path('demo_db/demo_uploads.zip'));
@@ -322,7 +419,9 @@ class UtilitiesRepository
         Artisan::call('optimize:clear');
         return true;
 
+>>>>>>> ba0b5249f9502e9ba36ce75de87b357f1d9bc31b
     }
+    
     public function remove_Visitor(){
         VisitorHistory::truncate();
         return true;

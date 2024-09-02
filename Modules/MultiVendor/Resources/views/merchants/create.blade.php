@@ -26,6 +26,17 @@
                             <hr>
                             <div class="col-md-4">
                                 <div class="primary_input mb-25">
+                                    <label class="primary_input_label" for="">{{ __('common.warehouse') }} <span class="text-danger">*</span></label>
+                                    <select name="warehouse_id" id="warehouse_id" class="primary_select mb-15">
+                                        <option disabled selected>{{'Select Warehouse'}}</option>
+                                        @foreach($warehouse as $key => $item)
+                                            <option value="{{$item->id}}" @if(old('warehouse_id') && old('warehouse_id') == $item->id) selected @endif >{{$item->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="primary_input mb-25">
                                     <label class="primary_input_label" for="">{{ __('seller.subscription_type') }} <span class="text-danger">*</span></label>
                                     <select class="primary_select commission_id" name="commission_id" id="commission_id">
                                         <option disabled selected>{{ __('common.select_one') }}</option>
@@ -77,6 +88,7 @@
                                     <span class="text-danger">{{$errors->first('phone_number')}}</span>
                                 </div>
                             </div>
+                           
                             <div class="col-md-6">
                                 <div class="primary_input mb-25">
                                     <label class="primary_input_label" for="password">{{__('common.password')}} <span class="text-danger">*</span></label>

@@ -22,6 +22,7 @@ class CreateStatesTable extends Migration
 
         $sql_path = base_path('static_sql/states.sql');
         DB::unprepared(file_get_contents($sql_path));
+        DB::statement("SELECT setval(pg_get_serial_sequence('states', 'id'), (SELECT MAX(id) FROM states) + 1);");
     }
 
     

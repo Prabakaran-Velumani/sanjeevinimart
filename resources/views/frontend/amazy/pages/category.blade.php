@@ -4,57 +4,138 @@
 @endsection
 @push('styles')
 <style>
+   /* Category Card */
+/* Category Card */
+.category-card {
+    width: 23%;
+    border: 1px solid #e0e0e0;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 24px;
+    background: #ffffff;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Banner Image */
+.category-banner {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px 8px 0 0;
+    margin-bottom: 12px;
+}
+
+.category-content {
+    padding: 10px;
+}
+
+/* Parent Category */
+.parent-category {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.category-image {
+    height: 50px;
+    width: 50px;
+    border: none;
+    border-radius: 50%;
+    margin-right: 12px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.parent-name {
+    font-size: 19px;
+    color: #333333;
+    font-weight: 700;
+}
+
+/* Child Categories */
+.child-categories {
+    padding: 10px 12px;
+    background: #f9f9f9;
+    border-radius: 6px;
+}
+
+.child-category {
+    color: #555555;
+    font-size: 18px;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 8px;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.child-category:hover {
+    color: #ff4b5a;
+}
+
+/* Third Level Categories */
+.third-level {
+    padding: 8px 0px 8px 16px;
+    width: 100%;
+}
+
+.third-level li {
+    list-style-type: none;
+    margin-bottom: 6px;
+}
+
+.third-level li a {
+    color: #444444;
+    font-size: 14px;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.third-level li a:hover {
+    color: #ff4b5a;
+}
+
+/* Load More Button */
+.load-more {
+    color: #ff4b5a !important;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.load-more i {
+    margin-left: 6px;
+    transition: transform 0.3s ease;
+}
+
+/* Row Adjustments */
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content:space-around;
+}
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .category-card {
+        width: 48%;
+        margin-bottom: 16px;
+        padding: 10px;
+        border-radius: 6px;
+    }
+}
+
+@media (max-width: 480px) {
     .category-card {
         width: 100%;
-        border: 1px solid #f1f1f1;
-        padding: 9px;
-        border-radius: 4px;
-        margin-bottom: 20px;
+        margin-bottom: 12px;
     }
 
+}
 
-    .parent-category {
-        display: flex;
-        justify-content: start;
-        margin-bottom: 3px;
-    }
-    .category-image {
-        height: 40px;
-        width: 40px;
-        border: 1px solid #f1f1f1;
-        margin-right: 6px;
-    }
-    .parent-name {
-        margin-top: 9px;
-        color: #5d5d5d;
-        font-weight: 600;
-    }
 
-    .child-categories {
-        padding: 0px 6px;
-    }
-    .child-category {
-        color: #707070;
-        font-size: 14px;
-        font-weight: 600;
-    }
-    .third-level {
-        padding: 0px 0px 5px 8px;
-        width: 100%;
-    }
-    .third-level li a{
-        color: #383636;
-        font-size: 13px;
-    }
-    .load-more {
-        color: #ff2732 !important;
-    }
-
-    .load-more i {
-        position: absolute;
-        margin-top: 7px;
-        margin-left: 7px;
-    }
 </style>
 @endpush
 @section('content')
@@ -70,73 +151,52 @@
 </div>
 <!-- brand_banner::end  -->
 <!-- prodcuts_area ::start  -->
-<div class="prodcuts_area ">
+<!-- Category Section -->
+<div class="prodcuts_area">
     <div class="container">
         <div class="row">
-            <div class="col-lg-12">
-                @foreach($categories as $category)
-                    <div class="category-card">
-                        @if(count($category->subCategories) > 0)
-                            <div class="parent-category">
-                                <a href="javascript:void(0)">
-                                    <div class="parent-category">
-
-                                        <div class="parent-img">
-                                            <img src="{{ showImage($category->categoryImage->image) }}" class="category-image">
-                                        </div>
-                                        <div class="parent-name">
-                                            {{ $category->name }}
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                        @else
-                            <div class="parent-category">
-                                <a href="{{route('frontend.category-product',['slug' => $category->slug, 'item' =>'category'])}}">
-                                    <div class="parent-category">
-
-                                        <div class="parent-img">
-                                            <img src="{{ showImage($category->categoryImage->image) }}" class="category-image">
-                                        </div>
-                                        <div class="parent-name">
-                                            {{ $category->name }}
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                        @endif
-
-
+            @foreach($categories as $category)
+                <div class="category-card">
+                    <!-- <img src="{{ showImage($category->bannerImage) }}" class="category-banner" alt="{{ $category->name }}"> -->
+                    <div class="category-content">
+                        <div class="parent-category">
+                            <a href="{{ count($category->subCategories) > 0 ? 'javascript:void(0)' : route('frontend.category-product',['slug' => $category->slug, 'item' =>'category']) }}">
+                                <div class="parent-img">
+                                    <img src="{{ showImage($category->categoryImage->image) }}" class="category-image" alt="{{ $category->name }}">
+                                </div>
+                                <div class="parent-name">{{ $category->name }}</div>
+                            </a>
+                        </div>
                         @if(!empty($category->subCategories))
-                           @foreach($category->subCategories as $subCategory)
+                            @foreach($category->subCategories as $subCategory)
                                 <div class="child-categories">
-                                    @if(!empty($subCategory->subCategories) && count($subCategory->subCategories) > 0)
-                                        <a class="child-category" href="javascript:void(0)">
-                                            {{ $subCategory->name }}
-                                        </a>
+                                    <a class="child-category" href="{{ count($subCategory->subCategories) > 0 ? 'javascript:void(0)' : route('frontend.category-product',['slug' => $subCategory->slug, 'item' =>'category']) }}">
+                                        {{ $subCategory->name }}
+                                    </a>
+                                    @if(count($subCategory->subCategories) > 0)
                                         <ul class="third-level">
                                             @foreach($subCategory->subCategories as $key => $thirdCategory)
                                                 <li class="{{ $key > 4 ? 'd-none '.Str::slug($subCategory->name):'' }}">
-                                                    <a  href="{{route('frontend.category-product',['slug' => $thirdCategory->slug, 'item' =>'category'])}}">{{ $thirdCategory->name }}</a>
+                                                    <a href="{{ route('frontend.category-product',['slug' => $thirdCategory->slug, 'item' =>'category']) }}">
+                                                        {{ $thirdCategory->name }}
+                                                    </a>
                                                 </li>
                                             @endforeach
                                             @if(count($subCategory->subCategories) > 5)
                                                 <li>
-                                                    <a class="load-more" data-class=".{{ Str::slug($subCategory->name) }}" href="javascript:void(0)">more <i class='fas fa-angle-down'></i></a>
+                                                    <a class="load-more" data-class=".{{ Str::slug($subCategory->name) }}" href="javascript:void(0)">
+                                                        more <i class='fas fa-angle-down'></i>
+                                                    </a>
                                                 </li>
                                             @endif
                                         </ul>
-                                    @else
-                                    <a class="child-category" href="{{route('frontend.category-product',['slug' => $subCategory->slug, 'item' =>'category'])}}">
-                                        {{ $subCategory->name }}
-                                    </a>
                                     @endif
                                 </div>
                             @endforeach
                         @endif
                     </div>
-                @endforeach
-            </div>
+                </div>
+            @endforeach
         </div>
         <div class="row">
             <div class="col d-flex justify-content-center">
@@ -146,10 +206,9 @@
             </div>
         </div>
     </div>
-    <div class="add-product-to-cart-using-modal">
-    </div>
-
+    <div class="add-product-to-cart-using-modal"></div>
 </div>
+
 @endsection
 @push('scripts')
 <script>

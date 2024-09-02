@@ -166,67 +166,78 @@ class AttributeRepository
     }
     public function getAttributeForSpecificCategory($category_id, $category_ids)
     {
-        $seller_products = SellerProductSKU::whereHas('mainProduct', function($query) use($category_ids, $category_id){
-            return $query->WhereHas('categories',function($q1)use($category_ids,$category_id){
-                $q1->where('category_id',$category_id)->orWhereHas('subCategories', function($q2) use($category_ids){
-                    $q2->whereRaw("id in ('" . implode("','",$category_ids) . "')");
-                });
-                $q1->where('category_id',$category_id);
+        $seller_products_query = SellerProductSKU::whereHas('mainProduct', function($query) use($category_ids, $category_id) {
+            $query->whereHas('categories', function($q1) use($category_ids, $category_id) {
+                $q1->where('category_id', $category_id);
+                if (!empty($category_ids)) {
+                    // If category_ids is not empty, filter based on category_ids
+                    $q1->orWhereHas('subCategories', function($q2) use($category_ids) {
+                        $q2->whereIn('id', $category_ids);
+                    });
+                }
             });
-        })->pluck('product_sku_id')->toArray();
-       
+        });
+        // Fetch product_sku_ids
+        $seller_products = $seller_products_query->pluck('product_sku_id')->toArray();
+        // Determine attribute_ids
+        if (empty($seller_products)) {
+            $attribute_ids = [];
+        } else {
+            $attribute_ids = ProductVariations::whereIn('product_sku_id', $seller_products)
+                ->where('attribute_id', '!=', 1)
+                ->pluck('attribute_id')
+                ->toArray();
+        }
+        // Fetch attributes
         if (empty($attribute_ids)) {
-        $attribute_ids=[];
-        }else{
-            $attribute_ids = ProductVariations::whereRaw("product_sku_id in ('". implode("','", $seller_products)."')")->where('attribute_id', '!=', 1)->pluck('attribute_id')->toArray();
+            return [];
+        } else {
+            $attribute_list = Attribute::with('values')
+                ->whereIn('id', $attribute_ids)
+                ->where('status', 1)
+                ->take(20)
+                ->get();
+    
+            return $attribute_list;
         }
-      
-   
-   if (empty($attribute_ids)) {
-           
- 
-            return[];
-        }else{
-            $attribute_list = Attribute::with('values')->whereRaw("id in ('" . implode("','", $attribute_ids)."')")->where('status',1)->take(20)->get();
-            return   $attribute_list;
-         
-        }
-       
     }
 
     public function getColorAttributeForSpecificCategory($category_id, $category_ids)
     {
-        $seller_products = SellerProductSKU::whereHas('mainProduct', function($query) use($category_ids, $category_id){
-            return $query->WhereHas('categories',function($q1)use($category_ids,$category_id){
-                $q1->where('category_id',$category_id)->orWhereHas('subCategories', function($q2) use($category_ids){
-                    $q2->whereRaw("id in ('" . implode("','",$category_ids)."')");
-                });
-                $q1->where('category_id',$category_id);
+        $category_ids = is_array($category_ids) ? $category_ids : [];
+        // Query for seller products based on categories
+        $seller_products_query = SellerProductSKU::whereHas('mainProduct', function($query) use($category_ids, $category_id) {
+            $query->whereHas('categories', function($q1) use($category_ids, $category_id) {
+                $q1->where('category_id', $category_id);
+                if (!empty($category_ids)) {
+                    $q1->orWhereHas('subCategories', function($q2) use($category_ids) {
+                        $q2->whereIn('id', $category_ids);
+                    });
+                }
             });
-        })->pluck('product_sku_id')->toArray();
-       
-        if (empty($attribute_ids)) {
+        });
+        // Fetch product_sku_ids
+        $seller_products = $seller_products_query->pluck('product_sku_id')->toArray();
+        // Determine attribute_ids based on seller_products
+        if (empty($seller_products)) {
             $attribute_ids = [];
+        } else {
+            $attribute_ids = ProductVariations::whereIn('product_sku_id', $seller_products)
+                ->where('attribute_id', '!=', 1)
+                ->pluck('attribute_id')
+                ->toArray();
         }
-        else{
-            $attribute_ids = ProductVariations::whereRaw("product_sku_id in ('". implode("','", $seller_products)."')")->where('attribute_id', 1)->pluck('attribute_id')->toArray();
-
-        }
-       
-
+        // Fetch attributes
         if (empty($attribute_ids)) {
-           
- 
-            return[];
-        }else{
-            $attribute_list = Attribute::with('values')->whereRaw("id in ('". implode("','", $attribute_ids)."')")->where('status', 1)->first();
-            return   $attribute_list;
-         
-        }
-
-
-       
-       
+            return [];
+        } else {
+            $attribute_list = Attribute::with('values')
+                ->whereIn('id', $attribute_ids)
+                ->where('status', 1)
+                ->take(20)
+                ->get();
+            return $attribute_list;
+        } 
     }
 
     public function getColorAttributeForSpecificBrand($brand_id)

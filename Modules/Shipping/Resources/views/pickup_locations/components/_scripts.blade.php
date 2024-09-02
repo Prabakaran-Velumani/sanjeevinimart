@@ -75,7 +75,7 @@
                     });
                     formData.append('_token',"{{ csrf_token() }}");
                     $.ajax({
-                        url: "{{ route('shipping.pickup_locations.store')}}",
+                        url: "{{ route('shipping.warehouse.store')}}",
                         type:"POST",
                         cache: false,
                         contentType: false,
@@ -107,7 +107,7 @@
                     event.preventDefault();
                     $('#pre-loader').removeClass('d-none');
                     let id = $(this).data("id");
-                    let url =  "{{route('shipping.pickup_locations.show',':id')}}";
+                    let url =  "{{route('shipping.warehouse.show',':id')}}";
                     url = url.replace(':id',id);
                     $.get(url, function(data){
                         $('#append_html').html(data);
@@ -121,7 +121,7 @@
                     event.preventDefault();
                     $('#pre-loader').removeClass('d-none');
                     let id = $(this).data("id");
-                    let url =  "{{route('shipping.pickup_locations.edit',':id')}}";
+                    let url =  "{{route('shipping.warehouse.edit',':id')}}";
                     url = url.replace(':id',id);
                     $.get(url, function(data){
                         $('.create_div').html(data);
@@ -143,7 +143,7 @@
                     formData.append('_token',"{{ csrf_token() }}");
                     resetValidationError();
                     let id = $('#rowId').val();
-                    let url =  "{{route('shipping.pickup_locations.update',':id')}}";
+                    let url =  "{{route('shipping.warehouse.update',':id')}}";
                     url = url.replace(':id',id);
                     $.ajax({
                         url: url,
@@ -188,7 +188,7 @@
                     formData.append('_token', "{{ csrf_token() }}");
                     formData.append('id', $('#pickup_location_delete_id').val());
                     $.ajax({
-                        url: "{{ route('shipping.pickup_locations.destroy') }}",
+                        url: "{{ route('shipping.warehouse.destroy') }}",
                         type: "POST",
                         cache: false,
                         contentType: false,
@@ -236,7 +236,7 @@
                     formData.append('status', status);
 
                     $.ajax({
-                        url: "{{ route('shipping.pickup_locations.status') }}",
+                        url: "{{ route('shipping.warehouse.status') }}",
                         type: "POST",
                         cache: false,
                         contentType: false,
@@ -277,7 +277,7 @@
                     formData.append('set_default', set_default);
 
                     $.ajax({
-                        url: "{{ route('shipping.pickup_locations.set_default') }}",
+                        url: "{{ route('shipping.warehouse.set_default') }}",
                         type: "POST",
                         cache: false,
                         contentType: false,
@@ -315,7 +315,8 @@
                 }
 
                 function showValidationErrors(formType, errors){
-                    $(formType +' #error_pickup_location').text(errors.pickup_location);
+                    console.log('errors',errors)
+                    $(formType +' #error_warehouse_location').text(errors.warehouse_location);
                     $(formType +' #error_name').text(errors.name);
                     $(formType +' #error_email').text(errors.email);
                     $(formType +' #error_phone').text(errors.phone);

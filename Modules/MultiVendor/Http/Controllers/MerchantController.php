@@ -26,21 +26,23 @@ use Modules\GeneralSetting\Entities\NotificationSetting;
 use Modules\MultiVendor\Repositories\CommisionRepository;
 use Modules\GeneralSetting\Entities\UserNotificationSetting;
 use Modules\MultiVendor\Http\Requests\SellerPassordChangeRequest;
-
+use Modules\Shipping\Entities\PickupLocation;
+use Modules\Shipping\Repositories\PickupLocationRepository;
 class MerchantController extends Controller
 {
     use Notification;
 
-    protected $merchantService, $profileService, $refundRepository, $ordermanageService;
+    protected $merchantService, $profileService, $refundRepository, $ordermanageService,$pickupLocationRepo;
 
 
-    public function __construct(MerchantService $merchantService, ProfileService $profileService ,RefundRepository $refundRepository ,OrderManageService $ordermanageService)
+    public function __construct(MerchantService $merchantService, ProfileService $profileService ,RefundRepository $refundRepository ,OrderManageService $ordermanageService ,PickupLocationRepository $pickupLocationRepo)
     {
         $this->middleware('maintenance_mode');
         $this->merchantService = $merchantService;
         $this->profileService = $profileService;
         $this->refundRepository = $refundRepository;
         $this->ordermanageService = $ordermanageService;
+        $this->pickupLocationRepo = $pickupLocationRepo;
     }
 
     public function index()
@@ -229,6 +231,8 @@ class MerchantController extends Controller
     {
         $commisionRepo = new CommisionRepository();
         $data['commissions'] = $commisionRepo->getAllActive();
+        $warehouseAll = $this->pickupLocationRepo->all();
+        $data['warehouse'] = $warehouseAll;
         return view('multivendor::merchants.create', $data);
     }
 
@@ -243,7 +247,8 @@ class MerchantController extends Controller
             "phone_number" => "required",
             "password" => "required|min:8",
             "password_confirmation" => "required|min:8",
-            "shop_name" => "required"
+            "shop_name" => "required",
+            "warehouse_id" => "required",
 
         ],[
             "commission_id.required" => "Subscription type is required",
