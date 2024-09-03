@@ -33,6 +33,7 @@
                                             <option value="{{$item->id}}" @if(old('warehouse_id') && old('warehouse_id') == $item->id) selected @endif >{{$item->name}}</option>
                                         @endforeach
                                     </select>
+                                    <span class="text-danger">{{$errors->first('warehouse_id')}}</span>
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -101,6 +102,7 @@
                                 <div class="primary_input mb-25">
                                     <label class="primary_input_label" for="re_password">{{__('common.confirm_password')}} <span class="text-danger">*</span></label>
                                     <input type="password" id="re_password" class="primary_input_field" name="password_confirmation" placeholder="{{__('common.confirm_password')}} " value="{{old('password_confirmation')}}">
+                                    <span class="text-danger">{{$errors->first('password_confirmation')}}</span>
                                 </div>
                             </div>
                             <div class="col-md-12 text-center">
@@ -125,51 +127,70 @@
 (function($){
     "use strict";
     $(document).ready(function(){
-        $(document).on('change', '.commission_id', function(){
-            var subscription_type = this.value;
-            $('.commission_rate').val($('select.commission_id').find(':selected').data('rate'));
-
+        // Function to load pricing based on the selected subscription type
+        function loadPricing(subscription_type) {
             if (subscription_type == 3) {
                 $('#pre-loader').removeClass('d-none');
                 var get_pricing_url = $('#get_pricing_url').val();
+
+                // Clear the pricing_div content before making the AJAX request
+                $(".pricing_div").empty().removeClass('d-none');
+
                 $.ajax({
                     url: get_pricing_url,
                     type: "GET",
                     dataType: "JSON",
                     success: function (response) {
-                        $(".pricing_div").removeClass('d-none');
-                        $(".pricing_div").append(response);
-                        $('select').niceSelect();
-                        $('#pre-loader').addClass('d-none');
+                        $(".pricing_div").html(response); // Replace .append with .html to prevent repeated appending
+                        let pricing_id = "{{ old('pricing_id') }}";
+                        if (pricing_id) {
+                            $('#pricing_id').val(pricing_id).niceSelect('update');
+                            $('#pre-loader').addClass('d-none');
+                        }
+                        else{
+                            $('select').niceSelect();
+                            $('#pre-loader').addClass('d-none');
+                        }
+                       
                     },
                     error: function (error) {
                         $('#pre-loader').addClass('d-none');
-                        if(response.responseJSON.error){
-                            toastr.error(response.responseJSON.error ,"{{__('common.error')}}");
-                            $('#pre-loader').addClass('d-none');
+                        if (error.responseJSON && error.responseJSON.error) {
+                            toastr.error(error.responseJSON.error, "{{__('common.error')}}");
                             return false;
                         }
                     }
                 });
-            }else {
+            } else {
                 $(".pricing_div").addClass('d-none');
             }
+
             if (subscription_type == 1) {
                 $("#commission_rate_div").show();
-            }else{
-                $("#commission_rate_div").hide();
-
-            }
-        });
-        checkSelectedCommission();
-
-        function checkSelectedCommission(){
-            let type = "{{old('commission_id')}}";
-            if(type != '' && type != 1){
+            } else {
                 $("#commission_rate_div").hide();
             }
         }
+
+        // Handle subscription type change
+        $(document).on('change', '.commission_id', function(){
+            var subscription_type = this.value;
+            $('.commission_rate').val($('select.commission_id').find(':selected').data('rate'));
+            loadPricing(subscription_type);
+        });
+
+        // Check for old commission ID and load pricing if necessary
+        function checkSelectedCommission(){
+            let type = "{{ old('commission_id') }}";
+            if (type) {
+                $('.commission_rate').val($('select.commission_id').find(':selected').data('rate'));
+                loadPricing(type);
+            }
+        }
+
+        checkSelectedCommission(); // Check and load pricing on page load if old value exists
     });
 })(jQuery);
+
 </script>
 @endpush

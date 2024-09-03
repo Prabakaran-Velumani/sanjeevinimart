@@ -28,6 +28,7 @@ use Modules\GeneralSetting\Entities\UserNotificationSetting;
 use Modules\MultiVendor\Http\Requests\SellerPassordChangeRequest;
 use Modules\Shipping\Entities\PickupLocation;
 use Modules\Shipping\Repositories\PickupLocationRepository;
+use \Modules\MultiVendor\Entities\SellerAccount;
 class MerchantController extends Controller
 {
     use Notification;
@@ -224,6 +225,8 @@ class MerchantController extends Controller
         $commissionRepo = new CommisionRepository();
         $data['commissions'] = $commissionRepo->getAllActive();
         $data['pricings'] = Pricing::where('status', 1)->get();
+        $warehouseAll = $this->pickupLocationRepo->all();
+        $data['warehouse'] = $warehouseAll;
         return view('multivendor::profile.index', $data);
     }
 
@@ -255,7 +258,23 @@ class MerchantController extends Controller
             "commission_rate.required_if" => "Commission rate is required",
             "pricing_id.required_if" => "Pricing plan  is required",
         ]);
-
+        $username = $data['phone_number'];
+        $email = $data['email'];
+        $shop_name = $data['shop_name'];
+        if (User::where('username', $username)->exists()) {
+            return back()->withErrors(['phone_number' => 'This phone number is already exit.'])->withInput();
+        }
+        else if (User::where('email', $email)->exists()) {
+            return back()->withErrors(['email' => 'This email is already exit.'])->withInput();
+        }
+        else if (SellerAccount::where('seller_shop_display_name', $shop_name)->exists())
+        {
+            return back()->withErrors(['shop_name' => 'This shop name is already exit.'])->withInput();
+        }
+        else if($data['password'] !== $data['password_confirmation'])
+        {
+            return back()->withErrors(['password_confirmation' => 'confirmed password doesnt match with Password.'])->withInput();
+        }
         DB::beginTransaction();
 
         // try {

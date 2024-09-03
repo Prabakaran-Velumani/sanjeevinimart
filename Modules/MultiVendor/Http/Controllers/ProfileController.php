@@ -19,7 +19,7 @@ use Modules\MultiVendor\Http\Requests\SellerBankAccountRequest;
 use Modules\MultiVendor\Http\Requests\SellerReturnAddressRequest;
 use Modules\MultiVendor\Http\Requests\SellerWarehouseAddressRequest;
 use Modules\MultiVendor\Http\Requests\SellerBusinessInformationRequest;
-
+use Illuminate\Support\Facades\Log;
 class ProfileController extends Controller
 {
     protected $seller;
@@ -152,6 +152,7 @@ class ProfileController extends Controller
     {
 
         try {
+            Log::info('$seller_data454');
             $this->seller->warehouseAddressUpdate($request->except('_token'), $id);
             Toastr::success(__('common.updated_successfully'), __('common.success'));
             LogActivity::successLog('Warehouse address update successful.');

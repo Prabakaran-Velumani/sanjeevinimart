@@ -9,6 +9,8 @@ use Modules\MultiVendor\Entities\SellerSubcription;
 use Modules\MultiVendor\Entities\SellerReturnAddress;
 use Modules\MultiVendor\Entities\SellerWarehouseAddress;
 use Modules\MultiVendor\Entities\SellerBusinessInformation;
+use Illuminate\Support\Facades\Log;
+
 
 class ProfileRepository {
 
@@ -107,16 +109,17 @@ class ProfileRepository {
     }
     public function warehouseAddressUpdate($data, $id){
 
+        Log::info('$seller_data');
         $seller_data = SellerWarehouseAddress::where('user_id',$id)->firstOrFail();
+     
         return $seller_data->update([
-            'warehouse_name' => $data['warehouse_name'],
+            'warehouse_name' => $data['warehouse_id'],
             'warehouse_address' => $data['warehouse_address'],
-            'warehouse_phone' => $data['warehouse_phone'],
+            'warehouse_phone' => $data['phone'],
             'warehouse_country' => $data['country'],
             'warehouse_state' => $data['state'],
             'warehouse_city' => $data['city'],
-            'warehouse_postcode' => $data['warehouse_postcode'],
-
+            'warehouse_postcode' => $data['post_code'],
         ]);
 
     }

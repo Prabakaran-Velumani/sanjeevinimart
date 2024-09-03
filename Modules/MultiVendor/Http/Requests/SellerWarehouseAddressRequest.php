@@ -3,6 +3,7 @@
 namespace Modules\MultiVendor\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Log;
 
 class SellerWarehouseAddressRequest extends FormRequest
 {
@@ -13,14 +14,15 @@ class SellerWarehouseAddressRequest extends FormRequest
      */
     public function rules()
     {
+        Log::info('$seller_data rules');
         return [
-            'warehouse_name' => 'required|max:255',
+            'warehouse_id' => 'required|max:255',
             'warehouse_address' => 'required|max:255',
-            'warehouse_phone' => 'required|max:255',
+            'phone' => 'required|max:255',
             'country' => 'required|max:255',
             'state' => 'required|max:255',
             'city' => 'required|max:255',
-            'warehouse_postcode' => 'required|max:255'
+            'post_code' => 'required|max:255'
         ];
     }
 
