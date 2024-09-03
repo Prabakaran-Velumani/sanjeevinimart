@@ -51,7 +51,7 @@ class FilterRepository
                         $q = $q->orWhere('name', 'LIKE', "%{$slug}%");
                     }
                     return $q;
-                }); 
+                });
             })->select(['*', 'name as product_name','sku as slug']);
         }elseif($data['requestItemType'] == "tag"){
             $tag = Tag::where('name',$requestItem)->first();
@@ -333,13 +333,33 @@ class FilterRepository
     }
     public function filterProductCategoryWise($category_id, $category_ids, $sort_by, $paginate_by)
     {
-        $products = SellerProduct::with('skus', 'product')->where('seller_products.status', true)->activeSeller()->select("seller_products.*")->join('products', function ($query) use ($category_ids, $category_id) {
-            return $query->on('products.id', '=', 'seller_products.product_id')->where('products.status', 1)->join('category_product',function($q) use($category_id,$category_ids){
-                return $q->on('products.id','=', 'category_product.product_id')->where('category_product.category_id', $category_id)->join('categories', function($q2) use($category_id){
-                    return $q2->on('category_product.category_id', '=', 'categories.id')->orOn('category_product.category_id', '=', 'categories.parent_id');
-                });
-            });
-        })->distinct('seller_products.id')->orderBy('seller_products.id', 'desc');
+        $products = SellerProduct::with('skus', 'product')
+            ->where('seller_products.status', true)
+            ->activeSeller()
+            ->select("seller_products.*")
+            ->join('products', function ($query) use ($category_ids, $category_id) {
+                $query->on('products.id', '=', 'seller_products.product_id')
+                    ->where('products.status', 1)
+                    ->join('category_product', function($q) use($category_id, $category_ids) {
+                        $q->on('category_product.product_id', '=', 'products.id');
+
+                        if (!empty($category_ids)) {
+                            // If category_ids is not empty, filter based on category_ids
+                            $q->whereIn('category_product.category_id', $category_ids);
+                        } else {
+                            // If category_ids is empty, just join without filtering
+                            $q->where('category_product.category_id', $category_id);
+                        }
+                    })
+                    ->join('categories', function($q2) use($category_id) {
+                        $q2->on('category_product.category_id', '=', 'categories.id')
+                            ->orOn('category_product.category_id', '=', 'categories.parent_id');
+                    });
+            })
+            ->distinct('seller_products.id')
+            ->orderBy('seller_products.id', 'desc')
+            ->get();
+
         return $this->sortAndPaginate($products, $sort_by, $paginate_by);
     }
     public function filterProductBrandWise($brand_id, $sort_by, $paginate_by)
@@ -360,11 +380,22 @@ class FilterRepository
     }
     public function filterBrandCategoryWise($category_id, $category_ids)
     {
-        $brnadList = Brand::select('brands.*')->where('brands.status', 1)->join('products', function($q) use($category_ids, $category_id){
-            return $q->on('products.brand_id', '=', 'brands.id')->join('category_product', function($q1) use($category_ids, $category_id){
-                return $q1->on('category_product.product_id', '=', 'products.id')->whereRaw("category_product.category_id in('". implode("','",$category_ids). "')");
-            });
-        })->distinct('brands.id')->take(20)->get();
+        $brnadList = Brand::select('brands.*')
+            ->where('brands.status', 1)
+            ->join('products', function($q) use($category_ids, $category_id) {
+                $q->on('products.brand_id', '=', 'brands.id')
+                ->join('category_product', function($q1) use($category_ids, $category_id) {
+                    if (!empty($category_ids)) { // If category_ids is not empty, use the IN clause
+                        $q1->on('category_product.product_id', '=', 'products.id')
+                            ->whereIn('category_product.category_id', $category_ids);
+                    } else { // If category_ids is empty, do not filter on category_product
+                        $q1->on('category_product.product_id', '=', 'products.id');
+                    }
+                });
+            })
+            ->distinct('brands.id')
+            ->take(20)
+            ->get();
         return $brnadList;
     }
     public function filterProductFromCategoryBlade($data, $sort_by, $paginate)
@@ -627,6 +658,7 @@ class FilterRepository
             $data['attributeLists'] = $attributeRepo->getAttributeForSpecificCategory($category_id, $category_ids);
             $data['category_id'] = $category_id;
             $data['color'] = $attributeRepo->getColorAttributeForSpecificCategory($category_id, $category_ids);
+
         }
         if ($item == 'brand') {
             $brand_id = $id;
@@ -694,7 +726,7 @@ class FilterRepository
         if(request()->sort_by){
             return $data;
         }
-        
+
         if($section->type == 1){
             $products = $products->join('category_product', function($q1){
                 $q1->on('products.id','=', 'category_product.product_id')->orderBy('category_product.category_id');
@@ -709,17 +741,17 @@ class FilterRepository
             $products->orderByDesc('seller_products.id')
             ->orderByDesc('recent_view');
 
-           
+
         }
         if($section->type == 4){
             $products->orderByDesc('seller_products.id')
             ->orderByDesc('total_sale');
-   
+
         }
         if($section->type == 5){
             $products = $products->withCount('reviews')->orderByDesc('seller_products.id')
             ->orderByDesc('reviews_count');
-            
+
         }
         if($section->type == 6){
             $product_ids = HomepageCustomProduct::where('section_id',$section->id)->pluck('seller_product_id')->toArray();

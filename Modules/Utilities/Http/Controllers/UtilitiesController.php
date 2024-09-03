@@ -13,8 +13,12 @@ use Modules\UserActivityLog\Traits\LogActivity;
 use Modules\SidebarManager\Entities\Backendmenu;
 use Modules\SidebarManager\Entities\BackendmenuUser;
 use Modules\Utilities\Repositories\UtilitiesRepository;
+<<<<<<< HEAD
 use Illuminate\Support\Facades\Log;
 
+=======
+use Illuminate\Support\Facades\log;
+>>>>>>> abaf07f50957c3c9a6bf30ff4acb8a5bd3240961
 class UtilitiesController extends Controller
 {
     protected $utilitiesRepository;
@@ -87,10 +91,14 @@ class UtilitiesController extends Controller
 
             if (empty($request->password)){
                 Toastr::error(__('common.enter_your_password'));
-
             }
+<<<<<<< HEAD
             if (Hash::check($request->password, auth()->user()->password)) {
                 Log::info('Password verified');
+=======
+            elseif (Hash::check($request->password, auth()->user()->password)) {
+                log::info('elseif');
+>>>>>>> abaf07f50957c3c9a6bf30ff4acb8a5bd3240961
                 $this->utilitiesRepository->reset_database($request);
                 // DB::commit();
                 Toastr::success(__('utilities.database_reset_successful'));

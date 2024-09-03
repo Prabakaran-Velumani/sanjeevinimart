@@ -14,7 +14,7 @@ if($popupContent->status == 0){
 <div class="" id="subscriptionDiv">
     <div class="newsletter_form_wrapper newsletter_active" id="subscriptionModal">
         <div class="newsletter_form_inner">
-            <div class="close_modalfaf">
+            <div class="close_modal"><!---faf---->
                 <i class="ti-close"></i>
             </div>
             <div class="newsletter_form_thumb d-flex align-items-center align-items-center justify-content-center d-none d-lg-block">

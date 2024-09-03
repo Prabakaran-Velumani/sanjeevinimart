@@ -442,7 +442,22 @@
                                                     </div>
                                                 @elseif($product->stock_manage == 0)
                                                     <div class="col-6">
-                                                        <button type="button" id="add_to_cart_btn" class="amaz_primary_btn style2 mb_20  add_to_cart text-uppercase add_to_cart_btn flex-fill text-center w-100" >{{__('common.add_to_cart')}}</button>
+                                                        @php
+                                                            if (@$product->thum_img != null) {
+                                                                $thumbnail = showImage(@$product->thum_img);
+                                                            } else {
+                                                                $thumbnail = showImage(@$product->product->thumbnail_image_source);
+                                                            }
+
+                                                            $price_qty = getProductDiscountedPrice(@$product);
+                                                            $showData = [
+                                                                'name' => @$product->product_name,
+                                                                'url' => singleProductURL(@$product->seller->slug, @$product->slug),
+                                                                'price' => $price_qty,
+                                                                'thumbnail' => $thumbnail,
+                                                            ];
+                                                        @endphp
+                                                        <button type="button" id="add_to_cart_btn" class="amaz_primary_btn style2 mb_20  add_to_cart text-uppercase add_to_cart_btn flex-fill text-center w-100 ">{{__('common.add_to_cart')}}</button>
                                                     </div>
                                                     <div class="col-6">
                                                         <button type="button" id="butItNow" class="amaz_primary_btn3 mb_20  w-100 text-center justify-content-center text-uppercase buy_now_btn" data-id="{{$product->id}}" data-type="product">{{__('common.buy_now')}}</button>
@@ -578,7 +593,7 @@
                                                     @endphp
                                                 </div>
                                             </div>
-                                            <div class="col-12 show_full_btn d-none">
+                                            <div class="col-12 show_full_btn">
                                                 <button id="show_full_details" class="show_less amaz_primary_btn style3 text-uppercase">Show More</button>
                                             </div>
                                         </div>
@@ -2013,6 +2028,20 @@
             });
         });
     })(jQuery);
+/// ------Ragav---------
+    document.getElementById('show_full_details').addEventListener('click', function() {
+        var container = document.querySelector('.product_description_container');
+        var button = this;
+        
+        if (container.style.maxHeight === 'none') {
+            container.style.maxHeight = '200px';
+            button.textContent = 'Show More';
+        } else {
+            container.style.maxHeight = 'none'; // Removes the height restriction
+            button.textContent = 'Show Less';
+        }
+    });
+/// ------Ragav---------
 </script>
 <script>
 
