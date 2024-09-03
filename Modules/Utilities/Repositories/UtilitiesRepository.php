@@ -27,6 +27,7 @@ use Modules\PaymentGateway\Entities\PaymentMethod;
 use Modules\Utilities\Entities\XmlSitemap;
 use Modules\Visitor\Entities\VisitorHistory;
 use ZipArchive;
+use Illuminate\Support\Facades\Log;
 
 class UtilitiesRepository
 {
@@ -176,12 +177,14 @@ class UtilitiesRepository
 
     public function reset_database($request)
     {
+        // Log::info('Testing verified');
         $user = DB::table('users')->where('id', 1)->first();
         $data = (array) $user;
         $data['lang_code'] = 'en';
         $data['currency_id'] = 2;
         $data['currency_code'] = "USD";
         $data['is_verified'] = 1;
+        // Log::info('Testing verified setp1');
         $infix_modules = InfixModuleManager::all();
         $setting = [
             'system_domain' => app('general_setting')->system_domain,
@@ -189,38 +192,51 @@ class UtilitiesRepository
             'software_version' => app('general_setting')->software_version,
             'system_version' => app('general_setting')->system_version
         ];
+        // Log::info('Testing verified setp2');
         $payment_methods = PaymentMethod::all();
         $modules = Module::all();
-        rate:fresh',array('--force' => true));
+        // Log::info('Testing verified setp3');
         User::where('id', 1)->update($data);
         InfixModuleManager::query()->truncate();
         Module::query()->truncate();
+        Artisan::call('rate:fresh',array('--force' => true));
+        Log::info('Testing verified setp4');
         foreach($infix_modules as $module){
             $module = $module->toArray();
             InfixModuleManager::create($module);
             if($module['purchase_code'] != null){
+                Log::info('log1');
                 if(!Schema::hasColumn('general_settings', 'general_settings')) {
+                    Log::info('log2');
                     $name = $module['name'];
                     Schema::table('general_settings', function ($table) use ($name) {
                         $table->integer($name)->default(1)->nullable();
+                        Log::info('log3');
                     });
+                    Log::info('Testing verified ');
                 }
+                Log::info('Testing verified ');
             }
+            Log::info('Testing verified ');
         }
+        Log::info('Testing verified setp5');
         foreach($modules as $module){
             $module = $module->toArray();
             Module::create($module);
         }
+        Log::info('Testing verified setp6');
         foreach($payment_methods as $payment_method){
             PaymentMethod::where('id', $payment_method->id)->update([
                 'active_status' => 1
             ]);
         }
+        Log::info('Testing verified setp7');
         GeneralSetting::first()->update($setting);
         if(file_exists(asset_path('uploads'))){
             $this->delete_directory(asset_path('uploads'));
         }
         $zip = new ZipArchive;
+        Log::info('Testing verified zip');
         $res = $zip->open(asset_path('demo_db/reset_uploads.zip'));
         if ($res === true) {
             $zip->extractTo(storage_path('app/tempResetFile'));
@@ -296,7 +312,7 @@ class UtilitiesRepository
         DB::statement("SET foreign_key_checks=1");
 
         DB::statement("SET AUTOCOMMIT=1");
-        rate',array('--force' => true));
+        Artisan::call('rate',array('--force' => true));
 
 
         User::where('id', 1)->update($data);
