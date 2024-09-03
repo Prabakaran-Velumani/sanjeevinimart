@@ -402,9 +402,9 @@
                                                                 <div class="thumb">
                                                                     <img src="
                                                                     @if (@$package_product->seller_product_sku->sku->product->product_type == 1)
-                                                                        {{showImage(@$package_product->seller_product_sku->product->thum_img??@$package_product->seller_product_sku->sku->product->thumbnail_image_source)}}
+                                                                        {{showImage(@$package_product->seller_product_sku->product->thumbnail_image_source??@$package_product->seller_product_sku->sku->product->thumbnail_image_source)}}
                                                                     @else
-                                                                        {{showImage((@$package_product->seller_product_sku->sku->variant_image?@$package_product->seller_product_sku->sku->variant_image:@$package_product->seller_product_sku->product->thum_img)??@$package_product->seller_product_sku->product->product->thumbnail_image_source)}}
+                                                                        {{showImage((@$package_product->seller_product_sku->sku->variant_image?@$package_product->seller_product_sku->sku->variant_image:@$package_product->seller_product_sku->product->thumbnail_image_source)??@$package_product->seller_product_sku->sku->product->thumbnail_image_source)}}
                                                                     @endif
                                                                     " alt="{{ @$package_product->seller_product_sku->product->product_name? textLimit(@$package_product->seller_product_sku->product->product_name, 18) : textLimit(@$package_product->seller_product_sku->sku->product->product_name, 18) }}" title="{{ @$package_product->seller_product_sku->product->product_name? textLimit(@$package_product->seller_product_sku->product->product_name, 18) : textLimit(@$package_product->seller_product_sku->sku->product->product_name, 18) }}">
                                                                 </div>

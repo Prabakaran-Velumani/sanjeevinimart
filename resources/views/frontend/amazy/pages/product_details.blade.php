@@ -593,7 +593,7 @@
                                                     @endphp
                                                 </div>
                                             </div>
-                                            <div class="col-12 show_full_btn d-none">
+                                            <div class="col-12 show_full_btn">
                                                 <button id="show_full_details" class="show_less amaz_primary_btn style3 text-uppercase">Show More</button>
                                             </div>
                                         </div>
@@ -2028,6 +2028,20 @@
             });
         });
     })(jQuery);
+/// ------Ragav---------
+    document.getElementById('show_full_details').addEventListener('click', function() {
+        var container = document.querySelector('.product_description_container');
+        var button = this;
+        
+        if (container.style.maxHeight === 'none') {
+            container.style.maxHeight = '200px';
+            button.textContent = 'Show More';
+        } else {
+            container.style.maxHeight = 'none'; // Removes the height restriction
+            button.textContent = 'Show Less';
+        }
+    });
+/// ------Ragav---------
 </script>
 <script>
 
