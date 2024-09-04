@@ -28,7 +28,7 @@ class AddUsersLoginCheckoutColumnOnGeneralSettingsTable extends Migration
     public function down()
     {
         if(Schema::hasColumn('general_settings','user_login_checkout')){
-            Schema::table('general_setting',function(Blueprint $table){
+            Schema::table('general_settings',function(Blueprint $table){
                 $table->dropColumn('user_login_checkout');
             });
         }

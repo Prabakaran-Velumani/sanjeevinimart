@@ -10,6 +10,7 @@ use App\Console\Commands\SellerSubscription;
 use App\Console\Commands\PushNotificationCommamd;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use App\Console\Commands\RateFresh;
 
 class Kernel extends ConsoleKernel
 {
@@ -20,7 +21,8 @@ class Kernel extends ConsoleKernel
         ResetCartPriceForFlashDeal::class,
         SellerSubscription::class,
         PushNotificationCommamd::class,
-        AuctionEndCheckCommand::class
+        AuctionEndCheckCommand::class,
+        RateFresh::class,
     ];
 
 

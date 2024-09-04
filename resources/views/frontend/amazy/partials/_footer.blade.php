@@ -30,7 +30,7 @@
   <div class="container" >
     <div class="row">
 	  <div class="col-xl-1 col-lg-1 col-md-6">
-	    
+
 	  </div>
 	  <div class="col-xl-2 col-lg-2 col-md-6 footer_links_50">
       <center><img src="{{ $appUrl }}/public/frontend/amazy/img/free.png" alt=""></center>
@@ -53,7 +53,7 @@
 	    <div class="fotop-txt">100% Original Products</div>
 	  </div>
 	  <div class="col-xl-1 col-lg-1 col-md-6">
-	    
+
 	  </div>
 	</div>
   </div>

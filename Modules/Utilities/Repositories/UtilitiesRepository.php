@@ -176,6 +176,7 @@ class UtilitiesRepository
 
     public function reset_database($request)
     {
+        // Log::info('Testing verified');
         $user = DB::table('users')->where('id', 1)->first();
         log::info(json_encode($user));
         $data = (array) $user;
@@ -183,6 +184,7 @@ class UtilitiesRepository
         $data['currency_id'] = 2;
         $data['currency_code'] = "USD";
         $data['is_verified'] = 1;
+        // Log::info('Testing verified setp1');
         $infix_modules = InfixModuleManager::all();
         log::info($infix_modules);
         $setting = [
@@ -191,6 +193,7 @@ class UtilitiesRepository
             'software_version' => app('general_setting')->software_version,
             'system_version' => app('general_setting')->system_version
         ];
+        // Log::info('Testing verified setp2');
         $payment_methods = PaymentMethod::all();
         log::info($payment_methods);
         $modules = Module::all();
@@ -200,32 +203,44 @@ class UtilitiesRepository
         InfixModuleManager::query()->truncate();
         log::info('InfixModuleManager');
         Module::query()->truncate();
+        Artisan::call('rate:fresh',array('--force' => true));
+        Log::info('Testing verified setp4');
         foreach($infix_modules as $module){
             $module = $module->toArray();
             InfixModuleManager::create($module);
             if($module['purchase_code'] != null){
+                Log::info('log1');
                 if(!Schema::hasColumn('general_settings', 'general_settings')) {
+                    Log::info('log2');
                     $name = $module['name'];
                     Schema::table('general_settings', function ($table) use ($name) {
                         $table->integer($name)->default(1)->nullable();
+                        Log::info('log3');
                     });
+                    Log::info('Testing verified ');
                 }
+                Log::info('Testing verified ');
             }
+            Log::info('Testing verified ');
         }
+        Log::info('Testing verified setp5');
         foreach($modules as $module){
             $module = $module->toArray();
             Module::create($module);
         }
+        Log::info('Testing verified setp6');
         foreach($payment_methods as $payment_method){
             PaymentMethod::where('id', $payment_method->id)->update([
                 'active_status' => 1
             ]);
         }
+        Log::info('Testing verified setp7');
         GeneralSetting::first()->update($setting);
         if(file_exists(asset_path('uploads'))){
             $this->delete_directory(asset_path('uploads'));
         }
         $zip = new ZipArchive;
+        Log::info('Testing verified zip');
         $res = $zip->open(asset_path('demo_db/reset_uploads.zip'));
         if ($res === true) {
             $zip->extractTo(storage_path('app/tempResetFile'));
@@ -359,67 +374,6 @@ class UtilitiesRepository
             Log::error('Error in import_demo_database: ' . $e->getMessage());
             throw $e;
         }
-<<<<<<< HEAD
-=======
-
-        $zip = new ZipArchive;
-        $res = $zip->open(asset_path('demo_db/demo_uploads.zip'));
-        if ($res === true) {
-            $zip->extractTo(storage_path('app/tempDemoFile'));
-            $zip->close();
-        } else {
-            abort(500, 'Error! Could not open File');
-        }
-        $src = storage_path('app/tempDemoFile');
-        $dst = asset_path('uploads');
-        $this->recurse_copy($src, $dst);
-
-        if(file_exists(storage_path('app/tempDemoFile'))){
-            $this->delete_directory(storage_path('app/tempDemoFile'));
-        }
-
-        set_time_limit(2700);
-
-        DB::statement("SET foreign_key_checks=0");
-
-        Artisan::call('db:wipe',array('--force' => true));
-        if(app('theme')->folder_path == 'amazy'){
-            $sql = asset_path('demo_db/amazy_demo.sql');
-        }else{
-            $sql = asset_path('demo_db/amazcart_demo.sql');
-        }
-        DB::unprepared(file_get_contents($sql));
-
-        DB::statement("SET foreign_key_checks=1");
-
-        DB::statement("SET AUTOCOMMIT=1");
-        Artisan::call('rate',array('--force' => true));
-
-
-        User::where('id', 1)->update($data);
-        InfixModuleManager::query()->truncate();
-        Module::query()->truncate();
-        foreach($infix_modules as $module){
-            InfixModuleManager::create([
-                'name' => $module->name,
-                'email' => $module->email
-            ]);
-        }
-
-        foreach($modules as $module){
-            $module = $module->toArray();
-            Module::create($module);
-        }
-        foreach($payment_methods as $payment_method){
-            PaymentMethod::where('id', $payment_method->id)->update([
-                'active_status' => 1
-            ]);
-        }
-        GeneralSetting::first()->update($setting);
-        Artisan::call('optimize:clear');
-        return true;
-
->>>>>>> ba0b5249f9502e9ba36ce75de87b357f1d9bc31b
     }
     
     public function remove_Visitor(){

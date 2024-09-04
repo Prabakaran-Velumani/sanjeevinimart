@@ -178,7 +178,6 @@ class CategoryController extends Controller
         if ($request->has('paginate')) {
             $data['paginate'] = $request->paginate;
         }
-        // return $data;
         return view(theme('partials.listing_paginate_data'), $data);
     }
 
@@ -372,7 +371,6 @@ class CategoryController extends Controller
             if (!empty($category_ids)) {
                 // Convert to array if it's a Collection
                 $category_ids_array = is_array($category_ids) ? $category_ids : $category_ids->toArray();
-            
                 // Ensure the array is not empty
                 if (!empty($category_ids_array)) {
                     $data['CategoryList'] = Category::whereIn('id', $category_ids_array) // Use whereIn instead of whereRaw
@@ -386,8 +384,8 @@ class CategoryController extends Controller
             } else {
                 $data['CategoryList'] = collect();
             }
-            
-            
+
+
 
             // $products = SellerProduct::activeSeller()->with('product')->select('seller_products.*')->join('products', function($q) use($main_product_ids,$slug){
             //     $q->on('seller_products.product_id','=','products.id');
@@ -406,7 +404,6 @@ class CategoryController extends Controller
                     ->where('seller_products.status', 1)
                     ->take(100)
                     ->get();
-                
                 // Brand query
                 $data['brandList'] = Brand::whereIn('id', $main_product_ids)  // Use whereIn instead of whereRaw
                     ->where('status', 1)

@@ -51,7 +51,7 @@ class FilterRepository
                         $q = $q->orWhere('name', 'LIKE', "%{$slug}%");
                     }
                     return $q;
-                }); 
+                });
             })->select(['*', 'name as product_name','sku as slug']);
         }elseif($data['requestItemType'] == "tag"){
             $tag = Tag::where('name',$requestItem)->first();
@@ -342,7 +342,6 @@ class FilterRepository
                     ->where('products.status', 1)
                     ->join('category_product', function($q) use($category_id, $category_ids) {
                         $q->on('category_product.product_id', '=', 'products.id');
-                        
                         if (!empty($category_ids)) {
                             // If category_ids is not empty, filter based on category_ids
                             $q->whereIn('category_product.category_id', $category_ids);
@@ -357,8 +356,9 @@ class FilterRepository
                     });
             })
             ->distinct('seller_products.id')
-            ->orderBy('seller_products.id', 'desc');
-        // return $products;
+            ->orderBy('seller_products.id', 'desc')
+            ->get();
+
         return $this->sortAndPaginate($products, $sort_by, $paginate_by);
     }
     public function filterProductBrandWise($brand_id, $sort_by, $paginate_by)
@@ -657,8 +657,6 @@ class FilterRepository
             $data['attributeLists'] = $attributeRepo->getAttributeForSpecificCategory($category_id, $category_ids);
             $data['category_id'] = $category_id;
             $data['color'] = $attributeRepo->getColorAttributeForSpecificCategory($category_id, $category_ids);
-            return $data['products'];
-            // $data['products'] = $this->sortAndPaginate($products, $sort_by, $paginate_by);
         }
         if ($item == 'brand') {
             $brand_id = $id;
@@ -726,7 +724,7 @@ class FilterRepository
         if(request()->sort_by){
             return $data;
         }
-        
+
         if($section->type == 1){
             $products = $products->join('category_product', function($q1){
                 $q1->on('products.id','=', 'category_product.product_id')->orderBy('category_product.category_id');
@@ -741,17 +739,17 @@ class FilterRepository
             $products->orderByDesc('seller_products.id')
             ->orderByDesc('recent_view');
 
-           
+
         }
         if($section->type == 4){
             $products->orderByDesc('seller_products.id')
             ->orderByDesc('total_sale');
-   
+
         }
         if($section->type == 5){
             $products = $products->withCount('reviews')->orderByDesc('seller_products.id')
             ->orderByDesc('reviews_count');
-            
+
         }
         if($section->type == 6){
             $product_ids = HomepageCustomProduct::where('section_id',$section->id)->pluck('seller_product_id')->toArray();
