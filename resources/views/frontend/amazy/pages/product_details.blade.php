@@ -993,7 +993,7 @@
                                     @endphp
                                     @php
                                         $review  = 1;
-                                         if( $total_review > 0 && review_count > 0){
+                                         if( $total_review > 0 && $review_count > 0){
                                             $review = round($total_review /$review_count,0);
                                          }
 
