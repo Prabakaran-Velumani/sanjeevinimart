@@ -594,6 +594,7 @@
             $('#error_unit_type').text('');
             $('#error_minumum_qty').text('');
             $('#error_selling_price').text('');
+            $('#error_cost_price').text('');
             $('#error_tax').text('');
             $('#error_discunt').text('');
             $('#error_thumbnail').text('');
@@ -623,12 +624,14 @@
                 requireMatch = 1;
                 $('#error_minumum_qty').text("{{ __('product.please_input_minimum_order_qty') }}");
             }
-            if ($('input[name=product_type]:checked').val() === '1' && $("#selling_price").val() === '') {
+            if ($('input[name=product_type]:checked').val() === '1' && $("#selling_price").val() === '' && $("#cost_price").val() === '') {
                 requireMatch = 1;
                 $('#error_selling_price').text("{{ __('product.please_input_selling_price') }}");
-            }else if ($('input[name=product_type]:checked').val() === '1' && $("#selling_price").val() == 0) {
+                $('#error_cost_price').text("{{ __('product.please_input_cost_price') }}");
+            }else if ($('input[name=product_type]:checked').val() === '1' && $("#selling_price").val() == 0 && $("#cost_price").val() == 0) {
                 requireMatch = 1;
                 $('#error_selling_price').text("{{ __('product.please_input_selling_price_minimum_one') }}");
+                $('#error_cost_price').text("{{ __('product.please_input_cost_price_minimum_one') }}");
             }
             if ($("#tax").val() === '') {
                 requireMatch = 1;
@@ -1104,7 +1107,7 @@
         $(document).on('change', '.related_product_checked', function (event) {
             event.preventDefault();
             var id = $(this).val();
-            if ($(this).is(":checked") == true) { 
+            if ($(this).is(":checked") == true) {
                 RelatedProduct.data.push(id);
                 $('#related_product_hidden_id').val(JSON.stringify(RelatedProduct.data));
             }
@@ -1113,12 +1116,12 @@
                 return value != parseInt(id);
                 });
                 $('#related_product_hidden_id').val(JSON.stringify(RelatedProduct.data));
-            } 
+            }
         });
         $(document).on('change', '.upsale_product_checked', function (event) {
             event.preventDefault();
             var id = $(this).val();
-            if ($(this).is(":checked") == true) { 
+            if ($(this).is(":checked") == true) {
                 UpsaleProduct.data.push(id);
                 $('#upsale_product_hidden_id').val(JSON.stringify(UpsaleProduct.data));
             }
@@ -1127,12 +1130,12 @@
                 return value != parseInt(id);
                 });
                 $('#upsale_product_hidden_id').val(JSON.stringify(UpsaleProduct.data));
-            } 
+            }
         });
         $(document).on('change', '.crosssale_product_checked', function (event) {
             event.preventDefault();
             var id = $(this).val();
-            if ($(this).is(":checked") == true) { 
+            if ($(this).is(":checked") == true) {
                 CrosssaleProduct.data.push(id);
                 $('#crosssale_product_hidden_id').val(JSON.stringify(CrosssaleProduct.data));
             }
@@ -1141,14 +1144,14 @@
                 return value != parseInt(id);
                 });
                 $('#crosssale_product_hidden_id').val(JSON.stringify(CrosssaleProduct.data));
-            } 
+            }
         });
         $(document).on('click', '#related_product .pagination a', function (event) {
                 event.preventDefault();
                 $('#pre-loader').removeClass('d-none');
                 var page = $(this).attr('href').split('page=')[1];
                 related_products(page);
-            }); 
+            });
             function related_products(page) {
                 var search = $('#rsearch_products').val();
                 var id = $('#product_id').val();
@@ -1167,7 +1170,7 @@
                                 $(this).prop('checked',true)
                             }else{
                                 $(this).prop('checked',false)
-                            } 
+                            }
                         });
                         $('#pre-loader').addClass('d-none');
                     }
@@ -1194,7 +1197,7 @@
                                 $(this).prop('checked',true)
                             }else{
                                 $(this).prop('checked',false)
-                            } 
+                            }
                         });
                         if (data.status == 'nothing_found') {
                             $('#related_product').html(
@@ -1208,7 +1211,7 @@
                 $('#pre-loader').removeClass('d-none');
                 var page = $(this).attr('href').split('page=')[1];
                 upsale_products(page);
-            }); 
+            });
             function upsale_products(page) {
                 var search = $('#upsale_search_products').val();
                 var id = $('#product_id').val();
@@ -1227,7 +1230,7 @@
                                 $(this).prop('checked',true)
                             }else{
                                 $(this).prop('checked',false)
-                            } 
+                            }
                         });
                         $('#pre-loader').addClass('d-none');
                     }
@@ -1254,7 +1257,7 @@
                                 $(this).prop('checked',true)
                             }else{
                                 $(this).prop('checked',false)
-                            } 
+                            }
                         });
                         if (data.status == 'nothing_found') {
                             $('#upsale_products').html(
@@ -1268,7 +1271,7 @@
                 $('#pre-loader').removeClass('d-none');
                 var page = $(this).attr('href').split('page=')[1];
                 crosssale_products(page);
-            }); 
+            });
             function crosssale_products(page) {
                 var search = $('#crosssale_search_products').val();
                 var id = $('#product_id').val();
@@ -1287,7 +1290,7 @@
                                 $(this).prop('checked',true)
                             }else{
                                 $(this).prop('checked',false)
-                            } 
+                            }
                         });
                         $('#pre-loader').addClass('d-none');
                     }
@@ -1314,7 +1317,7 @@
                                 $(this).prop('checked',true)
                             }else{
                                 $(this).prop('checked',false)
-                            } 
+                            }
                         });
                         if (data.status == 'nothing_found') {
                             $('#crosssale_products').html(
@@ -1328,11 +1331,11 @@
                 var lang = $(this).data('id');
                 $('.pelement').removeClass('active show');
                 $('#pelement'+lang).addClass('active show');
-                if (lang == "{{auth()->user()->lang_code}}") {  
+                if (lang == "{{auth()->user()->lang_code}}") {
                     $('#default_lang_{{auth()->user()->lang_code}}').removeClass('d-none');
                 }
             });
-            if ("{{auth()->user()->lang_code}}") {  
+            if ("{{auth()->user()->lang_code}}") {
                 $('#default_lang_{{auth()->user()->lang_code}}').removeClass('d-none');
             }
         @endif

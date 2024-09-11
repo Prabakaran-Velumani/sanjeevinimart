@@ -83,6 +83,7 @@
                 $('#error_category_ids').text('');
                 $('#error_unit_type').text('');
                 $('#error_minumum_qty').text('');
+                $('#error_cost_price').text('');
                 $('#error_selling_price').text('');
                 $('#error_tax').text('');
                 $('#error_discunt').text('');
@@ -115,12 +116,14 @@
                     requireMatch = 1;
                     $('#error_minumum_qty').text("{{ __('product.please_input_minimum_order_qty') }}");
                 }
-                if ($('input[name=product_type]:checked').val() === '1' && $("#selling_price").val() === '') {
+                if ($('input[name=product_type]:checked').val() === '1' && $("#selling_price").val() === '' && $("#cost_price").val() === '') {
                     requireMatch = 1;
                     $('#error_selling_price').text("{{ __('product.please_input_selling_price') }}");
-                }else if ($('input[name=product_type]:checked').val() === '1' && $("#selling_price").val() == 0) {
+                    $('#error_cost_price').text("{{ __('product.please_input_cost_price') }}");
+                }else if ($('input[name=product_type]:checked').val() === '1' && $("#selling_price").val() == 0 && $("#cost_price").val() == 0) {
                     requireMatch = 1;
                     $('#error_selling_price').text("{{ __('product.please_input_selling_price_minimum_one') }}");
+                    $('#error_cost_price').text("{{ __('product.please_input_cost_price_minimum_one') }}");
                 }
                 if ($("#tax").val() === '') {
                     requireMatch = 1;

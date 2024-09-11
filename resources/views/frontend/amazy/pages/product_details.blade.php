@@ -889,8 +889,8 @@
                                         <option data-display="Choose warehouse location" disabled>{{__('amazy.Choose warehouse location')}}</option>
                                         @if($pickup_locations)
                                         @foreach($pickup_locations as $pickup_location)
-                                             <option value="{{$pickup_location->id}}" 
-                                              {{--  {{$pickup_location->is_default?'selected':''}} --}} 
+                                             <option value="{{$pickup_location->id}}"
+                                              {{--  {{$pickup_location->is_default?'selected':''}} --}}
                                                 >{{$pickup_location->address}}</option>
                                         @endforeach
                                         @endif
@@ -993,7 +993,7 @@
                                     @endphp
                                     @php
                                         $review  = 1;
-                                         if( $total_review > 0 && review_count > 0){
+                                         if( $total_review > 0 && $review_count > 0){
                                             $review = round($total_review /$review_count,0);
                                          }
 
@@ -2032,7 +2032,7 @@
     document.getElementById('show_full_details').addEventListener('click', function() {
         var container = document.querySelector('.product_description_container');
         var button = this;
-        
+
         if (container.style.maxHeight === 'none') {
             container.style.maxHeight = '200px';
             button.textContent = 'Show More';
