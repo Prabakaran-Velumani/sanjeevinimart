@@ -125,6 +125,13 @@
                     $('#error_selling_price').text("{{ __('product.please_input_selling_price_minimum_one') }}");
                     $('#error_cost_price').text("{{ __('product.please_input_cost_price_minimum_one') }}");
                 }
+                if ($("#cost_price").val() === '') {
+                    requireMatch = 1;
+                    $('#error_cost_price').text("{{ __('product.please_input_cost_price') }}");
+                }else if ($("#cost_price").val() == 0) {
+                    requireMatch = 1;
+                    $('#error_cost_price').text("{{ __('product.please_input_cost_price_minimum_one') }}");
+                }
                 if ($("#tax").val() === '') {
                     requireMatch = 1;
                     $('#error_tax').text("{{ __('product.please_input_tax') }}");
