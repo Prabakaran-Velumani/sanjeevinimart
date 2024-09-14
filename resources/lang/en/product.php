@@ -216,5 +216,8 @@
   'Copied successfully.' => 'Copied successfully.',
   'auction_product_list' => 'Auction Product List',
   'add_new_auction_product' => 'Add Auction Product',
-  "create_redeem_card" => "Create Redeem Card"
+  "create_redeem_card" => "Create Redeem Card",
+  "please_input_cost_price" => "Please Input Cost Price",
+  "please_input_cost_price_minimum_one" => "Please Input Cost Price Minimum One",
+  "cost_price" => "Cost Price"
 );

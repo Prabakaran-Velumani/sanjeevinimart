@@ -476,7 +476,18 @@ $LanguageList = getLanguageList();
                                             </div>
 
                                         @endif
-
+                                        <div class="col-lg-6 cost_price_div">
+                                            <div class="primary_input mb-15">
+                                                <label class="primary_input_label" for="">
+                                                    {{ __('product.cost_price') }} <span
+                                                    class="text-danger">*</span></label>
+                                                <input class="primary_input_field cost_price" name="cost_price" id="cost_price"
+                                                    placeholder="{{ __('product.cost_price') }}" type="number" min="1"
+                                                    step="{{step_decimal()}}" value="{{@$product->skus->first()->cost_price}}"
+                                                    required>
+                                                <span class="text-danger" id="error_cost_price">{{ $errors->first('cost_price') }}</span>
+                                            </div>
+                                        </div>
                                         <div class="col-lg-6 selling_price_div">
                                             <div class="primary_input mb-15">
                                                 <label class="primary_input_label" for="">
