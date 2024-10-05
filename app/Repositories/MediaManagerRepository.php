@@ -128,13 +128,25 @@ class MediaManagerRepository
         return false;
     }
 
-    public function getMediaById($request){
+    public function getMediaById($request)
+    {
         $data = MediaManager::whereIn('id', $request->ids);
-        if($request->prev_ids){
-            $new_ids = implode(',',$request->ids);
-            $prev_ids = $request->prev_ids.','.$new_ids;
-            $data->orderByRaw('FIELD(id, '.$prev_ids.')');
+
+        if ($request->prev_ids) {
+            $new_ids = $request->ids;
+            $prev_ids = explode(',', $request->prev_ids);
+
+            $all_ids = array_merge($prev_ids, $new_ids);
+
+            $orderQuery = 'CASE ';
+            foreach ($all_ids as $index => $id) {
+                $orderQuery .= 'WHEN id = ' . intval($id) . ' THEN ' . ($index + 1) . ' ';
+            }
+            $orderQuery .= 'END';
+
+            $data->orderByRaw($orderQuery);
         }
+
         return $data->get();
     }
 
